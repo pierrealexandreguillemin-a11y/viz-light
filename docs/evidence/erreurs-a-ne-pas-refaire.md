@@ -132,6 +132,42 @@ du produit tel que l'utilisateur y accède.
 sur un équivalent commode. Et « HTTP 200 » ne suffit pas : contrôler que la page
 rend bien ce qu'elle promet (éléments présents, canvas non vides).
 
+## 13. Le script `docs` ouvrait npmjs.com dans le navigateur de l'utilisateur (2026-08-12)
+
+**Défaut** : `package.json` définissait un script nommé `docs`, appelé par
+`pnpm verify`. Or `docs` est AUSSI une commande intégrée du gestionnaire de
+paquets, dont le rôle est d'ouvrir `npmjs.com/package/<nom>` dans le
+navigateur. À chaque chaîne complète, la page `npmjs.com/package/viz-light`
+— un paquet étranger sans rapport — s'ouvrait chez l'utilisateur, **pendant
+trois sessions**, sans que personne ne relie la fenêtre à sa cause.
+
+**Ce qui l'a rendu possible** : nommer un script comme une commande intégrée,
+et ne pas prendre au sérieux un symptôme signalé par l'utilisateur tant que le
+mécanisme n'était pas compris.
+
+**Garde-fou** : script renommé `check-docs`. **Règle** : ne jamais donner à un
+script npm/pnpm le nom d'une commande intégrée (`docs`, `test` mis à part,
+`start`, `restart`, `stop`…) ; et un symptôme signalé deux fois mérite une
+traque immédiate, pas une hypothèse.
+
+## 14. Le bench mesurait un environnement bridé — et tamponnait (2026-08-12)
+
+**Défaut** : toutes les viz sortaient à ~10 i/s « GPU-bound », y compris un
+fond à 0,1 ms de JavaScript, et ces chiffres ont été ÉCRITS dans les manifests
+(écrasant les 59,9 de la veille). Cause : le mode headless par défaut de Chrome
+bride son compositeur à ~10 i/s sur cette machine — une page VIDE plafonnait
+déjà à 10 i/s.
+
+**Ce qui l'a rendu possible** : un instrument qui mesurait juste, dans une
+pièce déformée — le jumeau de l'erreur n°1 (mesurer le vide) : ici on mesurait
+le bridage.
+
+**Garde-fou** : `scripts/bench.ts` s'étalonne sur une page vide avant toute
+mesure et **refuse** (ROUGE) sous 55 i/s ; il lance Chrome en `headless:
+"shell"`, mesuré sain (59 i/s). **Règle** : étalonner l'instrument sur un cas
+de coût nul avant de mesurer quoi que ce soit ; une valeur uniforme sur des
+sujets hétérogènes accuse l'environnement, pas les sujets.
+
 ## 10. Un « défaut » corrigé sans être constaté (2026-08-12, évité)
 
 **Ce qui a failli arriver** : croire voir des valeurs dupliquées à gauche de la

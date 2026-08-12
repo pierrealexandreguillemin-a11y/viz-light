@@ -188,7 +188,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | 4 | Contrat de données : schéma manifest + registre + générateur CATALOG.md (gate) | ✅ 2026-08-12 |
 | 5 | Socle viz : hooks core + instrument + coquille UI, prouvé par une viz réelle | ✅ 2026-08-12 |
 | 5b | **Direction artistique + revue UI/UX** ([ADR 0009](decisions/0009-direction-artistique-planche-contact.md)) — repassée à l'étape 8, sur planche pleine | ✅ 2026-08-12 |
-| 6 | Migration des viz par lots, deux régimes ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)), dédup | 🟡 **5/31** |
+| 6 | Migration des viz par lots, deux régimes ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)), dédup | 🟡 **15/31** |
 | 7 | Bench Puppeteer + perf tamponnée dans les manifests | ✅ outil livré, tourne à chaque migration |
 | 8 | Recette utilisateur (revue visuelle complète par Pierre-Alexandre) | ⬜ |
 | 9 | Déploiement Vercel + CATALOG.md final | ⬜ |
@@ -198,25 +198,29 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 sans perf, donc chaque migration se termine par sa mesure. Mesurer en bloc à la
 fin laisserait `pnpm verify` rouge pendant tout le chantier.
 
-### État de l'étape 6 au 2026-08-12 — 5 sur 31
+### État de l'étape 6 au 2026-08-12 (2e session) — 15 sur 31
 
-**Migrées** (toutes `animation`, régime « œuvre », mesurées) : `tunnel-de-points`
-(référence du rendu aligné), `spirale-tressee`, `voile-tournante`,
-`coquille-cannelee`, `anneau-respirant`.
+**Migrées, catégorie `animation`** (régime « œuvre », mesurées) :
+`tunnel-de-points` (référence du rendu aligné), `spirale-tressee`,
+`voile-tournante`, `coquille-cannelee`, `anneau-respirant`.
 
-**Reste 26**, par ordre de priorité :
+**Migrées, catégorie `fond`** (régime « technique », réécriture libre,
+mesurées) : `orbes-floutees`, `mesh-gradient`, `grain-de-film`,
+`poussiere-d-etoiles`, `flow-field`, `constellation`, `grille-synthwave`,
+`balayage-radar`, `aurore-boreale`, `plasma-deforme`. Les réglages d'origine
+survivent intégralement : le schéma de manifest porte désormais **trois genres
+de paramètre** (`curseur`, `interrupteur`, `couleur`). La couleur d'une viz est
+une donnée de la viz, pas de l'UI — même frontière que le gate OKLCH.
 
-1. **Les 10 fonds du banc d'essai** — régime « technique », réécriture libre
-   ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)). Ce sont les plus
-   simples, et **la section « Fonds » de la vitrine est vide sans eux** :
-   `orbs`, `mesh`, `grain`, `sparse`, `flow`, `constellation`, `synthwave`,
-   `scan`, `aurora`, `plasma`. Leur source est minifiée, ce n'est pas un
-   obstacle — `params`, `claim` et `reality` y sont en clair.
-2. **Les 14 sketches p5 restants** — régime « œuvre ». Peu coûteux depuis que
+**Reste 16**, par ordre de priorité :
+
+1. **Les 14 sketches p5 restants** — régime « œuvre ». Peu coûteux depuis que
    `src/core/viz/champ-de-points.ts` porte le traitement : une viz ne coûte que
-   sa formule.
-3. **Les 5 algos de l'Atelier** — régime « œuvre », dont le *Flow Field* dont
-   **l'arbitrage entre les deux versions appartient à l'utilisateur**.
+   sa formule. ⚠ Dette de preuve : **aucune capture comparée n'existe encore**
+   pour les 5 œuvres migrées — à produire avant la recette (étape 8).
+2. **Les 5 algos de l'Atelier** — régime « œuvre », dont le *Flow Field* dont
+   **l'arbitrage entre les deux versions appartient à l'utilisateur** (la
+   version banc-essai est migrée en `fond`, la variante est notée au manifest).
 
 ### Comment migrer une viz (boucle complète)
 
