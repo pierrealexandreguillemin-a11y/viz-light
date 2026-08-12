@@ -188,7 +188,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | 4 | Contrat de données : schéma manifest + registre + générateur CATALOG.md (gate) | ✅ 2026-08-12 |
 | 5 | Socle viz : hooks core + instrument + coquille UI, prouvé par une viz réelle | ✅ 2026-08-12 |
 | 5b | **Direction artistique + revue UI/UX** ([ADR 0009](decisions/0009-direction-artistique-planche-contact.md)) — repassée à l'étape 8, sur planche pleine | ✅ 2026-08-12 |
-| 6 | Migration des viz par lots, fidélité par captures comparées, dédup | 🟡 1/31 |
+| 6 | Migration des viz par lots, deux régimes ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)), dédup | 🟡 **5/31** |
 | 7 | Bench Puppeteer + perf tamponnée dans les manifests | ✅ outil livré, tourne à chaque migration |
 | 8 | Recette utilisateur (revue visuelle complète par Pierre-Alexandre) | ⬜ |
 | 9 | Déploiement Vercel + CATALOG.md final | ⬜ |
@@ -197,6 +197,38 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 **L'étape 7 a fusionné dans l'étape 6** : le gate du catalogue refuse une viz
 sans perf, donc chaque migration se termine par sa mesure. Mesurer en bloc à la
 fin laisserait `pnpm verify` rouge pendant tout le chantier.
+
+### État de l'étape 6 au 2026-08-12 — 5 sur 31
+
+**Migrées** (toutes `animation`, régime « œuvre », mesurées) : `tunnel-de-points`
+(référence du rendu aligné), `spirale-tressee`, `voile-tournante`,
+`coquille-cannelee`, `anneau-respirant`.
+
+**Reste 26**, par ordre de priorité :
+
+1. **Les 10 fonds du banc d'essai** — régime « technique », réécriture libre
+   ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)). Ce sont les plus
+   simples, et **la section « Fonds » de la vitrine est vide sans eux** :
+   `orbs`, `mesh`, `grain`, `sparse`, `flow`, `constellation`, `synthwave`,
+   `scan`, `aurora`, `plasma`. Leur source est minifiée, ce n'est pas un
+   obstacle — `params`, `claim` et `reality` y sont en clair.
+2. **Les 14 sketches p5 restants** — régime « œuvre ». Peu coûteux depuis que
+   `src/core/viz/champ-de-points.ts` porte le traitement : une viz ne coûte que
+   sa formule.
+3. **Les 5 algos de l'Atelier** — régime « œuvre », dont le *Flow Field* dont
+   **l'arbitrage entre les deux versions appartient à l'utilisateur**.
+
+### Comment migrer une viz (boucle complète)
+
+```
+src/viz/<slug>/{algo.ts, <Nom>.tsx, manifest.json}   # écrire
+pnpm catalog     # valide le manifest, regénère CATALOG.md + le registre
+pnpm build       # le bench a besoin de out/
+pnpm bench       # mesure UNE viz à la fois, écrit perf dans les manifests
+pnpm verify      # docs → catalog → format → lint → typecheck → dup → test:cov → build
+```
+
+`pnpm catalog` reste **rouge tant qu'une viz n'a pas sa perf** : c'est voulu.
 
 ### Exigences ajoutées par l'utilisateur le 2026-08-12
 

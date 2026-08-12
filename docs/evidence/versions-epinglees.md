@@ -109,6 +109,13 @@ principe que « un seuil documenté que rien n'exécute n'est pas un gate ».
 | `@commitlint/config-conventional` | 21.2.0 | |
 | `jscpd` | 5.0.14 | duplication **inter-fichiers** |
 | `puppeteer` | 25.6.0 | bench + captures de fidélité |
+| `@testing-library/react` | 16.3.2 | ajouté à l'étape 5 : tester qu'une viz se monte VRAIMENT |
+| `@testing-library/dom` | 10.4.1 | peer exigé par le précédent |
+| `@testing-library/jest-dom` | 7.0.1 | |
+
+Les trois `@testing-library` ont été ajoutés **après** le scaffold, à l'étape 5,
+quand il a fallu prouver qu'une viz se montait réellement dans le DOM
+(`tests/scene-viz.test.tsx`). Leur peer déclaré `react ^18 || ^19` est satisfait.
 
 ## 5. Écarts assumés avec le moule ma-nfl / ma-cdm
 
