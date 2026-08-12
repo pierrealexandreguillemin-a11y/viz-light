@@ -4,12 +4,14 @@ last_verified: 2026-08-13
 expires: never
 ---
 
-# Handoff — 2026-08-13 (3e session) · les 13 derniers sketches p5
+# Handoff — 2026-08-13 (3e session) · les 13 sketches p5 et l'Atelier
 
 **Point de départ** : étape 6 à 15/31, gate `pnpm session` VERT, plan des 13
 sketches figé dans `SPEC.md` — aucune décision à prendre.
-**Point d'arrivée** : étape 6 à **28/31**, les **18 sketches @yuruyurau
-migrés, mesurés et prouvés** par captures comparées. `pnpm verify` exit 0.
+**Point d'arrivée** : étape 6 à **31/31 migrées** — les 18 sketches
+@yuruyurau ET les 3 algos de l'Atelier génératif, tous mesurés et prouvés par
+captures comparées. `pnpm verify` exit 0. Reste une décision, pas un chantier :
+l'arbitrage *Flow Field*.
 
 ## 1. Ce qui a été fait
 
@@ -86,18 +88,36 @@ fuit hors du dossier — `node_modules` local, hooks git dans `.husky/_`, aucune
 install globale, store pnpm partagé en lecture seule. La gêne ressentie était
 du CPU (Chrome headless du bench), pas une fuite.
 
+## 4bis. L'Atelier génératif — les 3 derniers
+
+`orbit-particles`, `spiral-bloom`, `noise-grid`, portés depuis le bundle de
+`sources/genart-studio-standalone.html` (minifié, mais `id`, `params`,
+`colors` et les corps de fonction sont en clair). Réglages et couleurs de
+l'Atelier conservés, plus la **graine** en curseur — l'Atelier avait un bouton
+« Nouvelle seed », et le perdre serait perdre l'œuvre.
+
+**Le `noise()` de p5 est porté terme pour terme** (`core/viz/bruit-perlin.ts`) :
+quatre octaves, table de 4096 valeurs, interpolation par cosinus mis à
+l'échelle. Différence assumée et documentée : p5 remplit sa table avec
+`Math.random()`, donc l'original n'est pas reproductible d'un chargement à
+l'autre ; ici la table est ensemencée.
+
+**Piège trouvé, erreur n°18** : `elementHandle.screenshot()` redimensionne la
+fenêtre, l'Atelier écoute `windowResized` et RECRÉE son sketch — les premières
+captures montraient une spirale remise à zéro. Capturer par découpe
+(`page.screenshot({ clip, captureBeyondViewport: false })`). Le recoupement
+chiffré (pixels allumés à format égal : 3 632 contre 3 577) disait la vérité
+quand l'image mentait.
+
 ## 5. Ce que la prochaine session doit faire
 
-1. **Étape 6, 3 viz restantes** : les algos de l'Atelier génératif, régime
-   « œuvre ». Même boucle : écrire → `pnpm catalog` → `pnpm build` →
-   `pnpm bench` → captures comparées → `pnpm verify`.
-2. **La seule décision du chantier appartient à l'utilisateur** : l'arbitrage
+1. **La seule décision du chantier appartient à l'utilisateur** : l'arbitrage
    *Flow Field* (version banc d'essai déjà migrée en `fond`, contre celle de
    l'Atelier). Lui montrer les deux, ne rien trancher.
-3. Puis étape 8 : recette visuelle complète par Pierre-Alexandre.
+2. Puis étape 8 : recette visuelle complète par Pierre-Alexandre.
 
 ## 6. État à la passation
 
-- Fil d'Ariane : 0-5b ✅, **étape 6 : 28/31**, 8-10 ⬜.
+- Fil d'Ariane : 0-5b ✅, **étape 6 : 31/31 migrées** (arbitrage Flow Field en attente), 8-10 ⬜.
 - `pnpm verify` → **exit 0**. `pnpm session` → VERT.
 - Aucun push, aucun remote. Commits atomiques sur `master`.

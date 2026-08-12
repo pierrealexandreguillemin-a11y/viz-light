@@ -1,0 +1,108 @@
+{
+  "slug": "spiral-bloom",
+  "nom": "Spiral Bloom",
+  "ambiance": "Une spirale qui s'ouvre une fois, puis respire sous le bruit.",
+  "categorie": "animation",
+  "origine": {
+    "source": "atelier-generatif",
+    "reference": "spiral-bloom",
+    "date": "2026-08-12"
+  },
+  "runtime": "canvas2d",
+  "tags": ["spirale", "floraison", "dégradé"],
+  "rendus": [
+    {
+      "id": "origine",
+      "libelle": "Origine",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "graine",
+          "libelle": "Graine",
+          "min": 1,
+          "max": 9999,
+          "pas": 1,
+          "valeur": 2026
+        },
+        {
+          "cle": "arms",
+          "libelle": "Bras",
+          "min": 1,
+          "max": 8,
+          "pas": 1,
+          "valeur": 3
+        },
+        {
+          "cle": "turns",
+          "libelle": "Tours",
+          "min": 2,
+          "max": 14,
+          "pas": 0.5,
+          "valeur": 7
+        },
+        {
+          "cle": "wobble",
+          "libelle": "Oscillation",
+          "min": 0,
+          "max": 40,
+          "pas": 1,
+          "valeur": 12
+        },
+        {
+          "cle": "growth",
+          "libelle": "Vitesse d'ouverture",
+          "min": 0.001,
+          "max": 0.02,
+          "pas": 0.001,
+          "valeur": 0.006
+        },
+        {
+          "cle": "background",
+          "libelle": "Fond",
+          "genre": "couleur",
+          "valeur": "#0b0f14"
+        },
+        {
+          "cle": "inner",
+          "libelle": "Cœur",
+          "genre": "couleur",
+          "valeur": "#f2a65a"
+        },
+        {
+          "cle": "outer",
+          "libelle": "Bord",
+          "genre": "couleur",
+          "valeur": "#6fe7c8"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": ["SpiralBloom.tsx", "algo.ts", "manifest.json"],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/toile.ts",
+      "core/viz/reglages.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts",
+      "core/viz/bruit-perlin.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-08-12",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 1.2,
+    "jsP95Ms": 1.4,
+    "gpuBound": false
+  }
+}

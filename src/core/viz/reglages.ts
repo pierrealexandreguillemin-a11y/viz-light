@@ -26,6 +26,32 @@ export function lireCouleur(r: Reglages, cle: string, defaut: string): string {
   return typeof valeur === "string" && valeur.trim() !== "" ? valeur : defaut;
 }
 
+/**
+ * La graine a-t-elle changé ? Les algos de l'Atelier tirent leur composition
+ * d'un générateur ensemencé : changer la vitesse ou une couleur s'applique en
+ * direct, changer la graine redistribue forcément tout.
+ */
+export function graineChangee(avant: Reglages, apres: Reglages): boolean {
+  return lireNombre(avant, "graine", 0) !== lireNombre(apres, "graine", 0);
+}
+
+/**
+ * Interpolation entre deux couleurs `#rrggbb`, canal par canal — le dégradé
+ * du cœur vers le bord dont plusieurs algos de l'Atelier tirent leur couleur.
+ */
+export function melangerHex(depart: string, arrivee: string, t: number): string {
+  const part = Math.min(1, Math.max(0, t));
+  const octet = (hex: string, i: number) =>
+    Number.parseInt(hex.replace("#", "").slice(i, i + 2), 16);
+  const canal = (i: number) => {
+    const a = octet(depart, i);
+    const b = octet(arrivee, i);
+    const v = Math.round(a + (b - a) * part);
+    return Math.min(255, Math.max(0, v)).toString(16).padStart(2, "0");
+  };
+  return `#${canal(0)}${canal(2)}${canal(4)}`;
+}
+
 /** `#rrggbb` → composantes 0..1, pour les uniforms WebGL. */
 export function hexVersRgb(hex: string): readonly [number, number, number] {
   const brut = hex.replace("#", "");

@@ -226,6 +226,25 @@ Le fichier reste la référence de fidélité (erreur n°15) et n'a **pas** ét�
 lieu d'attendre son long délai. **Règle** : distinguer « lent » de « mort » par
 un signal de démarrage, jamais par la patience.
 
+## 18. L'observation a réinitialisé l'observé (2026-08-13)
+
+**Défaut** : les captures de l'Atelier génératif montraient une spirale
+minuscule et des orbites sans traînée, alors que l'original animé était
+identique au portage. Cause : `elementHandle.screenshot()` de Puppeteer
+redimensionne temporairement la fenêtre (`captureBeyondViewport`) ; l'Atelier
+écoute `windowResized` et **recrée son sketch** — la capture montrait donc une
+œuvre remise à zéro trois images plus tôt.
+
+**Ce qui l'a rendu possible** : croire qu'une capture est passive. Elle ne
+l'est pas dès que la page réagit à la taille de la fenêtre.
+
+**Garde-fou** : capturer par découpe (`page.screenshot({ clip,
+captureBeyondViewport: false })`), jamais par capture d'élément, sur toute page
+qui écoute le redimensionnement. **Règle** : avant de conclure d'après une
+image, vérifier que l'acte de mesurer ne change pas ce qui est mesuré — et
+recouper par un chiffre pris SANS capture (ici : pixels allumés, 3 632 contre
+3 577, soit 1,5 % d'écart, qui disait la vérité quand l'image mentait).
+
 ## 10. Un « défaut » corrigé sans être constaté (2026-08-12, évité)
 
 **Ce qui a failli arriver** : croire voir des valeurs dupliquées à gauche de la

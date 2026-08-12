@@ -98,8 +98,8 @@
   "perf": {
     "mesureLe": "2026-08-12",
     "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
-    "cadenceFps": 30.1,
-    "jsMedianMs": 0.1,
+    "cadenceFps": 30,
+    "jsMedianMs": 0.2,
     "jsP95Ms": 0.3,
     "gpuBound": true
   }

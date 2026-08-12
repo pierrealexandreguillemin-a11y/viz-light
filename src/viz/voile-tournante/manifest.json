@@ -178,7 +178,7 @@
     "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
     "cadenceFps": 59.9,
     "jsMedianMs": 4.7,
-    "jsP95Ms": 5.2,
+    "jsP95Ms": 5.1,
     "gpuBound": false
   }
 }

@@ -177,8 +177,8 @@
     "mesureLe": "2026-08-12",
     "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
     "cadenceFps": 59.9,
-    "jsMedianMs": 4.5,
-    "jsP95Ms": 5,
+    "jsMedianMs": 4.4,
+    "jsP95Ms": 4.85,
     "gpuBound": false
   }
 }

@@ -188,7 +188,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | 4 | Contrat de données : schéma manifest + registre + générateur CATALOG.md (gate) | ✅ 2026-08-12 |
 | 5 | Socle viz : hooks core + instrument + coquille UI, prouvé par une viz réelle | ✅ 2026-08-12 |
 | 5b | **Direction artistique + revue UI/UX** ([ADR 0009](decisions/0009-direction-artistique-planche-contact.md)) — repassée à l'étape 8, sur planche pleine | ✅ 2026-08-12 |
-| 6 | Migration des viz par lots, deux régimes ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)), dédup | 🟡 **28/31** |
+| 6 | Migration des viz par lots, deux régimes ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)), dédup | 🟡 **31/31 migrées** — reste l'arbitrage Flow Field (utilisateur) |
 | 7 | Bench Puppeteer + perf tamponnée dans les manifests | ✅ outil livré, tourne à chaque migration |
 | 8 | Recette utilisateur (revue visuelle complète par Pierre-Alexandre) | ⬜ |
 | 9 | Déploiement Vercel + CATALOG.md final | ⬜ |
@@ -198,7 +198,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 sans perf, donc chaque migration se termine par sa mesure. Mesurer en bloc à la
 fin laisserait `pnpm verify` rouge pendant tout le chantier.
 
-### État de l'étape 6 au 2026-08-13 (3e session) — 28 sur 31
+### État de l'étape 6 au 2026-08-13 (3e session) — 31 sur 31 migrées
 
 **Les 18 sketches @yuruyurau sont migrés** (régime « œuvre », mesurés, chacun
 avec sa paire de captures comparées dans `evidence/captures/`) :
@@ -209,8 +209,21 @@ avec sa paire de captures comparées dans `evidence/captures/`) :
 `medaillon-tournant`, `ruban-plisse`, `ruban-ondule`, `anemone-marine`,
 `couronne-battante`, `rosace-fondatrice`.
 
-**Reste 3 viz** : les 5 algos de l'Atelier génératif moins les doublons
-(Tunnel, Flow Field). L'arbitrage *Flow Field* appartient à l'utilisateur.
+**Les 3 algos de l'Atelier génératif sont migrés** (régime « œuvre », mesurés,
+captures comparées contre l'artifact d'origine) : `orbit-particles`,
+`spiral-bloom`, `noise-grid`. Le `tunnel` de l'Atelier est le doublon déjà
+migré ; `flow-field` attend l'arbitrage de l'utilisateur.
+
+**Le `noise()` de p5 est porté terme pour terme** (`core/viz/bruit-perlin.ts`) :
+quatre octaves, table de 4096 valeurs, interpolation par cosinus. Un autre
+bruit donnerait une autre image, et le régime « œuvre » l'interdit. Différence
+assumée : p5 tire sa table avec `Math.random()` — l'original n'est donc PAS
+reproductible d'un chargement à l'autre, ici la table est ensemencée. La graine
+est un réglage, comme le bouton « Nouvelle seed » de l'Atelier.
+
+**Les captures de l'Atelier se comparent structurellement, pas au pixel** :
+l'original tire sa graine au hasard à chaque chargement. Le recoupement
+chiffré (pixels allumés à format égal) accompagne l'image.
 
 **Deux ajouts au moteur, tous deux exigés par une œuvre** : le champ
 `PointCalcule.taille` (les cercles de diamètre variable du 7 mai) et
