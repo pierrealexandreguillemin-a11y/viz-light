@@ -103,11 +103,32 @@ paramètres). **`aligne` est le rendu par défaut** ; les deux partagent le mêm
 `algo.ts`. Le Tunnel n'est pas une trahison du style @yuruyurau, c'en est un
 raffinement — décision de l'utilisateur, 2026-08-12.
 
-**Fidélité non négociable** : chaque viz migrée est vérifiée **visuellement
-contre l'original** par captures comparées (Puppeteer). C'est le rendu
-`origine` qui porte cette preuve — un rendu raffiné rendrait une erreur de
-portage indiscernable d'un choix de couleur. Substituer une version générique à
-une implémentation validée est une faute grave (historique Viz Light).
+### Deux régimes de migration, selon l'origine
+
+([ADR 0010](decisions/0010-deux-regimes-de-migration.md) — décision de
+l'utilisateur, 2026-08-12 : « pour les effets génériques, le code n'est pas
+verbatim ».)
+
+**Œuvres — `tweet-sketches` et `atelier-generatif` : portage fidèle.**
+La formule EST l'œuvre. Chaque viz est vérifiée **visuellement contre
+l'original** par captures comparées (Puppeteer) ; c'est le rendu `origine` qui
+porte cette preuve — un rendu raffiné rendrait une erreur de portage
+indiscernable d'un choix de couleur. Substituer une version générique à une
+implémentation validée est une faute grave (historique Viz Light).
+
+**Techniques — `banc-essai` (les fonds) : réécriture libre.**
+Un grain de film, un dégradé flouté, une constellation sont des techniques
+standard, sans auteur ni formule à préserver. On obtient l'effet, on ne
+transcrit pas l'implémentation. Ils se jugent sur **le rendu et les paramètres
+exposés**, pas sur une comparaison au pixel — donc pas de rendu `origine`
+obligatoire, et pas de capture comparée. Le fait que leur source soit un bundle
+minifié n'est **pas** un obstacle : `id`, `name`, `family`, `surface`, `params`,
+`claim` et `reality` y sont en clair, et cela suffit pour réécrire du TypeScript
+propre.
+
+⚠ Confondre les deux régimes a un coût mesuré : appliquer la règle de fidélité
+aux fonds a servi de motif pour les reporter, et la section « Fonds » de la
+vitrine est restée vide (`evidence/erreurs-a-ne-pas-refaire.md` §12).
 
 Hors v1 (après recette) : nouvelles créations à la demande, rapatriement d'autres
 sources (conversations claude.ai, tweets, CodePen, Shadertoy), HTML autonome
