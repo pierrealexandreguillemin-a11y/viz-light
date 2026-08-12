@@ -73,9 +73,11 @@ JS médian de 0 ms — mesuré réellement sur `mesh-gradient` en mode composé.
 3. **Reste 16 viz** : 14 sketches p5 (une formule chacun) puis les 5 algos de
    l'Atelier (arbitrage Flow Field = utilisateur ; la version banc-essai est
    déjà migrée en `fond` avec la variante notée au manifest).
-4. La page fait vivre plusieurs viz à la fois : le socle met en pause hors
-   viewport, mais 3-4 viz simultanées se partagent la machine — la cadence
-   perçue en défilant n'est pas celle des manifests (mesurés une viz seule).
+4. **Une seule viz vit à la fois** (`useScenePrincipale`, décision utilisateur
+   en fin de session) : la plus visible anime, les autres sont figées sur une
+   image — la cadence perçue rejoint celle des manifests. Piège documenté dans
+   le code : `canvas.width = …` efface un canvas, une scène figée doit se
+   repeindre après réglage ou redimensionnement.
 
 ## 4. État à la passation
 
