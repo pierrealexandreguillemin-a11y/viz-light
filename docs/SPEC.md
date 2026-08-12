@@ -1,6 +1,6 @@
 ---
 authority: canonical
-last_verified: 2026-08-11
+last_verified: 2026-08-12
 expires: never
 ---
 
@@ -79,16 +79,18 @@ marché.
 
 ## 4. Périmètre v1
 
-Rapatrier et unifier les **~33 viz existantes** (→ ~31 uniques après
-déduplication) depuis les trois artifacts sources (URLs et inventaire :
-`evidence/sources-viz-light.md`) :
+Rapatrier et unifier les **34 viz rapatriées** (→ **31 uniques** après
+déduplication) depuis les trois artifacts sources (provenance et inventaire
+vérifié : `evidence/sources-viz-light.md`) :
 
-- 18 sketches p5.js @yuruyurau (#つぶやきProcessing)
+- 19 sketches p5.js @yuruyurau (#つぶやきProcessing) — compté dans le fichier
+  rapatrié le 2026-08-12 ; la genèse en annonçait 18
 - 10 effets réglables du banc d'essai (canvas2d / dom-css / webgl)
 - 5 algos paramétrables de l'« Atelier génératif »
 
-Doublons (Tunnel de points ×2, Flow Field ×2) : **la version validée par
-l'utilisateur gagne**, l'autre est notée en variante dans le manifest.
+Doublons (Tunnel de points ×3, Flow Field ×2) : **la version validée par
+l'utilisateur gagne**, l'autre est notée en variante dans le manifest. Pour le
+Flow Field, l'arbitrage revient à l'utilisateur au moment de la migration.
 
 **Fidélité non négociable** : chaque viz migrée est vérifiée **visuellement
 contre l'original** par captures comparées (Puppeteer). Substituer une version
@@ -134,7 +136,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | # | Étape | État |
 |---|-------|------|
 | 0 | Genèse : cadrage, décisions, projection bootstrap (gardien) | ✅ 2026-08-11 |
-| 1 | **Rapatriement brut des 3 artifacts** dans `sources/` (URLs périssables — en premier) | ⬜ |
+| 1 | **Rapatriement brut des 3 artifacts** dans `sources/` (URLs périssables — en premier) | ✅ 2026-08-12 |
 | 2 | Épinglage versions latest stables (Context7) + scaffold Next 16 | ⬜ |
 | 3 | Socle qualité câblé + calibré dans les deux sens | ⬜ |
 | 4 | Contrat de données : schéma manifest + registre + générateur CATALOG.md (gate) | ⬜ |

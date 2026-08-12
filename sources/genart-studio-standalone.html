@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Atelier génératif — galerie et créateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+<style>
+:root {
+  --bg: #10141a;
+  --panel: #171d25;
+  --panel-alt: #1c232d;
+  --text: #e7ecf2;
+  --text-dim: #8b95a5;
+  --accent: #6fe7c8;
+  --accent-warm: #f2a65a;
+  --border: #2a3340;
+  --radius: 10px;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+button, input {
+  font-family: inherit;
+}
+
+/* ---------- Header ---------- */
+
+.app-header {
+  padding: 28px clamp(20px, 4vw, 48px) 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.wordmark {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-display);
+}
+
+.wordmark__mark {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.wordmark__sub {
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--accent);
+}
+
+.app-header__tagline {
+  margin: 6px 0 0;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+/* ---------- Layout ---------- */
+
+.app-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr 300px;
+  gap: 1px;
+  background: var(--border);
+  min-height: 62vh;
+}
+
+@media (max-width: 900px) {
+  .app-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rail {
+  background: var(--panel);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.rail__title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 14px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ---------- Preset gallery ---------- */
+
+.preset-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.preset-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--panel-alt);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.preset-card:hover {
+  border-color: var(--accent);
+}
+
+.preset-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.preset-card--active {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--panel-alt));
+}
+
+.preset-card__swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.preset-card__name {
+  font-size: 13.5px;
+}
+
+/* ---------- Stage ---------- */
+
+.stage {
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 14px;
+}
+
+.canvas-container {
+  flex: 1;
+  min-height: 420px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #0b0f14;
+}
+
+.canvas-container canvas {
+  display: block;
+}
+
+.stage__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stage__actions-right {
+  display: flex;
+  gap: 10px;
+}
+
+.seed-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.seed-readout {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent-warm);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  background: var(--panel-alt);
+}
+
+/* ---------- Buttons ---------- */
+
+.button {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 14px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--panel-alt);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.05s ease;
+}
+
+.button:hover {
+  border-color: var(--accent);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.button--accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0b1512;
+  font-weight: 600;
+}
+
+.button--secondary {
+  background: var(--panel-alt);
+}
+
+.button--tertiary {
+  background: transparent;
+  color: var(--text-dim);
+}
+
+/* ---------- Controls panel ---------- */
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  margin: 0;
+}
+
+.panel-description {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.control-group h3 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin: 0 0 10px;
+}
+
+.control-row {
+  margin-bottom: 14px;
+}
+
+.control-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.control-value {
+  font-family: var(--font-mono);
+  color: var(--accent-warm);
+}
+
+.control-row input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.control-row--color {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.control-row--color input[type="color"] {
+  width: 40px;
+  height: 26px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* ---------- Saved variants strip ---------- */
+
+.variants-strip {
+  border-top: 1px solid var(--border);
+  padding: 20px clamp(20px, 4vw, 48px) 32px;
+}
+
+.variants-strip__title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 14px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.saved-variants {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.variants-empty {
+  color: var(--text-dim);
+  font-size: 13px;
+  margin: 0;
+}
+
+.variant-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: 140px;
+}
+
+.variant-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: block;
+}
+
+.variant-card img:hover {
+  border-color: var(--accent);
+}
+
+.variant-card__label {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.variant-card__remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(11, 15, 20, 0.75);
+  color: var(--text);
+  cursor: pointer;
+  line-height: 1;
+  font-size: 14px;
+}
+
+.variant-card__remove:hover {
+  background: var(--accent-warm);
+  color: #0b1512;
+}
+
+</style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="wordmark">
+      <span class="wordmark__mark">Atelier</span>
+      <span class="wordmark__sub">génératif</span>
+    </div>
+    <p class="app-header__tagline">Une galerie d'algorithmes, un créateur pour les faire vôtres.</p>
+  </header>
+
+  <main class="app-grid">
+    <aside class="rail rail--left">
+      <h2 class="rail__title">Galerie</h2>
+      <div id="preset-gallery" class="preset-gallery"></div>
+    </aside>
+
+    <section class="stage">
+      <div id="canvas-container" class="canvas-container" aria-label="Zone de rendu de l'animation"></div>
+      <div class="stage__actions">
+        <div id="seed-controls" class="seed-controls"></div>
+        <div class="stage__actions-right">
+          <button id="save-variant" type="button" class="button button--accent">Enregistrer dans la galerie</button>
+          <button id="download-png" type="button" class="button button--tertiary">Télécharger en PNG</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="rail rail--right">
+      <div id="controls" class="controls"></div>
+    </aside>
+  </main>
+
+  <footer class="variants-strip">
+    <h2 class="variants-strip__title">Variantes enregistrées</h2>
+    <div id="saved-variants" class="saved-variants"></div>
+  </footer>
+
+  <script>
+"use strict";(()=>{var M=class{constructor(t){this.listeners=new Set;this.state=t}get(){return this.state}set(t){this.state=t;for(let n of this.listeners)n(this.state)}update(t){this.set({...this.state,...t})}notify(){for(let t of this.listeners)t(this.state)}subscribe(t){return this.listeners.add(t),()=>this.listeners.delete(t)}};function z(e){let t=e.replace("#",""),n=parseInt(t.substring(0,2),16),a=parseInt(t.substring(2,4),16),r=parseInt(t.substring(4,6),16);return[n,a,r]}function I(e){return Math.round(Math.min(255,Math.max(0,e))).toString(16).padStart(2,"0")}function E(e,t,n){let a=Math.min(1,Math.max(0,n)),[r,o,s]=z(e),[i,c,d]=z(t),u=r+(i-r)*a,m=o+(c-o)*a,p=s+(d-s)*a;return`#${I(u)}${I(m)}${I(p)}`}function C(e,t,n,a){let r=(e%360+360)%360,o=Math.min(1,Math.max(0,t/100)),s=Math.min(1,Math.max(0,n/100)),i=s*o,c=i*(1-Math.abs(r/60%2-1)),d=s-i,[u,m,p]=[0,0,0];r<60?[u,m,p]=[i,c,0]:r<120?[u,m,p]=[c,i,0]:r<180?[u,m,p]=[0,i,c]:r<240?[u,m,p]=[0,c,i]:r<300?[u,m,p]=[c,0,i]:[u,m,p]=[i,0,c];let h=Math.round((u+d)*255),k=Math.round((m+d)*255),x=Math.round((p+d)*255),S=Math.min(1,Math.max(0,a/255));return`rgba(${h}, ${k}, ${x}, ${S.toFixed(3)})`}function ie(e,t){return Math.hypot(e,t)}function le(e,t,n,a,r){let o=t/353,s=(o<9?9:5)+Math.cos(o*31-n),i=Math.cos(t/44+a*6),c=s*i;r>0&&(c+=r*(e.noise(t*.01,n*.3)-.5)*2);let d=o/9-14,u=ie(c,d)/1.6,m=u-n/2,p=(u*9+c*c)*Math.cos(m)+e.width/2,h=(55+u*9)*Math.sin(m/3)+4*Math.sin(c*2)+o/29*c*(d+3*Math.sin(d*4-u*4+n*3))+e.height/2;return{x:p,y:h,angle:m,magnitude:u,radiusFactor:c}}var G={id:"tunnel",name:"Tunnel de points",description:"L'algorithme d'origine (d\xE9-golf\xE9 puis optimis\xE9) : 10 000 points par frame, teinte HSB d\xE9riv\xE9e de l'angle et de la magnitude de chaque point, tra\xEEn\xE9e par fondu du fond, l\xE9ger bruit de Perlin, rotation pilot\xE9e par la souris.",params:[{key:"pointCount",label:"Nombre de points",min:1e3,max:1e4,step:500,default:6e3},{key:"speed",label:"Vitesse",min:.01,max:.15,step:.005,default:.0393},{key:"trail",label:"Tra\xEEn\xE9e (fondu du fond)",min:5,max:255,step:5,default:40},{key:"strokeAlpha",label:"Opacit\xE9 des points",min:20,max:255,step:5,default:150},{key:"noiseAmount",label:"Bruit",min:0,max:5,step:.1,default:0},{key:"mouseInfluence",label:"Influence souris",min:0,max:1,step:.05,default:.3},{key:"hueBase",label:"Teinte de base",min:0,max:360,step:5,default:200},{key:"hueSpread",label:"\xC9tendue des teintes",min:0,max:180,step:5,default:60}],colors:[],createSketch(e){let t=0;return{setup(n){n.background(C(0,0,3.53,255))},draw(n){let a=Math.round(e.params.pointCount??6e3),r=e.params.speed??.0393,o=e.params.trail??40,s=e.params.strokeAlpha??150,i=e.params.noiseAmount??0,c=e.params.mouseInfluence??.3,d=e.params.hueBase??200,u=e.params.hueSpread??60;n.noStroke(),n.fill(C(0,0,3.53,o)),n.rect(0,0,n.width,n.height),t+=r;let m=c*((n.mouseX-n.width/2)/n.width),p=Number.NaN;for(let h=a-1;h>=0;h--){let{x:k,y:x,angle:S,magnitude:P}=le(n,h,t,m,i),f=(d+u*Math.sin(S*.5)+P*4)%360;f<0&&(f+=360);let b=Math.round(f/3)*3;b!==p&&(n.stroke(C(b,70,100,s)),p=b),n.point(k,x)}}}}};var g=class{constructor(t){this.state=t>>>0}next(){this.state|=0,this.state=this.state+1831565813|0;let t=Math.imul(this.state^this.state>>>15,1|this.state);return t=t+Math.imul(t^t>>>7,61|t)^t,((t^t>>>14)>>>0)/4294967296}range(t,n){return t+this.next()*(n-t)}int(t,n){return Math.floor(this.range(t,n+1))}pick(t){let n=t[this.int(0,t.length-1)];if(n===void 0)throw new Error("Rng.pick called on an empty array");return n}};function V(){return Math.floor(Math.random()*2**31)}function ce(e,t,n){return{x:e.range(0,t),y:e.range(0,n)}}function de(e,t){let n=Math.round(Math.min(1,Math.max(0,t))*255);return`${e}${n.toString(16).padStart(2,"0")}`}var D={id:"flow-field",name:"Flow Field",description:"Particles drift along an invisible field carved from layered noise.",params:[{key:"count",label:"Particle count",min:100,max:2e3,step:50,default:700},{key:"scale",label:"Noise scale",min:.001,max:.02,step:.001,default:.006},{key:"speed",label:"Speed",min:.5,max:5,step:.1,default:2},{key:"trail",label:"Trail persistence",min:.02,max:.5,step:.01,default:.12}],colors:[{key:"background",label:"Background",default:"#10141a"},{key:"line",label:"Line",default:"#f2a65a"}],createSketch(e){let t=[];return{setup(n){n.background(e.colors.background??"#10141a");let a=new g(e.seed),r=Math.round(e.params.count??700);t=Array.from({length:r},()=>ce(a,n.width,n.height))},draw(n){let a=e.params.scale??.006,r=e.params.speed??2,o=e.params.trail??.12;n.noStroke(),n.fill(de(e.colors.background??"#10141a",o)),n.rect(0,0,n.width,n.height),n.stroke(e.colors.line??"#f2a65a"),n.strokeWeight(1);for(let s of t){let i=n.noise(s.x*a,s.y*a,n.frameCount*.002)*Math.PI*4,c=s.x+Math.cos(i)*r,d=s.y+Math.sin(i)*r;n.line(s.x,s.y,c,d),s.x=c,s.y=d,(s.x<0||s.x>n.width||s.y<0||s.y>n.height)&&(s.x=(s.x+n.width)%n.width,s.y=(s.y+n.height)%n.height)}}}}};function ue(e,t){let n=Math.round(Math.min(1,Math.max(0,t))*255);return`${e}${n.toString(16).padStart(2,"0")}`}var F={id:"orbit-particles",name:"Orbit Particles",description:"Bodies circle a handful of shared centers, tracing overlapping rings.",params:[{key:"centers",label:"Centers",min:1,max:6,step:1,default:3},{key:"orbiters",label:"Orbiters per center",min:5,max:120,step:5,default:40},{key:"speed",label:"Speed",min:.2,max:3,step:.1,default:1},{key:"trail",label:"Trail persistence",min:.02,max:.5,step:.01,default:.15}],colors:[{key:"background",label:"Background",default:"#10141a"},{key:"orbiter",label:"Orbiter",default:"#6fe7c8"}],createSketch(e){let t=[],n=[];return{setup(a){a.background(e.colors.background??"#10141a");let r=new g(e.seed),o=Math.round(e.params.centers??3),s=Math.round(e.params.orbiters??40);t=Array.from({length:o},()=>({x:r.range(a.width*.2,a.width*.8),y:r.range(a.height*.2,a.height*.8)})),n=[];for(let i=0;i<o;i++)for(let c=0;c<s;c++)n.push({centerIndex:i,radius:r.range(20,Math.min(a.width,a.height)*.35),angle:r.range(0,Math.PI*2),angularSpeed:r.range(.002,.02)*(r.next()>.5?1:-1)})},draw(a){let r=e.params.speed??1,o=e.params.trail??.15;a.noStroke(),a.fill(ue(e.colors.background??"#10141a",o)),a.rect(0,0,a.width,a.height),a.noStroke(),a.fill(e.colors.orbiter??"#6fe7c8");for(let s of n){let i=t[s.centerIndex];if(!i)continue;s.angle+=s.angularSpeed*r;let c=i.x+Math.cos(s.angle)*s.radius,d=i.y+Math.sin(s.angle)*s.radius;a.circle(c,d,2.5)}}}}};var W={id:"spiral-bloom",name:"Spiral Bloom",description:"A golden-ratio spiral, gently perturbed by noise, unfurling over time.",params:[{key:"arms",label:"Arms",min:1,max:8,step:1,default:3},{key:"turns",label:"Turns",min:2,max:14,step:.5,default:7},{key:"wobble",label:"Wobble",min:0,max:40,step:1,default:12},{key:"growth",label:"Growth rate",min:.001,max:.02,step:.001,default:.006}],colors:[{key:"background",label:"Background",default:"#0b0f14"},{key:"inner",label:"Inner",default:"#f2a65a"},{key:"outer",label:"Outer",default:"#6fe7c8"}],createSketch(e){let t=new g(e.seed),n=Array.from({length:8},()=>t.range(0,1e3)),a=0;return{setup(r){r.background(e.colors.background??"#0b0f14"),a=0},draw(r){let o=Math.round(e.params.arms??3),s=e.params.turns??7,i=e.params.wobble??12,c=e.params.growth??.006;r.background(e.colors.background??"#0b0f14"),a=Math.min(1,a+c);let d=r.width/2,u=r.height/2,m=Math.min(r.width,r.height)*.45*a,p=260;for(let h=0;h<o;h++){let k=h/o*Math.PI*2,x=n[h%n.length]??0;r.push(),r.translate(d,u);let S=0,P=0;for(let f=0;f<=p;f++){let b=f/p,$=k+b*Math.PI*2*s,A=b*m,B=(r.noise(x+b*3,r.frameCount*.001)-.5)*i,R=Math.cos($)*(A+B),O=Math.sin($)*(A+B);if(f>0){let se=E(e.colors.inner??"#f2a65a",e.colors.outer??"#6fe7c8",b);r.stroke(se),r.strokeWeight(1.5),r.line(S,P,R,O)}S=R,P=O}r.pop()}}}}};var _={id:"noise-grid",name:"Noise Grid",description:"A field of cells breathing in and out, driven by a slowly drifting noise plane.",params:[{key:"cells",label:"Grid resolution",min:6,max:60,step:1,default:24},{key:"scale",label:"Noise scale",min:.05,max:1,step:.05,default:.25},{key:"speed",label:"Drift speed",min:.001,max:.02,step:.001,default:.006},{key:"maxSize",label:"Max cell size",min:.3,max:1,step:.05,default:.85}],colors:[{key:"background",label:"Background",default:"#10141a"},{key:"low",label:"Low noise",default:"#171d25"},{key:"high",label:"High noise",default:"#f2a65a"}],createSketch(e){return{setup(t){t.background(e.colors.background??"#10141a")},draw(t){let n=Math.round(e.params.cells??24),a=e.params.scale??.25,r=e.params.speed??.006,o=e.params.maxSize??.85;t.background(e.colors.background??"#10141a"),t.noStroke();let s=t.width/n,i=t.height/n,c=t.frameCount*r;for(let d=0;d<n;d++)for(let u=0;u<n;u++){let m=t.noise(u*a,d*a,c),p=m*o*Math.min(s,i),h=E(e.colors.low??"#171d25",e.colors.high??"#f2a65a",m);t.fill(h);let k=u*s+s/2,x=d*i+i/2;t.circle(k,x,p)}}}}};var w=[G,D,F,W,_];function y(e){let t=w.find(n=>n.id===e);if(!t)throw new Error(`Unknown preset id: ${e}`);return t}function T(e){return Object.fromEntries(e.params.map(t=>[t.key,t.default]))}function L(e){return Object.fromEntries(e.colors.map(t=>[t.key,t.default]))}function me(){let e=w[0];if(!e)throw new Error("No presets registered");return{presetId:e.id,seed:V(),params:T(e),colors:L(e),savedVariants:[],runToken:0}}var l=new M(me());function j(e){let t=y(e),n=l.get();l.set({...n,presetId:e,params:T(t),colors:L(t),runToken:n.runToken+1})}function q(e,t){let n=l.get();n.params[e]=t,l.notify()}function U(e,t){let n=l.get();n.colors[e]=t,l.notify()}function pe(e){let t=l.get();l.set({...t,seed:e,runToken:t.runToken+1})}function X(){pe(V())}function Y(){let e=y(l.get().presetId),t=l.get();l.set({...t,params:T(e),colors:L(e),runToken:t.runToken+1})}function J(e){let t=l.get(),n={id:`${t.presetId}-${t.seed}-${Date.now()}`,presetId:t.presetId,seed:t.seed,params:t.params,colors:t.colors,thumbnail:e,createdAt:Date.now()};l.update({savedVariants:[n,...t.savedVariants]})}function K(e){l.set({...l.get(),presetId:e.presetId,seed:e.seed,params:e.params,colors:e.colors,runToken:l.get().runToken+1})}function Q(e){let t=l.get();l.update({savedVariants:t.savedVariants.filter(n=>n.id!==e)})}function he(){let e=window.p5;if(!e)throw new Error("p5.js was not found on window \u2014 check the CDN <script> tag in index.html");return e}function Z(e){let t=null,n=-1,a=o=>{function s(){let i=l.get();t=y(i.presetId).createSketch({seed:i.seed,params:i.params,colors:i.colors}),n=i.runToken,t.setup(o)}o.setup=()=>{o.createCanvas(e.clientWidth,e.clientHeight).parent(e),s()},o.draw=()=>{t&&t.draw(o)},o.windowResized=()=>{o.resizeCanvas(e.clientWidth,e.clientHeight),s()},l.subscribe(i=>{i.runToken!==n&&s()})},r=he();return new r(a)}function fe(e){let t=document.createElement("div");t.className="control-row";let n=document.createElement("label");n.textContent=e.label,n.setAttribute("for",`param-${e.key}`);let a=document.createElement("span");a.className="control-value";let r=document.createElement("div");r.className="control-header",r.append(n,a);let o=document.createElement("input");return o.type="range",o.id=`param-${e.key}`,o.min=String(e.min),o.max=String(e.max),o.step=String(e.step),(()=>{let i=l.get().params[e.key]??e.min;o.value=String(i),a.textContent=ee(i)})(),o.addEventListener("input",()=>{q(e.key,Number(o.value)),a.textContent=ee(Number(o.value))}),t.append(r,o),t}function be(e){let t=document.createElement("div");t.className="control-row control-row--color";let n=document.createElement("label");n.textContent=e.label,n.setAttribute("for",`color-${e.key}`);let a=document.createElement("input");return a.type="color",a.id=`color-${e.key}`,a.value=l.get().colors[e.key]??"#000000",a.addEventListener("input",()=>{U(e.key,a.value)}),t.append(n,a),t}function ee(e){return Number.isInteger(e)?String(e):e.toFixed(3)}function N(e){let t=l.get(),n=y(t.presetId);e.innerHTML="";let a=document.createElement("h2");a.className="panel-title",a.textContent=n.name;let r=document.createElement("p");if(r.className="panel-description",r.textContent=n.description,e.append(a,r),n.params.length>0){let o=document.createElement("div");o.className="control-group";let s=document.createElement("h3");s.textContent="Param\xE8tres",o.append(s,...n.params.map(fe)),e.append(o)}if(n.colors.length>0){let o=document.createElement("div");o.className="control-group";let s=document.createElement("h3");s.textContent="Couleurs",o.append(s,...n.colors.map(be)),e.append(o)}}function te(e){e.innerHTML="";let t=document.createElement("div");t.className="seed-readout";let n=()=>{t.textContent=`SEED \xB7 ${l.get().seed}`};n(),l.subscribe(n);let a=document.createElement("button");a.className="button button--secondary",a.textContent="Nouvelle seed",a.addEventListener("click",X);let r=document.createElement("button");r.className="button button--tertiary",r.textContent="R\xE9initialiser",r.addEventListener("click",Y),e.append(t,a,r)}function ne(e){e.innerHTML="";for(let t of w){let n=document.createElement("button");n.className="preset-card",n.type="button";let a=document.createElement("span");a.className="preset-card__swatch",a.style.background=`linear-gradient(135deg, ${t.colors[0]?.default??"#222"}, ${t.colors[t.colors.length-1]?.default??"#555"})`;let r=document.createElement("span");r.className="preset-card__name",r.textContent=t.name,n.append(a,r),n.addEventListener("click",()=>j(t.id));let o=()=>{n.classList.toggle("preset-card--active",l.get().presetId===t.id)};o(),l.subscribe(o),e.append(n)}}function H(e){let t=l.get();if(e.innerHTML="",t.savedVariants.length===0){let n=document.createElement("p");n.className="variants-empty",n.textContent="Aucune variante enregistr\xE9e pour l'instant \u2014 cliquez sur \xAB Enregistrer \xBB pour en garder une ici.",e.append(n);return}for(let n of t.savedVariants)e.append(ge(n))}function ge(e){let t=document.createElement("div");t.className="variant-card";let n=document.createElement("img");n.src=e.thumbnail,n.alt=`${e.presetId} \xB7 seed ${e.seed}`,n.addEventListener("click",()=>K(e));let a=document.createElement("span");a.className="variant-card__label",a.textContent=`${e.presetId} \xB7 ${e.seed}`;let r=document.createElement("button");return r.type="button",r.className="variant-card__remove",r.textContent="\xD7",r.setAttribute("aria-label","Supprimer cette variante"),r.addEventListener("click",o=>{o.stopPropagation(),Q(e.id)}),t.append(n,a,r),t}function re(e){return e.querySelector("canvas")}function ae(e,t=220){let n=re(e);if(!n)return null;let a=Math.min(1,t/n.width),r=document.createElement("canvas");r.width=Math.max(1,Math.round(n.width*a)),r.height=Math.max(1,Math.round(n.height*a));let o=r.getContext("2d");return o?(o.drawImage(n,0,0,r.width,r.height),r.toDataURL("image/jpeg",.82)):null}function oe(e,t){let n=re(e);if(!n)return;let a=document.createElement("a");a.download=t,a.href=n.toDataURL("image/png"),a.click()}function v(e){let t=document.getElementById(e);if(!t)throw new Error(`Missing #${e} in the page`);return t}function ke(){let e=v("canvas-container"),t=v("preset-gallery"),n=v("controls"),a=v("seed-controls"),r=v("saved-variants"),o=v("save-variant"),s=v("download-png");Z(e),ne(t),te(a),N(n),H(r);let i=l.get().runToken;l.subscribe(d=>{d.runToken!==i&&(i=d.runToken,N(n))});let c=l.get().savedVariants;l.subscribe(d=>{d.savedVariants!==c&&(c=d.savedVariants,H(r))}),o.addEventListener("click",()=>{let d=ae(e);d&&J(d)}),s.addEventListener("click",()=>{let{presetId:d,seed:u}=l.get();oe(e,`${d}-${u}.png`)})}document.addEventListener("DOMContentLoaded",ke);})();
+
+</script>
+</body>
+</html>

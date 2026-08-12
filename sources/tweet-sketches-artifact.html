@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>#つぶやきProcessing — sketches</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+<style>
+  html, body { margin: 0; height: 100%; background: #111; color: #eee;
+    font-family: system-ui, sans-serif; }
+  body { display: flex; flex-direction: column; align-items: center;
+    gap: 10px; padding: 16px; box-sizing: border-box; }
+  h1 { font-size: 15px; font-weight: 500; margin: 0; color: #999; }
+  select { padding: 6px 10px; font-size: 14px; background: #222; color: #eee;
+    border: 1px solid #444; border-radius: 6px; }
+  #canvas-holder canvas { border: 1px solid #333; border-radius: 4px; }
+  p.hint { font-size: 12px; color: #777; margin: 0; }
+</style>
+</head>
+<body>
+  <h1>#つぶやきProcessing — @yuruyurau (fév.&nbsp;→&nbsp;août 2026)</h1>
+  <select id="sketch-select"></select>
+  <div id="canvas-holder"></div>
+  <p class="hint">Le « Tunnel de points (HSB) » réagit au déplacement de la souris.</p>
+
+<script>
+const CANVAS_SIZE = 400;
+
+/* ─────────────────────────────────────────────────────────────────────
+ * NOTES DE TRADUCTION — points sur lesquels je m'étais trompé au départ
+ *
+ * 1. `t||createCanvas(w=400,w); background(9)...`
+ *    Le garde `t||` ne protège QUE createCanvas. `background(9)` est bien
+ *    exécuté à CHAQUE frame : l'écran est donc effacé à chaque image.
+ *    Il n'y a PAS d'effet de traînée dans ces sketches — l'aspect "voilé"
+ *    vient uniquement de l'alpha du stroke (96/255) sur des points qui se
+ *    superposent au sein d'une même frame.
+ *
+ * 2. `for(t+=PI/60, i=1e4; i--;)`
+ *    `i--` teste la valeur AVANT décrément : le corps tourne avec
+ *    i = 9999 … 0, et non 10000 … 1.
+ *
+ * 3. Sketch de Lorenz : `for(...; i--; point(...)) [x,y,z]=[...]`
+ *    point() est dans l'expression de mise à jour, donc elle s'exécute
+ *    APRÈS le corps. Le premier point tracé l'est avec un état déjà
+ *    avancé d'un pas d'intégration.
+ *
+ * Lexique : t=temps, i=index de particule, w=taille canvas,
+ * k,e=intermédiaires, d,o=distance (mag), q=rayon, c=angle, m=décalage.
+ * `stroke(w, a)` dans les originaux vaut stroke(400, a) → p5 sature à 255.
+ * ───────────────────────────────────────────────────────────────────── */
+
+/** Conversion HSB -> chaîne rgba() (utilisée seulement par le preset Tunnel). */
+function hsbToRgba(h, s, v, alpha255) {
+  const hue = ((h % 360) + 360) % 360;
+  const sat = Math.min(1, Math.max(0, s / 100));
+  const val = Math.min(1, Math.max(0, v / 100));
+  const c = val * sat;
+  const x = c * (1 - Math.abs(((hue / 60) % 2) - 1));
+  const m = val - c;
+  let r = 0, g = 0, b = 0;
+  if (hue < 60) [r, g, b] = [c, x, 0];
+  else if (hue < 120) [r, g, b] = [x, c, 0];
+  else if (hue < 180) [r, g, b] = [0, c, x];
+  else if (hue < 240) [r, g, b] = [0, x, c];
+  else if (hue < 300) [r, g, b] = [x, 0, c];
+  else [r, g, b] = [c, 0, x];
+  const R = Math.round((r + m) * 255);
+  const G = Math.round((g + m) * 255);
+  const B = Math.round((b + m) * 255);
+  const A = Math.min(1, Math.max(0, alpha255 / 255));
+  return `rgba(${R}, ${G}, ${B}, ${A.toFixed(3)})`;
+}
+
+const sketches = [
+  {
+    kind: "points",
+    title: "9 août 2026 — #1",
+    particleCount: 8200,
+    timeStep: Math.PI / 60,
+    alpha: 96,
+    compute: (p, t, i) => {
+      const y = 5 * ((i / 200) | 0);
+      const k = p.cos(i % 200) * 13;
+      const e = y / 8 - 12;
+      const d = p.mag(k, e) ** 2 / 109;
+      const c = d / 2 - t / 8;
+      const q = k * 3 + 80 + (k / p.cos(y * 5)) * p.sin(d * d - t);
+      return { x: q * p.sin(c) + e * p.sin(d + k - t) + 200,
+               y: (q + 30) * p.cos(c) + 200 };
+    },
+  },
+  {
+    kind: "points",
+    title: "9 août 2026 — #2",
+    particleCount: 10000,
+    timeStep: Math.PI / 20,
+    alpha: 66,
+    compute: (p, t, i) => {
+      const y = i / 43;
+      const k = 5 * p.cos(i / 14) * p.cos(y / 30);
+      const e = y / 8 - 13;
+      const d = p.mag(k, e) ** 2 / 59 + 6;
+      const c = d / 2 - t / 18;
+      const q = 90 - 5 * p.sin(p.atan2(k, e) * e) + k * (3 + p.sin(d * d - t * 2));
+      return { x: q * p.sin(c) + 200,
+               y: (q + d * d ** p.sin(d * 2 - t / 3)) * p.cos(c) + 200 };
+    },
+  },
+  {
+    kind: "points",
+    title: "8 août 2026 — #1",
+    particleCount: 20000,
+    timeStep: Math.PI / 30,
+    alpha: 96,
+    compute: (p, t, i) => {
+      const x = i % 100;
+      const y = i / 233;
+      const k = x / 4 - 12.5;
+      const e = y / 9 + 6;
+      const o = p.mag(k, e) / 9;
+      const c = o / 2 + e / 2 - t / 4;
+      const q = (3 * (p.tan(y / 2) / 2 + p.cos(y))) / k
+              + k * (5 / o + o * p.sin(y) * p.sin(e + o * 4 - t));
+      return { x: q + 40 * p.cos(c) + 200,
+               y: q * p.sin(c) - (k * k * o) / 6 + e * o * 12 };
+    },
+  },
+  {
+    kind: "points",
+    title: "8 août 2026 — #2",
+    particleCount: 20000,
+    timeStep: Math.PI / 30,
+    alpha: 66,
+    compute: (p, t, i) => {
+      const x = i % 100;
+      const y = i / 250;
+      const k = x / 4 - 12.5;
+      const e = y / 11 + 7;
+      const o = p.mag(k, e) / 8;
+      const c = o / 2 + e / 2 - t / 4;
+      const q = (3 * (p.tan(y / 2) / 2 + p.cos(y))) / k
+              + k * (4 / o + p.cos(y) / 3 + p.sin(e + o * 4 - t * 2));
+      return { x: q + 40 * p.cos(c) + 200,
+               y: q * p.sin(c) - (k * k * o) / 6 + e * o * 11 };
+    },
+  },
+  {
+    kind: "points",
+    title: "1er août 2026",
+    particleCount: 10000,
+    timeStep: Math.PI / 60,
+    alpha: 116,
+    compute: (p, t, i) => {
+      const y = i / 265;
+      const k = (4 + p.cos(y - t)) * p.cos(i / 29);
+      const e = y / 6 - 13;
+      const d = p.mag(k, e) ** 2 / 22;
+      const c = d - t / 2;
+      const q = 3 * p.sin(k * 2) + 0.3 / k
+              + (y / 22) * k * (9 + 2 * p.sin(e * 49 - d * 4 + t));
+      return { x: q + 50 * p.cos(c) + 200,
+               y: q * p.sin(c) + d * 40 + 40 * p.sin(t / 4 + e + 4) };
+    },
+  },
+  {
+    kind: "points",
+    title: "31 juillet 2026",
+    particleCount: 10000,
+    timeStep: Math.PI / 60,
+    alpha: 96,
+    compute: (p, t, i) => {
+      const m = (i % 3) * 4;
+      const k = 9 * p.cos(i / 81);
+      const e = i / 461 - 11;
+      const d = p.mag(k, e) ** 4 / 4e4 + 1.5 + p.sin(t / 2 + m) / 4;
+      const c = d + p.sin(t - d * 4) / 9 - t / 9 + m;
+      const q = 89 - e * p.sin(k) + k * (4 + 2 * p.sin(d * 9 + e / 9 - t));
+      return { x: q * p.cos(c) + 200, y: (q + 30) * p.sin(c) + 200 };
+    },
+  },
+  // Version fidèle au tweet du 29 juillet (monochrome, fond effacé chaque frame).
+  {
+    kind: "points",
+    title: "29 juillet 2026 — original",
+    particleCount: 10000,
+    timeStep: Math.PI / 80,
+    alpha: 96,
+    compute: (p, t, i) => {
+      const y = i / 353;
+      const k = ((y < 9 ? 9 : 5) + p.cos(y * 31 - t)) * p.cos(i / 44);
+      const e = y / 9 - 14;
+      const d = p.mag(k, e) / 1.6;
+      const c = d - t / 2;
+      return {
+        x: (d * 9 + k * k) * p.cos(c) + 200,
+        y: (55 + d * 9) * p.sin(c / 3) + 4 * p.sin(k * 2)
+           + (y / 29) * k * (e + 3 * p.sin(e * 4 - d * 4 + t * 3)) + 200,
+      };
+    },
+  },
+  // Variante retravaillée (celle validée dans l'autre conversation du projet) :
+  // même formule, mais teinte HSB par point, traînée par fondu, rotation souris,
+  // et bucketing des teintes à 3° pour éviter un stroke() par point.
+  {
+    kind: "custom",
+    title: "29 juillet 2026 — Tunnel de points (HSB)",
+    timeStep: 0.0393,
+    draw: (p, time, w) => {
+      const pointCount = 6000, trail = 40, strokeAlpha = 150;
+      const noiseAmount = 0, mouseInfluence = 0.3;
+      const hueBase = 200, hueSpread = 60;
+
+      p.noStroke();
+      p.fill(hsbToRgba(0, 0, 3.53, trail));
+      p.rect(0, 0, w, w);
+
+      const mouseOffset = mouseInfluence * ((p.mouseX - w / 2) / w);
+      let lastBucket = NaN;
+
+      for (let i = pointCount - 1; i >= 0; i--) {
+        const nIdx = i / 353;
+        const baseRadius = (nIdx < 9 ? 9 : 5) + p.cos(nIdx * 31 - time);
+        let radiusFactor = baseRadius * p.cos(i / 44 + mouseOffset * 6);
+        if (noiseAmount > 0) {
+          radiusFactor += noiseAmount * (p.noise(i * 0.01, time * 0.3) - 0.5) * 2;
+        }
+        const depthOffset = nIdx / 9 - 14;
+        const mag = p.mag(radiusFactor, depthOffset) / 1.6;
+        const angle = mag - time / 2;
+
+        const x = (mag * 9 + radiusFactor * radiusFactor) * p.cos(angle) + w / 2;
+        const y = (55 + mag * 9) * p.sin(angle / 3) + 4 * p.sin(radiusFactor * 2)
+          + (nIdx / 29) * radiusFactor
+            * (depthOffset + 3 * p.sin(depthOffset * 4 - mag * 4 + time * 3)) + w / 2;
+
+        let hue = (hueBase + hueSpread * p.sin(angle * 0.5) + mag * 4) % 360;
+        if (hue < 0) hue += 360;
+        const bucket = Math.round(hue / 3) * 3;
+        if (bucket !== lastBucket) {
+          p.stroke(hsbToRgba(bucket, 70, 100, strokeAlpha));
+          lastBucket = bucket;
+        }
+        p.point(x, y);
+      }
+    },
+  },
+  {
+    kind: "points",
+    title: "25 juillet 2026",
+    particleCount: 10000,
+    timeStep: Math.PI / 80,
+    alpha: 96,
+    compute: (p, t, i) => {
+      const y = i / 235;
+      const k = (4 + p.cos(i / 9 - t * 2)) * p.cos(i / 35);
+      const e = y / 7 - 13;
+      const d = p.mag(k, e) + p.sin(e / 9 + t / 2) - 4;
+      const c = d - t;
+      const q = 2 * p.sin(k * 3)
+              - (y / 35) * k * (9 + k * p.sin(p.cos(e) * 9 - d * 2 + t));
+      return { x: q + 40 * p.cos(c) + 200, y: q * p.sin(c) + d * 35 };
+    },
+  },
+  {
+    kind: "points",
+    title: "24 juillet 2026",
+    particleCount: 10000,
+    timeStep: Math.PI / 90,
+    alpha: 116,
+    compute: (p, t, i) => {
+      const y = i / 790;
+      // `y ^ 9` : XOR bit-à-bit, y est tronqué en entier 32 bits (comme en JS).
+      const k = (y < 7 ? 8 + p.sin(y ^ 9) * 6 : 4 + p.cos(y)) * p.cos(i + t / 2);
+      const e = y / 2 - 13;
+      const d = p.mag(k, e);
+      const c = d / 4 - t / 2 + (i % 2) * 3;
+      const q = ((y * k) / 5) * (2 + p.sin(d * 2 + y - t * 4)) + 80;
+      return { x: q * p.cos(c) * p.cos(c / 2 + e / 8) + 200,
+               y: ((q * d) / 8) * p.sin(c) + 200 };
+    },
+  },
+  // Attracteur de Lorenz : état (x,y,z) qui évolue le long de la boucle,
+  // réinitialisé à (9,9,9) chaque frame. point() est dans l'expression de
+  // mise à jour du for original -> le point est tracé APRÈS le pas d'Euler.
+  {
+    kind: "custom",
+    title: "9 mai 2026 — attracteur de Lorenz",
+    timeStep: 1, // l'original fait `t++`
+    draw: (p, t) => {
+      p.stroke(255, 96);
+      let x = 9, y = 9, z = 9;
+      const dt = 5e-4;
+      for (let i = 30000; i-- > 0; ) {
+        // corps de boucle : un pas d'Euler (sigma=9, rho=28, beta=2)
+        const nx = x + 9 * (y - x) * dt;
+        const ny = y + (x * (28 - z) - y) * dt;
+        const nz = z + (x * y - z - z) * dt;
+        x = nx; y = ny; z = nz;
+
+        // puis le tracé, avec l'état déjà avancé
+        const e = p.sin((t * p.PI) / 20 - (x * x) / 99 + (i % 9)) + 1;
+        const q = x * e + 89;
+        const k = z / 59 - e / 29 + (t * p.PI) / 480 + (i % 9) * 8;
+        p.point(q * p.cos(k) + 200, 200 - (q + 60 * p.cos(k / 2)) * p.sin(k));
+      }
+    },
+  },
+  {
+    kind: "points",
+    title: "7 mai 2026",
+    particleCount: 10000,
+    timeStep: Math.PI / 240,
+    alpha: 116,
+    filled: true,
+    compute: (p, t, i) => {
+      const y = i / 235;
+      const k = 4 * p.cos(i / 21);
+      const e = y / 8 - 20;
+      const d = p.mag(k, e);
+      const c = d - t;
+      const q = 3 * p.sin(k * 2) + 0.3 / k
+              + p.sin(y / 19) * k * (9 + 2 * p.sin(e * 14 - d * 3 + t * 2));
+      return { x: q + 50 * p.cos(c) + 200, y: q * p.sin(c) + d * 39 - 475,
+               size: k * k > 15 ? 2 : 1 };
+    },
+  },
+  {
+    kind: "points",
+    title: "5 mai 2026",
+    particleCount: 20000,
+    timeStep: Math.PI / 45,
+    alpha: 96,
+    compute: (p, t, i) => {
+      const m = (i % 2) * 9;
+      const k = 9 * p.cos(i / 81);
+      const e = i / 765 - 13;
+      const d = p.mag(k, e) / 4;
+      const c = (d * d) / 9 - t / 16 + m;
+      const inner = k * k < 19 ? t * 3 + d * 4 : d / 2 + 4;
+      const q = 79 - 2 * p.sin(k * 3)
+              + (p.sin(inner) / 2) * k * (9 + 5 * p.sin(d * d - e / 6 - t + m));
+      return { x: q * p.sin(c) + 200, y: (q + 50) * p.cos(c) + 200 };
+    },
+  },
+  {
+    kind: "points",
+    title: "10 mars 2026",
+    particleCount: 20000,
+    timeStep: Math.PI / 45,
+    alpha: 96,
+    compute: (p, t, i) => {
+      const m = (i % 2) * 3;
+      const k = 9 * p.cos(i / 61);
+      const e = i / 652 - 13;
+      const d = p.mag(k, e) ** 2 / 89 + 1;
+      const c = d / 1.9 + p.cos(t - d * 3 + m) / 11 - t / 16 + m;
+      const q = 79 - (e / 2) * p.sin(k)
+              + (k / d) * (6 + 5 * p.sin(p.sin(d * d + e / 9 - t + m)));
+      return { x: q * p.sin(c) + 200, y: (q + 40) * p.cos(c) + 200 };
+    },
+  },
+  {
+    kind: "points",
+    title: "8 mars 2026 — #1",
+    particleCount: 20000,
+    timeStep: Math.PI / 30,
+    alpha: 126,
+    compute: (p, t, i) => {
+      const y = i / 940;
+      const k = (4 + p.cos(y)) * p.cos(i);
+      const e = y / 6 - 13;
+      const d = p.mag(k, e) - 3;
+      const c = d / 1.2 - t / 4 + (i % 2) * 3;
+      const q = 3 * p.sin(k * 2) + (k / 16) * y * (e + 2 * p.sin(e - d * 5 + t)) + 99;
+      return { x: q * p.sin(c) * p.sin(c / 4 + e / 6 - 8) + 200,
+               y: ((q * d) / 9) * p.cos(c) + d * 22 };
+    },
+  },
+  {
+    kind: "points",
+    title: "8 mars 2026 — #2",
+    particleCount: 20000,
+    timeStep: Math.PI / 30,
+    alpha: 126,
+    compute: (p, t, i) => {
+      const y = i / 1000;
+      const k = (5 + p.sin(y)) * p.cos(i * 2);
+      const e = y / 6 - 13;
+      const d = p.mag(k, e) - 3;
+      const c = d - t / 4 + (i % 2) * 8;
+      const q = 3 * p.sin(k * 2)
+              + (k / 19) * y * (e + (d / 3) * p.sin(e - d * 4 + t)) + 99;
+      return { x: q * p.sin(c) * p.cos(c / 4 + e / 3) + 200,
+               y: ((q * d) / 9) * p.cos(c / 2 + 7) + 200 };
+    },
+  },
+  {
+    kind: "points",
+    title: "7 mars 2026",
+    particleCount: 20000,
+    timeStep: Math.PI / 30,
+    alpha: 96,
+    compute: (p, t, i) => {
+      const y = i / 600;
+      const k = p.cos(y * 7) * (y < 19 ? p.sin(t / 8 + y * 8) * 31 : 9);
+      const e = y / 8 - 13;
+      const o = p.mag(k, e) / 5;
+      const c = o / 2 - e / 6 - t / 8 + (i % 2) * 8;
+      const q = 59 + p.cos(y) / k + ((k / o) * 3) * (2 + p.sin(o * 3 - e * 9 - t));
+      return { x: q * p.sin(c) + 200,
+               y: 200 + q * p.cos(c) - 99 * p.sin(c / 3) };
+    },
+  },
+  {
+    kind: "points",
+    title: "6 mars 2026",
+    particleCount: 30000,
+    timeStep: Math.PI / 45,
+    alpha: 96,
+    compute: (p, t, i, w) => {
+      const m = (i % 2) * 3;
+      const k = 14 * p.cos(i / 39);
+      const e = i / w / 3 - 13;
+      const d = p.mag(k, e) ** 2 / 59 + 1;
+      const c = d * 0.45 - p.sin(t - d) / 8 - t / 8 + m;
+      const q = 89 - p.sin(k) * d + k * (8 / d + p.sin(d * 3 + e / 9 - t));
+      return { x: q * p.sin(c) + 200,
+               y: (q + 40 + 30 * p.sin(c * 2 + m)) * p.cos(c) + 200 };
+    },
+  },
+  {
+    kind: "points",
+    title: "22 février 2026",
+    particleCount: 20000,
+    timeStep: Math.PI / 60,
+    alpha: 96,
+    compute: (p, t, i) => {
+      const k = 8 * p.cos(i / 41);
+      const e = i / 652 - 14;
+      const d = p.mag(k, e) ** 2 / 79 + 1;
+      const c = d / 2 + p.sin(t - d) / d / 8 - t / 16 + (i % 2) * 3;
+      const q = 79 - 2 * p.sin((k / d) * 5)
+              + p.sin(d / 2 + 7) * k * (4 + 3 * p.sin(p.sin(d * d + e / 7 - t)));
+      return { x: q * p.sin(c) + 200, y: (q + 40) * p.cos(c) + 200 };
+    },
+  },
+];
+
+let current = sketches[0];
+let t = 0;
+
+new p5((p) => {
+  p.setup = () => {
+    p.createCanvas(CANVAS_SIZE, CANVAS_SIZE).parent("canvas-holder");
+    p.background(9);
+  };
+
+  p.draw = () => {
+    t += current.timeStep;
+
+    if (current.kind === "custom") {
+      // Le sketch Lorenz efface aussi le fond chaque frame ; le Tunnel HSB
+      // gère son propre fondu, d'où le drapeau ownBackground.
+      if (current.title.includes("Lorenz")) p.background(9);
+      current.draw(p, t, CANVAS_SIZE);
+      return;
+    }
+
+    // background(9) à CHAQUE frame — comme dans les originaux.
+    p.background(9);
+
+    if (current.filled) {
+      p.noStroke();
+      p.fill(255, current.alpha);
+    } else {
+      p.stroke(255, current.alpha);
+    }
+
+    // i va de particleCount-1 à 0, comme `for(i=N; i--;)`.
+    for (let i = current.particleCount; i-- > 0; ) {
+      const pt = current.compute(p, t, i, CANVAS_SIZE);
+      if (current.filled) p.circle(pt.x, pt.y, pt.size ?? 2);
+      else p.point(pt.x, pt.y);
+    }
+  };
+
+  const select = document.getElementById("sketch-select");
+  sketches.forEach((s, index) => {
+    const option = document.createElement("option");
+    option.value = String(index);
+    option.textContent = s.title;
+    select.appendChild(option);
+  });
+  select.addEventListener("change", () => {
+    current = sketches[Number(select.value)];
+    t = 0;
+    p.background(9);
+  });
+});
+</script>
+</body>
+</html>

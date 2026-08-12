@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Banc d'essai — effets de fond animés</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #101216;
+  --panel: #171A20;
+  --raised: #1D2128;
+  --line: #2B3039;
+  --bone: #E6E4DE;
+  --mute: #878E99;
+  --signal: #F2B441;
+  --bad: #E2604D;
+  --ok: #7FD1A6;
+  --sans: "Instrument Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--sans);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------- */
+/* En-tête                                                           */
+/* ---------------------------------------------------------------- */
+
+.masthead {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.masthead__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.masthead__sub {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--mute);
+  line-height: 1.45;
+}
+
+.masthead__mark {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--signal);
+  border: 1px solid rgba(242, 180, 65, 0.35);
+  border-radius: 2px;
+  padding: 3px 7px;
+  flex: none;
+}
+
+/* ---------------------------------------------------------------- */
+/* Structure                                                         */
+/* ---------------------------------------------------------------- */
+
+.bench {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr) 330px;
+  min-height: 0;
+}
+
+.rail {
+  border-right: 1px solid var(--line);
+  overflow-y: auto;
+  padding: 10px 0;
+  background: var(--panel);
+}
+
+.rail__item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 9px 18px;
+  background: none;
+  border: 0;
+  border-left: 2px solid transparent;
+  color: var(--mute);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.rail__item:hover { color: var(--bone); background: rgba(255, 255, 255, 0.025); }
+
+.rail__item[aria-current="true"] {
+  border-left-color: var(--signal);
+  background: rgba(242, 180, 65, 0.06);
+  color: var(--bone);
+}
+
+.rail__name { display: block; font-size: 14px; }
+
+.rail__meta {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-top: 2px;
+}
+
+/* ---------------------------------------------------------------- */
+/* Scène                                                             */
+/* ---------------------------------------------------------------- */
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  background: #05070a;
+  min-height: 0;
+}
+
+.stage__canvas { display: block; }
+
+.stage__layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.stage__layer[hidden] { display: none; }
+
+.orb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.mesh {
+  position: absolute;
+  inset: -25%;
+  will-change: transform;
+}
+
+.stage__caption {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  z-index: 2;
+  pointer-events: none;
+  max-width: min(58%, 420px);
+}
+
+.stage__name {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75);
+}
+
+.stage__surface {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bone);
+  background: rgba(10, 12, 16, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  padding: 3px 7px;
+  backdrop-filter: blur(6px);
+}
+
+.banner {
+  position: absolute;
+  inset: auto 16px 16px auto;
+  z-index: 3;
+  max-width: 300px;
+  padding: 12px 14px;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--mute);
+}
+
+.banner[hidden] { display: none; }
+.banner p { margin: 0 0 9px; }
+
+/* ---------------------------------------------------------------- */
+/* Panneau                                                           */
+/* ---------------------------------------------------------------- */
+
+.panel {
+  border-left: 1px solid var(--line);
+  overflow-y: auto;
+  background: var(--panel);
+  padding-bottom: 28px;
+}
+
+.group {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.group__title {
+  margin: 0 0 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+/* Instrument de mesure — l'élément signature du banc */
+
+.meter { padding: 16px 18px; border-bottom: 1px solid var(--line); }
+
+.meter__head {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.meter__fps {
+  font-family: var(--mono);
+  font-size: 46px;
+  font-weight: 500;
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  color: var(--signal);
+  font-variant-numeric: tabular-nums;
+}
+
+.meter__fps[data-state="warn"] { color: var(--signal); }
+.meter__fps[data-state="bad"] { color: var(--bad); }
+.meter__fps[data-state="ok"] { color: var(--ok); }
+.meter__fps[data-state="idle"] { color: var(--mute); }
+
+.meter__unit {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+  padding-bottom: 3px;
+}
+
+.meter__graph {
+  display: block;
+  width: 100%;
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.meter__verdict {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--mute);
+  border-left: 2px solid var(--line);
+  padding-left: 10px;
+}
+
+.meter__verdict[data-state="ok"] { border-left-color: var(--ok); color: var(--bone); }
+.meter__verdict[data-state="warn"] { border-left-color: var(--signal); color: var(--bone); }
+.meter__verdict[data-state="bad"] { border-left-color: var(--bad); color: var(--bone); }
+
+.meter__stats {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 14px;
+  margin: 12px 0 0;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.meter__stats dt { color: var(--mute); }
+
+.meter__stats dd {
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Ce qu'on lit / ce que la mesure montre */
+
+.assay dt {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 4px;
+}
+
+.assay dd { margin: 0 0 14px; font-size: 13px; line-height: 1.55; }
+.assay dd:last-child { margin-bottom: 0; }
+.assay .assay__claim { color: var(--mute); font-style: italic; }
+.assay .assay__reality { color: var(--bone); }
+
+/* Contrôles */
+
+.control { margin-bottom: 14px; }
+.control:last-child { margin-bottom: 0; }
+
+.control__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 5px;
+  font-size: 12.5px;
+}
+
+.control__value {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--signal);
+  font-variant-numeric: tabular-nums;
+}
+
+.control__note {
+  margin: 5px 0 0;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--mute);
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 18px;
+  background: none;
+  cursor: pointer;
+  margin: 0;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 2px;
+  background: var(--line);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 2px;
+  background: var(--line);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: var(--signal);
+  border: 0;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--signal);
+  border: 0;
+}
+
+.control--toggle { margin-bottom: 12px; }
+
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+  font-size: 12.5px;
+}
+
+.switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch__track {
+  flex: none;
+  width: 30px;
+  height: 17px;
+  border-radius: 9px;
+  background: var(--line);
+  position: relative;
+  transition: background 140ms ease;
+}
+
+.switch__track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--mute);
+  transition: transform 140ms ease, background 140ms ease;
+}
+
+.switch input:checked + .switch__track { background: rgba(242, 180, 65, 0.28); }
+.switch input:checked + .switch__track::after { transform: translateX(13px); background: var(--signal); }
+.switch input:focus-visible + .switch__track { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+.swatches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+}
+
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--mute);
+  cursor: pointer;
+  min-width: 0;
+}
+
+.swatch span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.swatch input[type="color"] {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: none;
+  cursor: pointer;
+}
+
+.swatch input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+.swatch input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 1px; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.button {
+  flex: 1 1 auto;
+  padding: 7px 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--bone);
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.button:hover { border-color: var(--signal); color: var(--signal); }
+
+.footnote {
+  padding: 14px 18px;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--mute);
+}
+
+/* ---------------------------------------------------------------- */
+/* Adaptation mobile                                                 */
+/* ---------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  /* En colonne, la page défile : une hauteur figée écraserait les rangées auto. */
+  html, body { height: auto; }
+  body { overflow: visible; grid-template-rows: auto auto; }
+
+  .bench {
+    grid-template-columns: 1fr;
+    grid-template-rows: 52vh auto auto;
+  }
+
+  .stage { order: 1; }
+  .rail {
+    order: 2;
+    display: flex;
+    overflow-x: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 0;
+  }
+
+  .rail__item {
+    flex: none;
+    width: auto;
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    padding: 10px 14px;
+    white-space: nowrap;
+  }
+
+  .rail__item[aria-current="true"] { border-left-color: transparent; border-bottom-color: var(--signal); }
+
+  .panel { order: 3; border-left: 0; overflow: visible; }
+  .masthead { flex-wrap: wrap; gap: 8px 14px; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <span class="masthead__mark">Banc d'essai</span>
+  <h1 class="masthead__title">Effets de fond animés</h1>
+  <p class="masthead__sub">Dix effets réels, réglables. Chaque fiche compare ce qu'on lit habituellement sur son coût à ce que la mesure montre ici, sur votre appareil.</p>
+</header>
+
+<main class="bench">
+  <nav class="rail" id="rail" aria-label="Effets"></nav>
+
+  <section class="stage" id="stage">
+    <div class="stage__caption">
+      <h2 class="stage__name" id="effect-title">—</h2>
+      <span class="stage__surface" id="effect-surface">—</span>
+    </div>
+    <div class="banner" id="motion-banner" hidden>
+      <p>Votre système demande de réduire les animations. Le banc respecte ce réglage : rien ne bouge tant que vous ne l'autorisez pas.</p>
+      <button type="button" class="button" id="motion-override">Animer quand même</button>
+    </div>
+  </section>
+
+  <aside class="panel">
+    <div class="meter" id="meter">
+      <div class="meter__head">
+        <span class="meter__fps" data-state="idle">—</span>
+        <span class="meter__unit">images / seconde</span>
+      </div>
+      <canvas class="meter__graph"></canvas>
+      <p class="meter__verdict" data-state="idle">Mesure en cours…</p>
+      <dl class="meter__stats"></dl>
+    </div>
+
+    <section class="group">
+      <h3 class="group__title">Lecture</h3>
+      <dl class="assay">
+        <dt>Ce qu'on lit</dt>
+        <dd class="assay__claim" id="claim">—</dd>
+        <dt>Ce que la mesure montre</dt>
+        <dd class="assay__reality" id="reality">—</dd>
+      </dl>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Socle</h3>
+      <div class="control">
+        <div class="control__header">
+          <label for="render-scale">Échelle de rendu</label>
+          <output class="control__value" id="render-scale-value">1.00×</output>
+        </div>
+        <input type="range" id="render-scale" min="0.25" max="1" step="0.05" value="1">
+        <p class="control__note">Réduit la taille du tampon de rendu. Sur un fond flou, 0,6× est souvent invisible et divise le coût GPU par près de trois.</p>
+      </div>
+      <div class="control">
+        <div class="control__header">
+          <label for="dpr-cap">Plafond de densité (DPR)</label>
+          <output class="control__value" id="dpr-cap-value">1.5×</output>
+        </div>
+        <input type="range" id="dpr-cap" min="1" max="3" step="0.5" value="1.5">
+        <p class="control__note">Sans plafond, un écran à 3× rend neuf fois plus de pixels qu'un écran à 1×.</p>
+      </div>
+      <div class="actions">
+        <button type="button" class="button" id="play">Mettre en pause</button>
+        <button type="button" class="button" id="restart">Rejouer</button>
+        <button type="button" class="button" id="reset">Réglages d'origine</button>
+      </div>
+    </section>
+
+    <div id="controls"></div>
+
+    <p class="footnote">La cadence est déduite de l'intervalle réel entre images ; le temps JS ne mesure que le travail JavaScript. Pour les effets DOM et WebGL, le navigateur fait une partie du travail hors de cette fenêtre — d'où des cas où le JS reste à zéro alors que la cadence s'effondre. Pour un test sévère, ouvrez les outils de développement, onglet Performances, et bridez le processeur à ×4.</p>
+  </aside>
+</main>
+
+<script>
+"use strict";(()=>{var D=class{constructor(e){this.def=null;this.instance=null;this.values={};this.dprCap=2;this.renderScale=1;this.width=0;this.height=0;this.rafId=0;this.startedAt=0;this.lastFrameAt=0;this.elapsed=0;this.samples=[];this.intervals=[];this.visible=!0;this.wantsRunning=!0;this.metricsListener=null;this.errorListener=null;this.metricsFlushedAt=0;this.tick=e=>{if(this.rafId=requestAnimationFrame(this.tick),!this.instance)return;this.startedAt===0&&(this.startedAt=e);let t=this.lastFrameAt===0,a=t?1/60:(e-this.lastFrameAt)/1e3;t||(this.intervals.push(e-this.lastFrameAt),this.intervals.length>90&&this.intervals.shift()),this.lastFrameAt=e,this.elapsed+=Math.min(a,.1);let s=performance.now();this.instance.frame(this.context(),this.elapsed,Math.min(a,.1));let r=performance.now()-s;this.samples.push(r),this.samples.length>90&&this.samples.shift(),e-this.metricsFlushedAt>250&&(this.metricsFlushedAt=e,this.emitMetrics())};this.host=e,this.canvas=document.createElement("canvas"),this.canvas.className="stage__canvas",this.layer=document.createElement("div"),this.layer.className="stage__layer",e.append(this.layer,this.canvas);let t=window.matchMedia("(prefers-reduced-motion: reduce)");this.motionAllowed=!t.matches,t.addEventListener("change",a=>{this.motionAllowed=!a.matches,this.sync()}),document.addEventListener("visibilitychange",()=>{this.visible=document.visibilityState==="visible",this.sync()}),new ResizeObserver(()=>this.measure()).observe(e),new IntersectionObserver(a=>{let s=a[0];s&&(this.visible=s.isIntersecting&&document.visibilityState==="visible",this.sync())},{threshold:0}).observe(e),this.measure()}get reducedMotion(){return!this.motionAllowed}overrideReducedMotion(){this.motionAllowed=!0,this.sync()}onMetrics(e){this.metricsListener=e}onError(e){this.errorListener=e}setDprCap(e){this.dprCap=e,this.measure()}setRenderScale(e){this.renderScale=e,this.measure()}setRunning(e){this.wantsRunning=e,this.sync()}setParams(e){this.values=e}load(e,t){this.instance?.dispose(),this.instance=null,this.def=e,this.values=t,this.samples.length=0,this.intervals.length=0,this.resetSurface(e.surface);try{let a=this.context();this.instance=e.create(a),this.instance.resize(a),this.startedAt=0,this.elapsed=0,this.sync(),this.renderOnce()}catch(a){let s=a instanceof Error?a.message:String(a);this.errorListener?.(s)}}restart(){this.def&&this.load(this.def,this.values)}resetSurface(e){let t=document.createElement("canvas");t.className="stage__canvas",this.canvas.replaceWith(t),this.canvas=t,this.layer.innerHTML="",this.layer.hidden=e!=="dom",t.hidden=e==="dom",this.applySize()}context(){return{layer:this.layer,canvas:this.canvas,width:this.width,height:this.height,scale:this.effectiveScale(),params:this.values}}effectiveScale(){return Math.min(window.devicePixelRatio||1,this.dprCap)*this.renderScale}measure(){let e=this.host.getBoundingClientRect();this.width=Math.max(1,Math.round(e.width)),this.height=Math.max(1,Math.round(e.height)),this.applySize(),this.instance&&(this.instance.resize(this.context()),this.renderOnce())}applySize(){let e=this.effectiveScale();this.canvas.width=Math.max(1,Math.round(this.width*e)),this.canvas.height=Math.max(1,Math.round(this.height*e)),this.canvas.style.width=`${this.width}px`,this.canvas.style.height=`${this.height}px`}shouldRun(){return this.wantsRunning&&this.visible&&this.motionAllowed&&this.instance!==null}sync(){this.shouldRun()?this.rafId===0&&(this.lastFrameAt=0,this.rafId=requestAnimationFrame(this.tick)):this.rafId!==0&&(cancelAnimationFrame(this.rafId),this.rafId=0,this.emitMetrics())}renderOnce(){this.instance&&this.instance.frame(this.context(),this.elapsed,0)}emitMetrics(){if(!this.metricsListener)return;let e=[...this.samples].sort((o,c)=>o-c),t=[...this.intervals].sort((o,c)=>o-c),a=W(e,.5),s=W(e,.95),r=W(t,.5),i=r>0?Math.min(240,1e3/r):0;this.metricsListener({fps:i,median:a,p95:s,gpuBound:t.length>20&&i<50&&s<4,samples:this.samples,pixels:[this.canvas.width,this.canvas.height],load:this.instance?.load?.(this.context())??"\u2014",running:this.rafId!==0})}};function W(n,e){if(n.length===0)return 0;let t=Math.min(n.length-1,Math.floor(n.length*e));return n[t]??0}function d(n,e){let t=n[e];return typeof t=="number"?t:0}function y(n,e){return n[e]===!0}function m(n,e){let t=n[e];return typeof t=="string"?t:"#000000"}function C(n){let e=Number.parseInt(n.slice(1),16);return[(e>>16&255)/255,(e>>8&255)/255,(e&255)/255]}function U(n){let e={};for(let t of n.params)e[t.key]=t.value;return e}var J=new Uint8Array(512);(function(){let e=new Uint8Array(256);for(let a=0;a<256;a++)e[a]=a;let t=1337;for(let a=255;a>0;a--){t=t*1664525+1013904223>>>0;let s=t%(a+1),r=e[a];e[a]=e[s],e[s]=r}for(let a=0;a<512;a++)J[a]=e[a&255]})();function re(n){return n*n*(3-2*n)}function F(n,e){return J[J[n&255]+(e&255)&255]/255}function Pe(n,e){let t=Math.floor(n),a=Math.floor(e),s=re(n-t),r=re(e-a),i=F(t,a),o=F(t+1,a),c=F(t,a+1),u=F(t+1,a+1),l=i+(o-i)*s,f=c+(u-c)*s;return l+(f-l)*r}function se(n,e,t){let a=0,s=.5,r=1,i=0;for(let o=0;o<t;o++)a+=Pe(n*r,e*r)*s,i+=s,s*=.5,r*=2;return i>0?a/i:0}function M(n,e,t){return n<e?e:n>t?t:n}function w(n){let e=n>>>0;return()=>{e=e+1831565813>>>0;let t=e;return t=Math.imul(t^t>>>15,t|1),t^=t+Math.imul(t^t>>>7,t|61),((t^t>>>14)>>>0)/4294967296}}var j=class{constructor(e){this.ctx=e;this.orbs=[];this.built=-1;this.reconcile(e)}reconcile(e){let t=Math.round(d(e.params,"count"));if(t===this.built){this.restyle(e);return}this.built=t,e.layer.innerHTML="";let a=w(9182);this.orbs=Array.from({length:t},()=>{let s=document.createElement("div");return s.className="orb",e.layer.append(s),{node:s,cx:.15+a()*.7,cy:.15+a()*.7,rx:.08+a()*.22,ry:.08+a()*.22,phase:a()*Math.PI*2,rate:.45+a()*.75}}),this.restyle(e)}restyle(e){let t=d(e.params,"size"),a=d(e.params,"blur"),s=[m(e.params,"colorA"),m(e.params,"colorB"),m(e.params,"colorC")],r=Math.min(e.width,e.height);this.orbs.forEach((i,o)=>{let c=r*t*(.7+o*37%60/100);i.node.style.width=`${c}px`,i.node.style.height=`${c}px`,i.node.style.background=s[o%s.length]??"#ffffff",y(e.params,"animateBlur")||(i.node.style.filter=`blur(${a}px)`)})}resize(e){this.ctx=e,this.restyle(e)}frame(e,t){this.ctx=e,this.reconcile(e);let a=d(e.params,"speed"),s=d(e.params,"blur"),r=y(e.params,"animateBlur");for(let i of this.orbs){let o=t*a*i.rate+i.phase,c=(i.cx+Math.cos(o)*i.rx)*e.width,u=(i.cy+Math.sin(o*1.31)*i.ry)*e.height,l=i.node.offsetWidth/2;i.node.style.transform=`translate3d(${(c-l).toFixed(1)}px, ${(u-l).toFixed(1)}px, 0) scale(${(1+Math.sin(o*.7)*.12).toFixed(3)})`,r&&(i.node.style.filter=`blur(${(s*(.7+.3*Math.sin(o))).toFixed(1)}px)`)}}load(e){let t=y(e.params,"animateBlur")?"flou anim\xE9":"flou fixe";return`${this.orbs.length} orbes \xB7 ${t}`}dispose(){this.ctx.layer.innerHTML="",this.orbs=[]}},ie={id:"orbs",name:"Orbes flout\xE9es",family:"Soft",surface:"dom",claim:"\xAB CSS pur, co\xFBt quasi nul \xBB",reality:"Vrai tant que le flou reste fixe et que seul transform est anim\xE9 : le navigateur garde chaque orbe dans une couche compos\xE9e par le GPU. Activez \xAB flou anim\xE9 \xBB : la valeur de blur change \xE0 chaque frame, la couche doit \xEAtre refaite, et la cadence tombe.",params:[{kind:"range",key:"count",label:"Orbes",min:1,max:10,step:1,value:4},{kind:"range",key:"size",label:"Taille",min:.15,max:1.1,step:.05,value:.6},{kind:"range",key:"blur",label:"Flou",min:10,max:180,step:5,value:90,unit:"px",note:"Un grand rayon co\xFBte cher m\xEAme fig\xE9, surtout sur mobile."},{kind:"range",key:"speed",label:"Vitesse",min:.05,max:1.2,step:.05,value:.3},{kind:"toggle",key:"animateBlur",label:"Animer le flou",value:!1,note:"\xC0 \xE9viter en production \u2014 pr\xE9sent ici pour rendre le co\xFBt visible."},{kind:"color",key:"colorA",label:"Teinte 1",value:"#4a5fd6"},{kind:"color",key:"colorB",label:"Teinte 2",value:"#c94f8a"},{kind:"color",key:"colorC",label:"Teinte 3",value:"#2fae9c"}],create:n=>new j(n)},Y=class{constructor(e){this.node=document.createElement("div"),this.node.className="mesh",e.layer.append(this.node),this.restyle(e)}restyle(e){let t=[[m(e.params,"colorA"),18,22],[m(e.params,"colorB"),82,26],[m(e.params,"colorC"),34,78],[m(e.params,"colorD"),76,74]],a=d(e.params,"spread");this.node.style.background=[...t.map(([s,r,i])=>`radial-gradient(circle at ${r}% ${i}%, ${s} 0%, transparent ${a}%)`),m(e.params,"base")].join(", "),this.node.style.backgroundSize=y(e.params,"repaint")?"180% 180%":"100% 100%",this.node.style.filter=`blur(${d(e.params,"blur")}px)`}resize(e){this.restyle(e)}frame(e,t){this.restyle(e);let a=t*d(e.params,"speed");y(e.params,"repaint")?(this.node.style.transform="none",this.node.style.backgroundPosition=`${(50+Math.cos(a)*40).toFixed(1)}% ${(50+Math.sin(a*.8)*40).toFixed(1)}%`):(this.node.style.backgroundPosition="50% 50%",this.node.style.transform=`translate3d(${(Math.cos(a)*6).toFixed(2)}%, ${(Math.sin(a*.8)*6).toFixed(2)}%, 0) rotate(${(Math.sin(a*.35)*8).toFixed(2)}deg) scale(1.35)`)}load(e){return y(e.params,"repaint")?"4 d\xE9grad\xE9s \xB7 repeint":"4 d\xE9grad\xE9s \xB7 compos\xE9"}dispose(){this.node.remove()}},oe={id:"mesh",name:"Mesh gradient",family:"Soft",surface:"dom",claim:"\xAB CSS pur, co\xFBt quasi nul \xBB",reality:"Le mesh gradient n'existe pas nativement en CSS : on l'approxime avec quatre radial-gradient superpos\xE9s et un flou. Le mode \xAB repeint \xBB anime background-position, ce que le GPU ne peut pas composer \u2014 comparez-le au mode compos\xE9, qui rend la m\xEAme image en d\xE9pla\xE7ant simplement la couche.",params:[{kind:"toggle",key:"repaint",label:"Animer background-position",value:!1,note:"Le mode d\xE9crit comme \xAB CSS pur, gratuit \xBB. Comparez la cadence."},{kind:"range",key:"speed",label:"Vitesse",min:.02,max:.8,step:.02,value:.16},{kind:"range",key:"spread",label:"\xC9talement",min:25,max:95,step:5,value:45,unit:"%"},{kind:"range",key:"blur",label:"Flou",min:0,max:120,step:5,value:15,unit:"px"},{kind:"color",key:"base",label:"Fond",value:"#101a2e"},{kind:"color",key:"colorA",label:"Teinte 1",value:"#3d6bd6"},{kind:"color",key:"colorB",label:"Teinte 2",value:"#b8478f"},{kind:"color",key:"colorC",label:"Teinte 3",value:"#2f9e8f"},{kind:"color",key:"colorD",label:"Teinte 4",value:"#e0a355"}],create:n=>new Y(n)};var x=Math.PI*2;function T(n){let e=n.canvas.getContext("2d",{alpha:!1});if(!e)throw new Error("Contexte Canvas 2D indisponible.");return e}function P(n,e){n.setTransform(e.scale,0,0,e.scale,0,0)}function le(n,e){return(n%e+e)%e}function L(n,e){let t=Number.parseInt(n.slice(1),16);return`rgba(${t>>16&255}, ${t>>8&255}, ${t&255}, ${e})`}var Z=class{constructor(e){this.tile=document.createElement("canvas");this.pattern=null;this.bakedFor="";this.g=T(e),this.tile.width=180,this.tile.height=180}bake(e){let t=this.tile.getContext("2d");if(!t)return;let a=t.createImageData(this.tile.width,this.tile.height),s=a.data,r=Math.max(1,Math.round(e));for(let i=0;i<this.tile.height;i+=r)for(let o=0;o<this.tile.width;o+=r){let c=Math.random()*255;for(let u=0;u<r;u++)for(let l=0;l<r;l++){let f=((i+u)*this.tile.width+(o+l))*4;f+3>=s.length||(s[f]=c,s[f+1]=c,s[f+2]=c,s[f+3]=255)}}t.putImageData(a,0,0),this.pattern=this.g.createPattern(this.tile,"repeat")}resize(){this.bakedFor=""}frame(e,t){P(this.g,e);let{width:a,height:s}=e,r=d(e.params,"cell"),i=y(e.params,"live"),o=`${r}`;(i||o!==this.bakedFor||!this.pattern)&&(this.bake(r),this.bakedFor=o);let c=d(e.params,"drift"),u=this.g.createLinearGradient(0,0,a*.6,s);u.addColorStop(0,m(e.params,"colorA")),u.addColorStop(1,m(e.params,"colorB")),this.g.fillStyle=u,this.g.fillRect(0,0,a,s),this.pattern&&(this.g.save(),this.g.globalAlpha=d(e.params,"intensity"),this.g.globalCompositeOperation="overlay",this.g.translate(Math.round(Math.cos(t*c)*20),Math.round(Math.sin(t*c*1.3)*20)),this.g.fillStyle=this.pattern,this.g.fillRect(-40,-40,a+80,s+80),this.g.restore())}load(e){return y(e.params,"live")?"grain r\xE9g\xE9n\xE9r\xE9 chaque frame":"grain fig\xE9 \xB7 1 g\xE9n\xE9ration"}dispose(){this.pattern=null}},ce={id:"grain",name:"Grain de film",family:"Soft",surface:"canvas2d",claim:"\xAB CSS + SVG feTurbulence, co\xFBt quasi nul \xBB",reality:"Exact si la texture est g\xE9n\xE9r\xE9e une seule fois puis simplement d\xE9cal\xE9e \u2014 c'est le mode par d\xE9faut ici. Un feTurbulence anim\xE9, lui, r\xE9g\xE9n\xE8re du bruit \xE0 chaque frame : cochez \xAB r\xE9g\xE9n\xE9rer chaque frame \xBB pour retrouver ce comportement et voir le temps JS grimper.",params:[{kind:"toggle",key:"live",label:"R\xE9g\xE9n\xE9rer chaque frame",value:!1,note:"\xC9quivalent d'un feTurbulence anim\xE9."},{kind:"range",key:"intensity",label:"Intensit\xE9",min:0,max:.6,step:.02,value:.18},{kind:"range",key:"cell",label:"Taille du grain",min:1,max:5,step:1,value:1,unit:"px"},{kind:"range",key:"drift",label:"D\xE9rive",min:0,max:3,step:.1,value:.8},{kind:"color",key:"colorA",label:"Haut",value:"#1d2a44"},{kind:"color",key:"colorB",label:"Bas",value:"#5c2f4a"}],create:n=>new Z(n)},K=class{constructor(e){this.stars=[];this.built=-1;this.g=T(e),this.build(e)}build(e){let t=Math.round(d(e.params,"count"));this.built=t;let a=w(4242);this.stars=Array.from({length:t},()=>({x:a(),y:a(),r:.4+a()*a()*2.6,phase:a()*x,rate:.3+a()*1.6,drift:(a()-.5)*.006}))}resize(){}frame(e,t,a){Math.round(d(e.params,"count"))!==this.built&&this.build(e),P(this.g,e);let{width:s,height:r}=e;this.g.fillStyle=m(e.params,"background"),this.g.fillRect(0,0,s,r);let i=m(e.params,"color"),o=d(e.params,"size"),c=y(e.params,"halo"),u=d(e.params,"haloSize");c&&(this.g.shadowColor=i,this.g.shadowBlur=u),this.g.fillStyle=i;for(let l of this.stars){l.x+=l.drift*a,l.x<0&&(l.x+=1),l.x>1&&(l.x-=1);let f=.35+.65*(.5+.5*Math.sin(t*l.rate+l.phase));this.g.globalAlpha=f,this.g.beginPath(),this.g.arc(l.x*s,l.y*r,l.r*o,0,x),this.g.fill()}this.g.globalAlpha=1,this.g.shadowBlur=0}load(e){return`${this.stars.length} points${y(e.params,"halo")?" \xB7 halo actif":""}`}dispose(){this.stars=[]}},ue={id:"sparse",name:"Poussi\xE8re d'\xE9toiles",family:"Dark",surface:"canvas2d",claim:"\xAB tr\xE8s faible \xBB",reality:"Exact, \xE0 une condition : le co\xFBt est lin\xE9aire, donc il faut plafonner le nombre de points. Le pi\xE8ge n'est pas le nombre mais le halo \u2014 shadowBlur refait un flou par point \xE0 chaque frame. Activez-le et montez \xE0 800 points pour voir la diff\xE9rence.",params:[{kind:"range",key:"count",label:"Points",min:40,max:1500,step:20,value:260},{kind:"range",key:"size",label:"Taille",min:.3,max:3,step:.1,value:1},{kind:"toggle",key:"halo",label:"Halo (shadowBlur)",value:!1,note:"Joli, mais c'est un flou par point et par frame."},{kind:"range",key:"haloSize",label:"Rayon du halo",min:2,max:30,step:1,value:8,unit:"px"},{kind:"color",key:"background",label:"Fond",value:"#080b14"},{kind:"color",key:"color",label:"Points",value:"#e8eaf2"}],create:n=>new K(n)},Q=class{constructor(e){this.particles=[];this.built=-1;this.cleared=!1;this.g=T(e),this.build(e)}build(e){let t=Math.round(d(e.params,"count"));this.built=t;let a=w(77);this.particles=Array.from({length:t},()=>({x:a()*e.width,y:a()*e.height,age:a()*200,life:80+a()*220})),this.cleared=!1}resize(){this.cleared=!1}frame(e,t,a){Math.round(d(e.params,"count"))!==this.built&&this.build(e),P(this.g,e);let{width:s,height:r}=e;this.cleared||(this.g.fillStyle=m(e.params,"background"),this.g.fillRect(0,0,s,r),this.cleared=!0),this.g.fillStyle=L(m(e.params,"background"),d(e.params,"fade")),this.g.fillRect(0,0,s,r);let i=d(e.params,"scale")/1e3,o=Math.round(d(e.params,"octaves")),c=d(e.params,"speed")*60*Math.min(a,.05),u=t*d(e.params,"evolution");this.g.strokeStyle=L(m(e.params,"color"),d(e.params,"opacity")),this.g.lineWidth=d(e.params,"thickness"),this.g.beginPath();for(let l of this.particles){let f=se(l.x*i,l.y*i+u,o)*x*2,g=l.x+Math.cos(f)*c,h=l.y+Math.sin(f)*c;this.g.moveTo(l.x,l.y),this.g.lineTo(g,h),l.x=g,l.y=h,l.age+=1,(l.age>l.life||l.x<0||l.x>s||l.y<0||l.y>r)&&(l.x=Math.random()*s,l.y=Math.random()*r,l.age=0)}this.g.stroke()}load(e){return`${this.particles.length} particules \xD7 ${Math.round(d(e.params,"octaves"))} octaves`}dispose(){this.particles=[]}},de={id:"flow",name:"Flow field",family:"Organique",surface:"canvas2d",claim:"\xAB tr\xE8s peu de calculs \xBB",reality:"C'est l'affirmation la plus trompeuse du tableau d'origine. Le bruit est appel\xE9 une fois par particule et par frame : le co\xFBt est le produit particules \xD7 octaves. Passez de 1 \xE0 4 octaves sans rien changer d'autre \u2014 le temps JS est multipli\xE9 d'autant.",params:[{kind:"range",key:"count",label:"Particules",min:100,max:6e3,step:100,value:1200},{kind:"range",key:"octaves",label:"Octaves de bruit",min:1,max:5,step:1,value:2,note:"Multiplicateur direct du temps de calcul."},{kind:"range",key:"scale",label:"\xC9chelle du bruit",min:.5,max:8,step:.25,value:2},{kind:"range",key:"speed",label:"Vitesse",min:.2,max:4,step:.1,value:1.2},{kind:"range",key:"evolution",label:"\xC9volution du champ",min:0,max:.4,step:.01,value:.06},{kind:"range",key:"fade",label:"Effacement",min:.005,max:.3,step:.005,value:.04},{kind:"range",key:"thickness",label:"\xC9paisseur",min:.3,max:3,step:.1,value:.8,unit:"px"},{kind:"range",key:"opacity",label:"Opacit\xE9 du trait",min:.05,max:1,step:.05,value:.55},{kind:"color",key:"background",label:"Fond",value:"#0d1020"},{kind:"color",key:"color",label:"Trait",value:"#8fd0ff"}],create:n=>new Q(n)},X=class{constructor(e){this.nodes=[];this.built=-1;this.comparisons=0;this.g=T(e),this.build(e)}build(e){let t=Math.round(d(e.params,"count"));this.built=t;let a=w(2024);this.nodes=Array.from({length:t},()=>({x:a()*e.width,y:a()*e.height,vx:(a()-.5)*18,vy:(a()-.5)*18}))}resize(e){for(let t of this.nodes)t.x=M(t.x,0,e.width),t.y=M(t.y,0,e.height)}frame(e,t,a){Math.round(d(e.params,"count"))!==this.built&&this.build(e),P(this.g,e);let{width:s,height:r}=e;this.g.fillStyle=m(e.params,"background"),this.g.fillRect(0,0,s,r);let i=Math.min(a,.05)*d(e.params,"speed");for(let u of this.nodes)u.x+=u.vx*i,u.y+=u.vy*i,(u.x<0||u.x>s)&&(u.vx*=-1),(u.y<0||u.y>r)&&(u.vy*=-1),u.x=M(u.x,0,s),u.y=M(u.y,0,r);let o=d(e.params,"distance");this.comparisons=0,this.g.lineWidth=.6,this.g.strokeStyle=m(e.params,"line"),y(e.params,"naive")?this.linkNaive(o):this.linkGrid(o,s,r),this.g.fillStyle=m(e.params,"node");let c=d(e.params,"nodeSize");for(let u of this.nodes)this.g.beginPath(),this.g.arc(u.x,u.y,c,0,x),this.g.fill()}linkNaive(e){let t=e*e;for(let a=0;a<this.nodes.length;a++){let s=this.nodes[a];for(let r=a+1;r<this.nodes.length;r++){let i=this.nodes[r];this.comparisons++,this.drawLink(s,i,t,e)}}}linkGrid(e,t,a){let s=e*e,r=Math.max(1,Math.ceil(t/e)),i=Math.max(1,Math.ceil(a/e)),o=Array.from({length:r*i},()=>[]);for(let c of this.nodes){let u=M(Math.floor(c.x/e),0,r-1),l=M(Math.floor(c.y/e),0,i-1);o[l*r+u].push(c)}for(let c=0;c<i;c++)for(let u=0;u<r;u++){let l=o[c*r+u];if(l.length!==0)for(let f=0;f<=1;f++)for(let g=f===0?0:-1;g<=1;g++){let h=u+g,b=c+f;if(h<0||h>=r||b>=i)continue;let E=o[b*r+h],p=g===0&&f===0;for(let _=0;_<l.length;_++)for(let R=p?_+1:0;R<E.length;R++)this.comparisons++,this.drawLink(l[_],E[R],s,e)}}}drawLink(e,t,a,s){let r=e.x-t.x,i=e.y-t.y,o=r*r+i*i;o>=a||(this.g.globalAlpha=1-Math.sqrt(o)/s,this.g.beginPath(),this.g.moveTo(e.x,e.y),this.g.lineTo(t.x,t.y),this.g.stroke(),this.g.globalAlpha=1)}load(e){let t=y(e.params,"naive")?"na\xEFf":"grille";return`${this.nodes.length} points \xB7 ${this.comparisons.toLocaleString("fr-FR")} comparaisons/frame (${t})`}dispose(){this.nodes=[]}},me={id:"constellation",name:"Constellation",family:"Tech",surface:"canvas2d",claim:"\xAB Canvas 2D optimis\xE9, faible \xBB",reality:"Seulement avec une grille spatiale. En mode na\xEFf, relier les points demande n\xD7(n\u22121)/2 comparaisons : \xE0 150 points c'est 11 175 par frame, \xE0 600 points c'est 179 700. Le compteur de comparaisons ci-dessous rend la falaise visible \u2014 basculez entre les deux modes \xE0 nombre de points \xE9gal.",params:[{kind:"toggle",key:"naive",label:"Mode na\xEFf (n\xB2)",value:!1,note:"La version qu'on trouve dans la plupart des tutoriels."},{kind:"range",key:"count",label:"Points",min:40,max:900,step:20,value:160},{kind:"range",key:"distance",label:"Distance de liaison",min:40,max:220,step:10,value:110,unit:"px"},{kind:"range",key:"speed",label:"Vitesse",min:.2,max:4,step:.2,value:1.4},{kind:"range",key:"nodeSize",label:"Taille des points",min:.5,max:4,step:.5,value:1.5,unit:"px"},{kind:"color",key:"background",label:"Fond",value:"#070d12"},{kind:"color",key:"line",label:"Liaisons",value:"#2f6f7a"},{kind:"color",key:"node",label:"Points",value:"#7fe3d4"}],create:n=>new X(n)},ee=class{constructor(e){this.g=T(e)}resize(){}frame(e,t){P(this.g,e);let{width:a,height:s}=e,r=s*d(e.params,"horizon"),i=this.g.createLinearGradient(0,0,0,r);i.addColorStop(0,m(e.params,"skyTop")),i.addColorStop(1,m(e.params,"skyBottom")),this.g.fillStyle=i,this.g.fillRect(0,0,a,r);let o=Math.min(a,s)*.22,c=r-o*.35,u=this.g.createLinearGradient(0,c-o,0,c+o);u.addColorStop(0,m(e.params,"sunTop")),u.addColorStop(1,m(e.params,"sunBottom")),this.g.save(),this.g.beginPath(),this.g.rect(0,0,a,r),this.g.clip(),this.g.fillStyle=u,this.g.beginPath(),this.g.arc(a/2,c,o,0,x),this.g.fill(),this.g.fillStyle=m(e.params,"skyBottom");for(let h=0;h<7;h++){let b=c+o*(h/7)*.9;this.g.fillRect(0,b,a,o*.045*(1+h*.35))}this.g.restore(),this.g.fillStyle=m(e.params,"ground"),this.g.fillRect(0,r,a,s-r),this.g.strokeStyle=m(e.params,"grid"),this.g.lineWidth=1,this.g.beginPath();let l=Math.round(d(e.params,"columns"));for(let h=-l;h<=l;h++){let b=a/2+h/l*a*1.6;this.g.moveTo(a/2,r),this.g.lineTo(b,s)}let f=Math.round(d(e.params,"rows")),g=t*d(e.params,"speed")%1;for(let h=0;h<f;h++){let b=(h+g)/f,E=r+(s-r)*b*b;this.g.moveTo(0,E),this.g.lineTo(a,E)}this.g.stroke()}load(e){return`${Math.round(d(e.params,"columns"))*2+Math.round(d(e.params,"rows"))} lignes \xB7 1 stroke`}dispose(){}},fe={id:"synthwave",name:"Grille synthwave",family:"Tech",surface:"canvas2d",claim:"\xAB tr\xE8s faible \xBB",reality:"Exact, et pour une raison pr\xE9cise : tous les segments sont accumul\xE9s dans un seul chemin puis trac\xE9s d'un coup. La m\xEAme grille dessin\xE9e avec un beginPath par ligne co\xFBterait plusieurs fois plus. Le nombre de lignes n'a presque pas d'influence sur la mesure.",params:[{kind:"range",key:"horizon",label:"Ligne d'horizon",min:.25,max:.75,step:.05,value:.55},{kind:"range",key:"columns",label:"Colonnes",min:4,max:40,step:2,value:16},{kind:"range",key:"rows",label:"Rang\xE9es",min:6,max:60,step:2,value:24},{kind:"range",key:"speed",label:"Vitesse",min:0,max:2,step:.1,value:.5},{kind:"color",key:"skyTop",label:"Ciel (haut)",value:"#160b2e"},{kind:"color",key:"skyBottom",label:"Ciel (bas)",value:"#4b1450"},{kind:"color",key:"sunTop",label:"Soleil (haut)",value:"#ffd76e"},{kind:"color",key:"sunBottom",label:"Soleil (bas)",value:"#ff4d7d"},{kind:"color",key:"ground",label:"Sol",value:"#0a0616"},{kind:"color",key:"grid",label:"Grille",value:"#ff5fa8"}],create:n=>new ee(n)},te=class{constructor(e){this.blips=[];this.built=-1;this.prevSweep=null;this.g=T(e),this.build(e)}build(e){let t=Math.round(d(e.params,"blips"));this.built=t,this.prevSweep=null;let a=w(555);this.blips=Array.from({length:t},()=>({angle:a()*x,radius:.15+a()*.8,seen:0}))}resize(){}frame(e,t,a){Math.round(d(e.params,"blips"))!==this.built&&this.build(e),P(this.g,e);let{width:s,height:r}=e;this.g.fillStyle=m(e.params,"background"),this.g.fillRect(0,0,s,r);let i=s/2,o=r/2,c=Math.hypot(s,r)/2,u=d(e.params,"cell");this.g.strokeStyle=m(e.params,"grid"),this.g.lineWidth=1,this.g.beginPath();for(let p=i%u-u;p<s;p+=u)this.g.moveTo(Math.round(p)+.5,0),this.g.lineTo(Math.round(p)+.5,r);for(let p=o%u-u;p<r;p+=u)this.g.moveTo(0,Math.round(p)+.5),this.g.lineTo(s,Math.round(p)+.5);this.g.stroke();let l=t*d(e.params,"speed")%x,f=d(e.params,"trail"),g=m(e.params,"sweep"),h=this.g.createRadialGradient(i,o,0,i,o,c);h.addColorStop(0,L(g,.55)),h.addColorStop(.65,L(g,.18)),h.addColorStop(1,L(g,0)),this.g.fillStyle=h;let b=24;for(let p=0;p<b;p++){let _=l-f*(1-p/b),R=l-f*(1-(p+1)/b),O=(p+1)/b;this.g.globalAlpha=O*O*O,this.g.beginPath(),this.g.moveTo(i,o),this.g.arc(i,o,c,_,R+.004),this.g.closePath(),this.g.fill()}this.g.globalAlpha=1,this.g.strokeStyle=L(g,.9),this.g.beginPath(),this.g.moveTo(i,o),this.g.lineTo(i+Math.cos(l)*c,o+Math.sin(l)*c),this.g.stroke(),this.g.fillStyle=g;let E=this.prevSweep===null?0:le(l-this.prevSweep,x);this.prevSweep=l;for(let p of this.blips)E>0&&le(p.angle-(l-E),x)<=E&&(p.seen=1),p.seen=Math.max(0,p.seen-a*d(e.params,"speed")*.22),!(p.seen<=0)&&(this.g.globalAlpha=p.seen*p.seen,this.g.beginPath(),this.g.arc(i+Math.cos(p.angle)*p.radius*c*.9,o+Math.sin(p.angle)*p.radius*c*.9,3,0,x),this.g.fill());this.g.globalAlpha=1}load(){return`${this.blips.length} \xE9chos \xB7 1 secteur d\xE9grad\xE9`}dispose(){this.blips=[]}},pe={id:"scan",name:"Balayage radar",family:"Tech",surface:"canvas2d",claim:"\xAB tr\xE8s faible \xBB",reality:"Exact. La grille est un seul chemin, le faisceau un seul secteur d\xE9grad\xE9, et les \xE9chos sont quelques dizaines de disques. Rien ici ne cro\xEEt avec la surface : c'est le profil de co\xFBt le plus plat du catalogue.",params:[{kind:"range",key:"cell",label:"Maille",min:20,max:140,step:5,value:48,unit:"px"},{kind:"range",key:"speed",label:"Vitesse",min:.2,max:4,step:.1,value:1},{kind:"range",key:"trail",label:"Tra\xEEne",min:.2,max:2.4,step:.1,value:1},{kind:"range",key:"blips",label:"\xC9chos",min:0,max:60,step:2,value:18},{kind:"color",key:"background",label:"Fond",value:"#04100e"},{kind:"color",key:"grid",label:"Grille",value:"#123c33"},{kind:"color",key:"sweep",label:"Faisceau",value:"#43e8a0"}],create:n=>new te(n)};var Ae=`
+attribute vec2 a_position;
+void main() {
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`,ae=`
+precision mediump float;
+uniform vec2 u_resolution;
+uniform float u_time;
+
+float hash(vec2 p) {
+  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+}
+
+float noise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(
+    mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x),
+    mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x),
+    u.y);
+}
+
+float fbm(vec2 p, int octaves) {
+  float sum = 0.0;
+  float amp = 0.5;
+  for (int i = 0; i < 6; i++) {
+    if (i >= octaves) break;
+    sum += noise(p) * amp;
+    p *= 2.0;
+    amp *= 0.5;
+  }
+  return sum;
+}
+`,$=class{constructor(e,t){this.uniforms=new Map;let a=e.getContext("webgl",{antialias:!1,alpha:!1,depth:!1,stencil:!1,powerPreference:"low-power"});if(!a)throw new Error("WebGL indisponible sur cet appareil.");this.gl=a,this.program=Re(a,Ae,t),a.useProgram(this.program);let s=a.createBuffer();if(!s)throw new Error("Impossible d'allouer le buffer de g\xE9om\xE9trie.");this.buffer=s,a.bindBuffer(a.ARRAY_BUFFER,s),a.bufferData(a.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),a.STATIC_DRAW);let r=a.getAttribLocation(this.program,"a_position");a.enableVertexAttribArray(r),a.vertexAttribPointer(r,2,a.FLOAT,!1,0,0)}location(e){return this.uniforms.has(e)||this.uniforms.set(e,this.gl.getUniformLocation(this.program,e)),this.uniforms.get(e)??null}setFloat(e,t){let a=this.location(e);a&&this.gl.uniform1f(a,t)}setInt(e,t){let a=this.location(e);a&&this.gl.uniform1i(a,t)}setVec2(e,t,a){let s=this.location(e);s&&this.gl.uniform2f(s,t,a)}setVec3(e,t){let a=this.location(e);a&&this.gl.uniform3f(a,t[0],t[1],t[2])}resize(e,t){this.gl.viewport(0,0,e,t),this.setVec2("u_resolution",e,t)}draw(){this.gl.drawArrays(this.gl.TRIANGLES,0,3)}dispose(){this.gl.deleteBuffer(this.buffer),this.gl.deleteProgram(this.program)}};function he(n,e,t){let a=n.createShader(e);if(!a)throw new Error("Cr\xE9ation du shader impossible.");if(n.shaderSource(a,t),n.compileShader(a),!n.getShaderParameter(a,n.COMPILE_STATUS)){let s=n.getShaderInfoLog(a)??"erreur inconnue";throw n.deleteShader(a),new Error(`Compilation du shader \xE9chou\xE9e : ${s}`)}return a}function Re(n,e,t){let a=n.createProgram();if(!a)throw new Error("Cr\xE9ation du programme impossible.");let s=he(n,n.VERTEX_SHADER,e),r=he(n,n.FRAGMENT_SHADER,t);if(n.attachShader(a,s),n.attachShader(a,r),n.linkProgram(a),n.deleteShader(s),n.deleteShader(r),!n.getProgramParameter(a,n.LINK_STATUS)){let i=n.getProgramInfoLog(a)??"erreur inconnue";throw n.deleteProgram(a),new Error(`\xC9dition de liens \xE9chou\xE9e : ${i}`)}return a}var De=`${ae}
+uniform vec3 u_sky;
+uniform vec3 u_colorA;
+uniform vec3 u_colorB;
+uniform float u_speed;
+uniform float u_scale;
+uniform float u_intensity;
+uniform float u_bands;
+uniform int u_octaves;
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / u_resolution;
+  vec2 p = vec2(uv.x * u_scale, uv.y * u_scale * 0.6);
+  float t = u_time * u_speed;
+
+  vec3 glow = vec3(0.0);
+  for (int i = 0; i < 4; i++) {
+    if (float(i) >= u_bands) break;
+    float offset = float(i) * 0.41;
+    float wave = fbm(p + vec2(t * (0.4 + offset), offset * 3.0), u_octaves);
+    // Chaque rideau est une gaussienne \xE9troite autour d'une hauteur qui ondule.
+    float center = 0.60 + wave * 0.32 - offset * 0.10;
+    float d = uv.y - center;
+    float band = exp(-d * d * 300.0);
+    // Striations verticales fines : c'est ce qui donne l'aspect \xAB rideau \xBB
+    // plut\xF4t que \xAB nuage \xBB. Deux fr\xE9quences, une fine et une large.
+    float fine = 0.30 + 0.70 * noise(vec2(uv.x * 68.0 + offset * 17.0, t * 0.35));
+    float broad = 0.45 + 0.55 * noise(vec2(uv.x * 15.0 - t * 0.2, offset * 9.0));
+    // Vert \xE0 la base du rideau, violet vers la cr\xEAte.
+    vec3 tint = mix(u_colorA, u_colorB, clamp(d * 6.0 + 0.5, 0.0, 1.0));
+    glow += tint * band * fine * broad * (1.0 - offset * 0.25);
+  }
+
+  // Les rideaux s'estompent vers le bas, comme une vraie aurore.
+  glow *= u_intensity * smoothstep(0.05, 0.5, uv.y);
+
+  vec3 color = u_sky + glow;
+  // Compression des hautes lumi\xE8res : sans elle les rideaux saturent en blanc.
+  color = vec3(1.0) - exp(-color * 1.6);
+  gl_FragColor = vec4(color, 1.0);
+}`,Fe=`${ae}
+uniform vec3 u_colorA;
+uniform vec3 u_colorB;
+uniform vec3 u_colorC;
+uniform float u_speed;
+uniform float u_scale;
+uniform float u_warp;
+uniform float u_contrast;
+uniform int u_octaves;
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / u_resolution;
+  uv.x *= u_resolution.x / u_resolution.y;
+  vec2 p = uv * u_scale;
+  float t = u_time * u_speed;
+
+  // Domain warping : on d\xE9forme les coordonn\xE9es avec du bruit avant
+  // de r\xE9\xE9chantillonner. Le rendu liquide vient de l\xE0, au prix d'un
+  // passage de bruit suppl\xE9mentaire.
+  vec2 q = vec2(fbm(p + vec2(0.0, t), u_octaves), fbm(p + vec2(5.2, 1.3 - t), u_octaves));
+  vec2 r = vec2(
+    fbm(p + u_warp * q + vec2(1.7, 9.2) + 0.15 * t, u_octaves),
+    fbm(p + u_warp * q + vec2(8.3, 2.8) - 0.12 * t, u_octaves));
+  float v = fbm(p + u_warp * r, u_octaves);
+
+  v = clamp((v - 0.5) * u_contrast + 0.5, 0.0, 1.0);
+  vec3 color = mix(u_colorA, u_colorB, v);
+  color = mix(color, u_colorC, clamp(length(r) * 0.42, 0.0, 0.85));
+  gl_FragColor = vec4(color, 1.0);
+}`,I=class{constructor(e,t,a){this.bind=a;this.quad=new $(e.canvas,t),this.resize(e)}resize(e){this.quad.resize(e.canvas.width,e.canvas.height)}frame(e,t){this.quad.setFloat("u_time",t),this.bind(this.quad,e),this.quad.draw()}load(e){let[t,a]=[e.canvas.width,e.canvas.height],s=Math.round(d(e.params,"octaves"));return`${(t*a/1e6).toFixed(2)} Mpx \xD7 ${s} octaves par frame`}dispose(){this.quad.dispose()}},ge={id:"aurora",name:"Aurore bor\xE9ale",family:"Organique",surface:"webgl",claim:"\xAB extr\xEAmement faible \xBB",reality:"Faux tel quel, mais pour une raison int\xE9ressante. Le temps JS reste proche de z\xE9ro \u2014 d'o\xF9 l'impression de gratuit\xE9. Le travail r\xE9el est du remplissage de pixels : le shader tourne pour chaque pixel, 60 fois par seconde. Montez l'\xE9chelle de rendu \xE0 1 et les octaves \xE0 5, puis regardez la cadence chuter alors que le temps JS ne bouge pas.",params:[{kind:"range",key:"octaves",label:"Octaves de bruit",min:1,max:5,step:1,value:3,note:"Multiplie le travail par pixel."},{kind:"range",key:"bands",label:"Rideaux",min:1,max:4,step:1,value:3},{kind:"range",key:"speed",label:"Vitesse",min:.02,max:.6,step:.02,value:.12},{kind:"range",key:"scale",label:"\xC9chelle",min:.5,max:6,step:.25,value:2},{kind:"range",key:"intensity",label:"Intensit\xE9",min:.2,max:2.5,step:.1,value:1.1},{kind:"color",key:"sky",label:"Ciel",value:"#04070f"},{kind:"color",key:"colorA",label:"Teinte basse",value:"#1fd68f"},{kind:"color",key:"colorB",label:"Teinte haute",value:"#7a5cf0"}],create:n=>new I(n,De,(e,t)=>{e.setInt("u_octaves",Math.round(d(t.params,"octaves"))),e.setFloat("u_bands",d(t.params,"bands")),e.setFloat("u_speed",d(t.params,"speed")),e.setFloat("u_scale",d(t.params,"scale")),e.setFloat("u_intensity",d(t.params,"intensity")),e.setVec3("u_sky",C(m(t.params,"sky"))),e.setVec3("u_colorA",C(m(t.params,"colorA"))),e.setVec3("u_colorB",C(m(t.params,"colorB")))})},ve={id:"plasma",name:"Plasma d\xE9form\xE9",family:"Dark",surface:"webgl",claim:"\xAB aspect liquide sans physique lourde \xBB",reality:"Vrai sur le principe \u2014 aucune simulation, juste du bruit. Mais c'est l'effet le plus lourd du catalogue : la d\xE9formation de domaine appelle le bruit fractal cinq fois par pixel. Le curseur \xAB d\xE9formation \xBB \xE0 z\xE9ro le ram\xE8ne \xE0 un simple plasma, deux fois moins cher.",params:[{kind:"range",key:"octaves",label:"Octaves de bruit",min:1,max:5,step:1,value:3},{kind:"range",key:"warp",label:"D\xE9formation",min:0,max:6,step:.25,value:3,note:"\xC0 z\xE9ro, deux des cinq passages de bruit deviennent inutiles."},{kind:"range",key:"speed",label:"Vitesse",min:.02,max:.8,step:.02,value:.1},{kind:"range",key:"scale",label:"\xC9chelle",min:.5,max:6,step:.25,value:2.5},{kind:"range",key:"contrast",label:"Contraste",min:.5,max:4,step:.1,value:1.2},{kind:"color",key:"colorA",label:"Creux",value:"#070a18"},{kind:"color",key:"colorB",label:"Cr\xEAtes",value:"#3a5cc4"},{kind:"color",key:"colorC",label:"Accent",value:"#c2456f"}],create:n=>new I(n,Fe,(e,t)=>{e.setInt("u_octaves",Math.round(d(t.params,"octaves"))),e.setFloat("u_warp",d(t.params,"warp")),e.setFloat("u_speed",d(t.params,"speed")),e.setFloat("u_scale",d(t.params,"scale")),e.setFloat("u_contrast",d(t.params,"contrast")),e.setVec3("u_colorA",C(m(t.params,"colorA"))),e.setVec3("u_colorB",C(m(t.params,"colorB"))),e.setVec3("u_colorC",C(m(t.params,"colorC")))})};var A=[pe,fe,ce,ie,oe,ue,me,ge,de,ve];function V(n){return A.find(e=>e.id===n)??A[0]}var $e={dom:"DOM / CSS",canvas2d:"Canvas 2D",webgl:"WebGL"};function xe(n,e,t){n.innerHTML="";for(let a of A){let s=document.createElement("button");s.type="button",s.className="rail__item",s.setAttribute("aria-current",a.id===e?"true":"false");let r=document.createElement("span");r.className="rail__name",r.textContent=a.name;let i=document.createElement("span");i.className="rail__meta",i.textContent=`${a.family} \xB7 ${$e[a.surface]}`,s.append(r,i),s.addEventListener("click",()=>t(a.id)),n.append(s)}}function Ee(n,e,t,a){n.innerHTML="";let s=e.params.filter(i=>i.kind!=="color"),r=e.params.filter(i=>i.kind==="color");if(s.length>0&&n.append(be("R\xE9glages",s.map(i=>ye(i,t,a)))),r.length>0){let i=document.createElement("div");i.className="swatches",i.append(...r.map(o=>ye(o,t,a))),n.append(be("Couleurs",[i]))}}function be(n,e){let t=document.createElement("section");t.className="group";let a=document.createElement("h3");return a.className="group__title",a.textContent=n,t.append(a,...e),t}function ye(n,e,t){switch(n.kind){case"range":return Ie(n,e,t);case"toggle":return Ve(n,e,t);case"color":return Be(n,e,t)}}function Ce(n){if(!n)return null;let e=document.createElement("p");return e.className="control__note",e.textContent=n,e}function Ie(n,e,t){let a=document.createElement("div");a.className="control";let s=`p-${n.key}`,r=document.createElement("div");r.className="control__header";let i=document.createElement("label");i.setAttribute("for",s),i.textContent=n.label;let o=document.createElement("output");o.className="control__value";let c=document.createElement("input");c.type="range",c.id=s,c.min=String(n.min),c.max=String(n.max),c.step=String(n.step);let u=e[n.key];c.value=String(typeof u=="number"?u:n.value);let l=()=>{let g=Number(c.value);o.textContent=`${Number.isInteger(g)?g:g.toFixed(2)}${n.unit?` ${n.unit}`:""}`};l(),c.addEventListener("input",()=>{l(),t(n.key,Number(c.value))}),r.append(i,o),a.append(r,c);let f=Ce(n.note);return f&&a.append(f),a}function Ve(n,e,t){let a=document.createElement("div");a.className="control control--toggle";let s=`p-${n.key}`,r=document.createElement("label");r.className="switch",r.setAttribute("for",s);let i=document.createElement("input");i.type="checkbox",i.id=s,i.checked=e[n.key]===!0;let o=document.createElement("span");o.className="switch__track";let c=document.createElement("span");c.className="switch__label",c.textContent=n.label,i.addEventListener("change",()=>t(n.key,i.checked)),r.append(i,o,c),a.append(r);let u=Ce(n.note);return u&&a.append(u),a}function Be(n,e,t){let a=document.createElement("label");a.className="swatch";let s=`p-${n.key}`;a.setAttribute("for",s);let r=document.createElement("input");r.type="color",r.id=s;let i=e[n.key];r.value=typeof i=="string"?i:n.value,r.addEventListener("input",()=>t(n.key,r.value));let o=document.createElement("span");return o.textContent=n.label,a.append(r,o),a}var ke=1e3/60,z=class{constructor(e){this.fps=B(e,".meter__fps"),this.verdict=B(e,".meter__verdict"),this.stats=B(e,".meter__stats"),this.graph=B(e,".meter__graph")}update(e){let t=Math.round(e.fps);this.fps.textContent=e.running&&t>0?String(t):"\u2014";let a=e.running?t>=55?"ok":t>=40?"warn":"bad":"idle";this.fps.dataset.state=a,this.verdict.dataset.state=a,this.verdict.textContent=ze(e,a),this.stats.innerHTML="";for(let[s,r]of[["Temps JS m\xE9dian",`${e.median.toFixed(2)} ms`],["Temps JS p95",`${e.p95.toFixed(2)} ms`],["Backing store",`${e.pixels[0]} \xD7 ${e.pixels[1]} px`],["Charge",e.load]]){let i=document.createElement("dt");i.textContent=s;let o=document.createElement("dd");o.textContent=r,this.stats.append(i,o)}this.drawGraph(e.samples)}drawGraph(e){let t=Math.min(window.devicePixelRatio||1,2),a=this.graph.clientWidth,s=this.graph.clientHeight;if(a===0||s===0)return;this.graph.width!==Math.round(a*t)&&(this.graph.width=Math.round(a*t),this.graph.height=Math.round(s*t));let r=this.graph.getContext("2d");if(!r)return;r.setTransform(t,0,0,t,0,0),r.clearRect(0,0,a,s);let i=Math.max(ke,...e)*1.15,o=s-ke/i*s;r.strokeStyle="rgba(226, 96, 77, 0.55)",r.setLineDash([3,4]),r.beginPath(),r.moveTo(0,o),r.lineTo(a,o),r.stroke(),r.setLineDash([]),!(e.length<2)&&(r.strokeStyle="#f2b441",r.lineWidth=1.25,r.beginPath(),e.forEach((c,u)=>{let l=u/(e.length-1)*a,f=s-c/i*s;u===0?r.moveTo(l,f):r.lineTo(l,f)}),r.stroke())}};function ze(n,e){return e==="idle"?"En pause \u2014 la boucle est arr\xEAt\xE9e, rien n'est consomm\xE9.":n.gpuBound?"Le GPU sature : la cadence chute alors que le JS ne fait presque rien. Baissez l'\xE9chelle de rendu ou les octaves.":e==="ok"?n.p95>6?"Fluide, mais le JS consomme une part notable du budget. Peu de marge pour le reste de la page.":"Fluide, avec de la marge. Ce r\xE9glage passe partout.":e==="warn"?"Cadence d\xE9grad\xE9e. Visible au scroll, co\xFBteux en batterie.":"Cadence insuffisante. Ce r\xE9glage n'est pas utilisable en fond de page."}function B(n,e){let t=n.querySelector(e);if(!t)throw new Error(`\xC9l\xE9ment manquant dans le gabarit : ${e}`);return t}function v(n){let e=document.getElementById(n);if(!e)throw new Error(`\xC9l\xE9ment introuvable : #${n}`);return e}var He=v("stage"),Ne=v("rail"),qe=v("controls"),Ge=v("claim"),we=v("reality"),Oe=v("effect-title"),We=v("effect-surface"),Ue=v("motion-banner"),k=new D(He),Je=new z(v("meter")),N=new Map,S=A[0].id;function Se(n){let e=N.get(n);if(e)return e;let t=U(V(n));return N.set(n,t),t}function ne(n){S=n;let e=V(n),t=Se(n);Oe.textContent=e.name,We.textContent=`${e.family} \xB7 ${e.surface==="dom"?"DOM / CSS":e.surface==="webgl"?"WebGL":"Canvas 2D"}`,Ge.textContent=e.claim,we.textContent=e.reality,xe(Ne,n,ne),Ee(qe,e,t,je),k.load(e,t)}function je(n,e){let t={...Se(S),[n]:e};N.set(S,t),k.setParams(t)}var q=v("render-scale"),_e=v("render-scale-value");q.addEventListener("input",()=>{let n=Number(q.value);_e.textContent=`${n.toFixed(2)}\xD7`,k.setRenderScale(n)});var G=v("dpr-cap"),Le=v("dpr-cap-value");G.addEventListener("input",()=>{let n=Number(G.value);Le.textContent=`${n.toFixed(1)}\xD7`,k.setDprCap(n)});var Me=v("play"),H=!0;Me.addEventListener("click",()=>{H=!H,k.setRunning(H),Me.textContent=H?"Mettre en pause":"Reprendre"});v("restart").addEventListener("click",()=>k.restart());v("reset").addEventListener("click",()=>{N.set(S,U(V(S))),ne(S)});function Te(){Ue.hidden=!k.reducedMotion}v("motion-override").addEventListener("click",()=>{k.overrideReducedMotion(),Te()});k.onMetrics(n=>Je.update(n));k.onError(n=>{we.textContent=`Cet effet n'a pas pu d\xE9marrer : ${n}`});k.setDprCap(Number(G.value));k.setRenderScale(Number(q.value));_e.textContent=`${Number(q.value).toFixed(2)}\xD7`;Le.textContent=`${Number(G.value).toFixed(1)}\xD7`;ne(S);Te();})();
+
+</script>
+</body>
+</html>
