@@ -74,9 +74,47 @@ if (!existsSync(join(SORTIE, "index.html"))) {
 const serveur = servir();
 await new Promise<void>((resoudre) => serveur.listen(PORT, resoudre));
 
-const navigateur = await puppeteer.launch();
+/**
+ * `headless: "shell"` et non le headless par défaut : mesuré sur cette machine
+ * (2026-08-12), le nouveau mode bride son compositeur à ~10 i/s même sur une
+ * page vide — toutes les viz sortaient à 10 i/s « GPU-bound », y compris un
+ * effet à 0,1 ms de JavaScript. Le shell tient les 60 i/s attendues.
+ */
+const navigateur = await puppeteer.launch({ headless: "shell" });
 const page = await navigateur.newPage();
 await page.setViewport({ width: 1440, height: 1000, deviceScaleFactor: 1 });
+
+/**
+ * ÉTALONNAGE AVANT MESURE. Un environnement peut brider `requestAnimationFrame`
+ * (mode efficacité Windows, compositeur headless…) : les chiffres seraient
+ * alors ceux du bridage, pas des viz — et ils seraient tamponnés. Un instrument
+ * doit crier quand il mesure du vide ; il doit aussi crier quand il mesure
+ * dans une pièce déformée.
+ */
+await page.goto("about:blank");
+const plafondRaf = await page.evaluate(
+  () =>
+    new Promise<number>((resoudre) => {
+      let images = 0;
+      const debut = performance.now();
+      const boucle = () => {
+        images += 1;
+        if (performance.now() - debut > 2000) resoudre(Math.round(images / 2));
+        else requestAnimationFrame(boucle);
+      };
+      requestAnimationFrame(boucle);
+    }),
+);
+if (plafondRaf < 55) {
+  console.error(
+    `\nROUGE — l'environnement plafonne a ${plafondRaf} i/s sur une page vide.` +
+      "\nToute mesure serait celle du bridage, pas des viz. Bench refuse.\n",
+  );
+  await navigateur.close();
+  serveur.close();
+  process.exit(1);
+}
+console.log(`Etalonnage : page vide a ${plafondRaf} i/s — environnement sain.`);
 
 /**
  * UNE VIZ À LA FOIS — condition pour que le chiffre veuille dire quelque chose.
