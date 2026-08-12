@@ -4,13 +4,12 @@ last_verified: 2026-08-12
 expires: never
 ---
 
-# Handoff — 2026-08-12 · étapes 1, 2 et 3
+# Handoff — 2026-08-12 · étapes 1, 2, 3 et 4
 
 **Session** : première de `claude-viz-light`. Point de départ : étape 0 seule
 verte, aucun code applicatif.
-**Point d'arrivée** : étapes **1, 2 et 3 vertes**. La prochaine session ouvre
-sur l'**étape 4** (contrat de données : schéma manifest + registre + générateur
-`CATALOG.md`).
+**Point d'arrivée** : étapes **1 à 4 vertes**. La prochaine session ouvre sur
+l'**étape 5** (socle viz : hooks core + instrument + coquille UI).
 
 ---
 
@@ -38,6 +37,22 @@ Table d'épinglage complète : `evidence/versions-epinglees.md`.
 `pnpm verify` = docs → format:check → lint → typecheck → dup → test → build,
 branchée en pre-push. Seize gates calibrés dans les deux sens, sorties réelles
 dans `evidence/socle-qualite.md`.
+
+### Étape 4 — contrat de données
+
+Schéma de manifest, validateur, rendu de `CATALOG.md`, générateur de registre.
+Logique pure dans `src/core/`, entrées-sorties isolées dans
+`scripts/build-catalog.ts`. Le gate rougit sur manifest invalide **et** sur perf
+non mesurée. Plancher de couverture posé ici, mesuré avant d'être fixé.
+
+### Décision de l'utilisateur en cours de session
+
+« Aligne les p5 sur le tunnel de points » · « le tunnel de points est un
+raffinement, une amélioration de ce style ». → **deux rendus par viz p5**,
+`origine` et `aligne`, `aligne` par défaut
+([ADR 0008](../decisions/0008-deux-rendus-par-viz-origine-et-aligne.md)).
+Le schéma de manifest les porte déjà. **La mise en œuvre visible est à
+l'étape 6** — c'est ce que l'utilisateur attend de voir.
 
 ---
 
@@ -89,14 +104,22 @@ Le Tunnel, lui, est tranché : la référence est la version **HSB**, vérifiée
 le code rapatrié (formule `i / 353`, `hsbToRgba` custom, traînée par fondu,
 Perlin optionnel, rotation souris, bucketing des teintes à 3°).
 
-### 3.3 La dette assumée de l'étape 3
+### 3.3 Deux pannes de gate trouvées à l'étape 4 — à ne pas réintroduire
 
-Le **plancher de couverture est vide** (`vitest.config.ts`,
-`coverage.include: []`) et c'est délibéré : sur un dépôt sans logique métier, un
-plancher affiche 100 % sur des coquilles. **C'est à l'étape 4 de le poser**, sur
-le schéma de manifest et le registre, **mesuré avant d'être fixé**, jamais
-abaissé ensuite. Si l'étape 4 se termine sans ce plancher, la promesse du
-`SPEC.md §5` est en défaut.
+- **`pnpm verify` lançait `test` et non `test:cov`** : le plancher de couverture
+  était écrit dans `vitest.config.ts` et **exécuté par rien**. C'est
+  littéralement « un seuil documenté que rien n'exécute n'est pas un gate »,
+  survenu à l'intérieur du dépôt qui énonce la règle.
+- **Le rapport `text` de v8 omet les fichiers couverts à 100 %** sur les quatre
+  colonnes. `generer.ts` en avait disparu et paraissait hors périmètre. Vérifier
+  via `coverage/coverage-summary.json`, jamais via le tableau console.
+
+### 3.4 Le gate du catalogue bloque tant que le bench n'a pas tourné
+
+`pnpm catalog` refuse de publier une viz dont `perf` vaut `null`. Conséquence
+concrète pour l'étape 6 : **mesurer chaque viz au fur et à mesure de sa
+migration** plutôt que d'attendre l'étape 7 en bloc, sinon `pnpm verify` reste
+rouge pendant toute la migration. C'est voulu — l'absence de mesure doit gêner.
 
 ### 3.4 Le socle a déjà mordu une fois
 
@@ -108,8 +131,8 @@ rappel que l'auto-revue ne suffit pas (`evidence/socle-qualite.md §4`).
 
 ## 4. État à la passation
 
-- Fil d'Ariane : **0-1-2-3 ✅**, 4 à 10 ⬜.
-- 4 commits sur `master`. **Aucun push, aucun remote** — conforme.
+- Fil d'Ariane : **0-1-2-3-4 ✅**, 5 à 10 ⬜.
+- 6 commits sur `master`. **Aucun push, aucun remote** — conforme.
 - `pnpm verify` → **exit 0**. `node scripts/check-docs.mjs` → **VERT**.
 - Puppeteer opérationnel (Chrome 151.0.7922.77) — prêt pour les captures de
   fidélité (étape 6) et le bench (étape 7).
