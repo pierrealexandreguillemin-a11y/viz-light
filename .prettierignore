@@ -8,3 +8,9 @@ coverage/
 # leurs bundles minifiés. Les formater détruirait la trace de provenance et
 # invaliderait les SHA-256 consignés dans docs/evidence/sources-viz-light.md.
 sources/
+# Généré par `pnpm catalog`. Sa forme est décidée par
+# `src/core/catalogue/rendre.ts` et gardée par ses tests ; le reformater ici le
+# remettrait en conflit à chaque régénération. Le registre généré, lui, RESTE
+# vérifié : il sort déjà conforme, et c'est une contrainte utile sur le
+# générateur de code.
+CATALOG.md

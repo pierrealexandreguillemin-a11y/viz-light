@@ -1,0 +1,187 @@
+{
+  "slug": "tunnel-de-points",
+  "nom": "Tunnel de points",
+  "ambiance": "Une gorge de poussière lumineuse qui respire et se tord lentement.",
+  "origine": {
+    "source": "tweet-sketches",
+    "reference": "29 juillet 2026 — Tunnel de points (HSB)",
+    "auteur": "@yuruyurau",
+    "date": "2026-07-29"
+  },
+  "runtime": "canvas2d",
+  "tags": ["tunnel", "particules", "hsb", "souris"],
+  "rendus": [
+    {
+      "id": "origine",
+      "libelle": "Origine",
+      "defaut": false,
+      "params": [
+        {
+          "cle": "points",
+          "libelle": "Points",
+          "min": 1000,
+          "max": 12000,
+          "pas": 500,
+          "valeur": 10000
+        },
+        {
+          "cle": "vitesse",
+          "libelle": "Vitesse",
+          "min": 0.005,
+          "max": 0.15,
+          "pas": 0.005,
+          "valeur": 0.0393
+        },
+        {
+          "cle": "trainee",
+          "libelle": "Traînée",
+          "min": 5,
+          "max": 255,
+          "pas": 5,
+          "valeur": 255,
+          "note": "255 efface le fond à chaque image — le sketch d'origine n'a pas de traînée."
+        },
+        {
+          "cle": "alphaPoint",
+          "libelle": "Opacité des points",
+          "min": 20,
+          "max": 255,
+          "pas": 5,
+          "valeur": 96
+        },
+        {
+          "cle": "saturation",
+          "libelle": "Saturation",
+          "min": 0,
+          "max": 100,
+          "pas": 5,
+          "valeur": 0,
+          "note": "0 = blanc, la couleur exacte du sketch publié."
+        },
+        {
+          "cle": "teinteBase",
+          "libelle": "Teinte de base",
+          "min": 0,
+          "max": 360,
+          "pas": 5,
+          "valeur": 200
+        },
+        {
+          "cle": "teinteEtendue",
+          "libelle": "Étendue de teinte",
+          "min": 0,
+          "max": 180,
+          "pas": 5,
+          "valeur": 60
+        },
+        {
+          "cle": "influenceSouris",
+          "libelle": "Influence souris",
+          "min": 0,
+          "max": 1,
+          "pas": 0.05,
+          "valeur": 0
+        }
+      ]
+    },
+    {
+      "id": "aligne",
+      "libelle": "Aligné",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "points",
+          "libelle": "Points",
+          "min": 1000,
+          "max": 12000,
+          "pas": 500,
+          "valeur": 6000
+        },
+        {
+          "cle": "vitesse",
+          "libelle": "Vitesse",
+          "min": 0.005,
+          "max": 0.15,
+          "pas": 0.005,
+          "valeur": 0.0393
+        },
+        {
+          "cle": "trainee",
+          "libelle": "Traînée",
+          "min": 5,
+          "max": 255,
+          "pas": 5,
+          "valeur": 40
+        },
+        {
+          "cle": "alphaPoint",
+          "libelle": "Opacité des points",
+          "min": 20,
+          "max": 255,
+          "pas": 5,
+          "valeur": 150
+        },
+        {
+          "cle": "saturation",
+          "libelle": "Saturation",
+          "min": 0,
+          "max": 100,
+          "pas": 5,
+          "valeur": 70
+        },
+        {
+          "cle": "teinteBase",
+          "libelle": "Teinte de base",
+          "min": 0,
+          "max": 360,
+          "pas": 5,
+          "valeur": 200
+        },
+        {
+          "cle": "teinteEtendue",
+          "libelle": "Étendue de teinte",
+          "min": 0,
+          "max": 180,
+          "pas": 5,
+          "valeur": 60
+        },
+        {
+          "cle": "influenceSouris",
+          "libelle": "Influence souris",
+          "min": 0,
+          "max": 1,
+          "pas": 0.05,
+          "valeur": 0.3
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": ["TunnelDePoints.tsx", "algo.ts", "manifest.json"],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/FiletCout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-08-12",
+    "machine": "win32 x64 · Chrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 3.1,
+    "jsP95Ms": 3.55,
+    "gpuBound": false
+  },
+  "variantes": [
+    "29 juillet 2026 — original (version golfée, rendue par le préréglage « Origine »)",
+    "atelier-generatif / tunnel (même reprise, paramétrée autrement)"
+  ]
+}

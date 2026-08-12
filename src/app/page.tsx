@@ -1,25 +1,40 @@
+import { Legende } from "@/core/composants/Legende.tsx";
+import { Planche } from "@/core/composants/Planche.tsx";
+import { REGISTRE } from "@/viz/registre.genere.ts";
+
 /**
- * Page d'accueil — coquille provisoire de l'étape 2 (scaffold).
+ * LA PLANCHE — page d'accueil du catalogue (ADR 0009).
  *
- * Elle n'existe que pour prouver que la chaîne Next 16 / React 19 / Tailwind 4
- * construit et rend en OKLCH. La galerie réelle arrive à l'étape 5 ; le
- * catalogue qu'elle affichera est généré depuis les manifests (étape 4).
+ * L'en-tête est court et ne porte QUE l'identité : dans un catalogue de
+ * visuels, l'espace appartient aux visuels. Ce qui explique la planche descend
+ * contre la planche (`Legende`), là où on en a besoin.
  */
-export default function Home() {
+export default function Accueil() {
+  const entrees = Object.values(REGISTRE);
+
   return (
-    <main className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center gap-6 px-6 py-16">
-      <p className="text-sm tracking-[0.2em] text-(--color-accent) uppercase">Viz Light</p>
-      <h1 className="text-4xl font-semibold text-balance text-(--color-ink)">
-        Le catalogue est en cours de montage.
-      </h1>
-      <p className="max-w-prose text-(--color-ink-muted)">
-        Les 3 artifacts sources sont rapatriés et le socle se câble. La galerie, les fiches de viz
-        et le contrat d’extraction arrivent ensuite — étape par étape, chacune vérifiée avant la
-        suivante.
-      </p>
-      <p className="text-sm text-(--color-ink-faint)">
-        Avancement détaillé : <code>docs/SPEC.md</code>, section « Fil d’Ariane ».
-      </p>
+    <main className="mx-auto flex min-h-dvh w-full max-w-[1400px] flex-col gap-10 px-4 py-10 sm:px-8">
+      <header className="flex flex-col gap-4">
+        <p className="etiquette">
+          Planche contact · {entrees.length} spécimen{entrees.length > 1 ? "s" : ""}
+        </p>
+        <h1 className="text-5xl leading-[0.85] tracking-tighter text-(--color-os) sm:text-7xl">
+          viz<span className="text-(--color-ambre)">·</span>light
+        </h1>
+        <p className="voix-humaine max-w-prose text-base text-(--color-os-mat)">
+          Des fonds animés à regarder, et à emporter tels quels.
+        </p>
+      </header>
+
+      <div className="flex flex-1 flex-col gap-3">
+        <Legende />
+        <Planche entrees={entrees} />
+      </div>
+
+      <footer className="etiquette border-t border-(--color-filet) pt-6 normal-case">
+        Extraction : <code className="text-(--color-os-mat)">CATALOG.md</code> donne, pour chaque
+        viz, la liste exacte des fichiers à copier.
+      </footer>
     </main>
   );
 }

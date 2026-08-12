@@ -108,8 +108,18 @@ describe("genererRegistre", () => {
 
   it("charge chaque viz paresseusement — sinon tout entre dans le bundle", () => {
     const source = genererRegistre([{ slug: "tunnel-de-points", composant: "TunnelDePoints" }]);
-    expect(source).toContain('charger: () => import("./tunnel-de-points/TunnelDePoints.tsx")');
+    expect(source).toContain(
+      'Composant: lazy(() => import("./tunnel-de-points/TunnelDePoints.tsx"))',
+    );
     expect(source).toContain('import manifest0 from "./tunnel-de-points/manifest.json"');
+  });
+
+  it("appelle lazy() au niveau du module, jamais dans un rendu", () => {
+    const source = genererRegistre([{ slug: "aurore", composant: "Aurore" }]);
+    // Un composant paresseux recréé pendant le rendu redémarrerait l'animation
+    // à chaque re-rendu de la planche.
+    expect(source).not.toContain("useMemo");
+    expect(source.indexOf("lazy(")).toBeGreaterThan(source.indexOf("export const REGISTRE"));
   });
 
   it("trie par slug pour que la regeneration soit reproductible", () => {

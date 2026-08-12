@@ -5,7 +5,7 @@
   "type": "module",
   "packageManager": "pnpm@10.30.2",
   "engines": {
-    "node": ">=24.5.0"
+    "node": "\u003e=24.5.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
@@ -27,8 +27,9 @@
     "dup": "jscpd src tests",
     "docs": "node scripts/check-docs.mjs",
     "catalog": "node scripts/build-catalog.ts",
-    "verify": "pnpm docs && pnpm catalog && pnpm format:check && pnpm lint && pnpm typecheck && pnpm dup && pnpm test:cov && pnpm build",
-    "prepare": "husky"
+    "verify": "pnpm docs \u0026\u0026 pnpm catalog \u0026\u0026 pnpm format:check \u0026\u0026 pnpm lint \u0026\u0026 pnpm typecheck \u0026\u0026 pnpm dup \u0026\u0026 pnpm test:cov \u0026\u0026 pnpm build",
+    "prepare": "husky",
+    "bench": "node scripts/bench.ts"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -48,6 +49,9 @@
     "@commitlint/cli": "21.2.1",
     "@commitlint/config-conventional": "21.2.0",
     "@tailwindcss/postcss": "4.3.3",
+    "@testing-library/dom": "10.4.1",
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/react": "16.3.2",
     "@types/node": "24.13.3",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",

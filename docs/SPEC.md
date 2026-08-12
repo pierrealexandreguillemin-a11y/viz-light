@@ -43,12 +43,16 @@ naît là-bas est rapatrié ici ([ADR 0001](decisions/0001-catalogue-unifie-dans
   └── notes.md        # optionnel : éditorial, toggles pédago, pièges
   ```
 
-- **Socle = hooks React partagés** (`src/core/hooks/`) : `useAnimationLoop`,
-  `useCanvas` (plafond DPR, pause onglet caché / hors viewport,
-  `prefers-reduced-motion`), `useInstrument`. Runtimes couverts : canvas2d, webgl
-  brut, p5 (mode instance piloté par notre boucle), dom-css. Soupape pour stack
-  incompatible : HTML autonome dans `public/labs/` rendu via `<IframeViz>`,
-  catalogué avec le même manifest.
+- **Socle = hooks React partagés** (`src/core/hooks/`) : `useBoucleAnimation`,
+  `useSurface` (plafond DPR), `useVisible` (pause onglet caché / hors viewport),
+  `usePreferenceMouvement`, `useInstrument` — composés par
+  `<SceneViz>`. **Le contrat entre une viz et le socle est
+  `src/core/viz/contrat.ts`** : la viz reçoit un élément hôte et rend
+  `{ frame, redimensionner?, demonter? }`. Il ne nomme aucun runtime, ce qui
+  couvre canvas2d, webgl brut, p5 (mode instance piloté par notre boucle) et
+  dom-css sans adaptateur par famille. Soupape pour stack incompatible : HTML
+  autonome dans `public/labs/` rendu via `<IframeViz>`, catalogué avec le même
+  manifest.
 - **Registre auto-découvert** depuis les manifests ; chargement paresseux par viz
   (p5.js n'est chargé que pour les sketches p5).
 - **Instrument de mesure en socle**, replié par défaut dans la vitrine : cadence
@@ -161,8 +165,9 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | 2 | Épinglage versions latest stables + scaffold Next 16 (`evidence/versions-epinglees.md`) | ✅ 2026-08-12 |
 | 3 | Socle qualité câblé + calibré dans les deux sens (`evidence/socle-qualite.md`) | ✅ 2026-08-12 |
 | 4 | Contrat de données : schéma manifest + registre + générateur CATALOG.md (gate) | ✅ 2026-08-12 |
-| 5 | Socle viz : hooks core + instrument + coquille UI (galerie / scène / panneau) | ⬜ |
-| 6 | Migration des viz par lots, fidélité par captures comparées, dédup | ⬜ |
+| 5 | Socle viz : hooks core + instrument + coquille UI, prouvé par une viz réelle | ✅ 2026-08-12 |
+| 5b | **Direction artistique + revue UI/UX** ([ADR 0009](decisions/0009-direction-artistique-planche-contact.md)) — repassée à l'étape 8, sur planche pleine | ✅ 2026-08-12 |
+| 6 | Migration des viz par lots, fidélité par captures comparées, dédup | 🟡 1/31 (Tunnel de points) |
 | 7 | Bench Puppeteer + perf tamponnée dans les manifests | ⬜ |
 | 8 | Recette utilisateur (revue visuelle complète par Pierre-Alexandre) | ⬜ |
 | 9 | Déploiement Vercel + CATALOG.md final | ⬜ |

@@ -22,8 +22,17 @@ const EXTENSIONS = [".css", ".ts", ".tsx"];
 
 /** `#abc`, `#aabbcc`, `#aabbccdd` — mais pas `#region` ni une ancre `#top`. */
 const HEX_COLOR = /#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})\b/gi;
-/** `rgb(...)`, `rgba(...)`, `hsl(...)`, `hsla(...)`. */
-const LEGACY_COLOR_FN = /\b(?:rgba?|hsla?)\s*\(/gi;
+/**
+ * `rgb(...)`, `rgba(...)`, `hsl(...)`, `hsla(...)`.
+ *
+ * AUCUN espace toléré avant la parenthèse, et c'est une correction de
+ * calibration, pas un détail : la version tolérante (`\s*\(`) rougissait sur la
+ * phrase « aucune valeur hex/hsl (CLAUDE.md §5.3) » écrite en commentaire — le
+ * gate se déclenchait sur l'énoncé de sa propre règle. En CSS comme en JS, un
+ * appel de fonction n'a pas d'espace avant sa parenthèse ; exiger l'accolement
+ * supprime le faux positif sans rien laisser passer.
+ */
+const LEGACY_COLOR_FN = /\b(?:rgba?|hsla?)\(/gi;
 
 function walk(dir: string): string[] {
   return readdirSync(dir).flatMap((name) => {
@@ -54,6 +63,20 @@ describe("couleurs de l'UI", () => {
 
   it("balaie effectivement des fichiers (sinon le gate ne garde rien)", () => {
     expect(files.length).toBeGreaterThan(0);
+  });
+
+  it("attrape une vraie couleur héritée et ignore une prose qui la nomme", () => {
+    const attrape = (source: string) => offendingLines(source, LEGACY_COLOR_FN).length;
+    expect(attrape("color: rgba(255, 0, 0, 0.4);")).toBe(1);
+    expect(attrape("color: hsl(200 50% 40%);")).toBe(1);
+    // Un commentaire qui énonce la règle n'est pas une infraction à la règle.
+    expect(attrape("/* aucune valeur hex/hsl (CLAUDE.md §5.3) */")).toBe(0);
+  });
+
+  it("attrape un hexadécimal et ignore une ancre ou un mot-dièse", () => {
+    const attrape = (source: string) => offendingLines(source, HEX_COLOR).length;
+    expect(attrape('background: "#111827";')).toBe(1);
+    expect(attrape('href="#sommaire"')).toBe(0);
   });
 
   it.each(files.map(({ full, rel }) => [rel, full]))(

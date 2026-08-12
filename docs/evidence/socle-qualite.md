@@ -102,6 +102,49 @@ frontière est le dossier, pas le goût.
 bien trouvé des fichiers. Sans lui, un `src/` déplacé rendrait le test vert en
 ne vérifiant plus rien — le pire mode de panne d'un gate.
 
+## 3.3 Le test de montage (`tests/scene-viz.test.tsx`) — ajouté sur un vrai bug
+
+Le 2026-08-12, l'effet de montage de `SceneViz` lisait les dimensions fournies
+par le `ResizeObserver` **tout en les excluant de ses dépendances** via un
+`eslint-disable`. À l'instant où l'hôte apparaît, la mesure n'existe pas encore :
+l'effet sortait par sa garde et ne rejouait jamais.
+
+**Aucune viz ne se montait. Et l'instrument affichait 59,9 i/s et 0 ms de
+JavaScript** — il mesurait une boucle vide. Le bench a failli tamponner ces
+chiffres dans le manifest. C'est le pire mode de panne possible pour ce projet :
+un instrument qui répond avec assurance sur du vide.
+
+Ce qu'aucun autre gate ne voyait : le fichier compilait, faisait moins de 300
+lignes, n'était pas dupliqué, était formaté, et les chiffres semblaient
+plausibles. **Seule une assertion qui exige un élément dans l'hôte l'attrape.**
+
+Calibration, dans les deux sens :
+
+```
+# bug réintroduit (garde sur `dimensions`, hors dépendances)
+tests/scene-viz.test.tsx (4 tests | 4 failed)
+  × monte réellement la viz dans le DOM
+  × transmet des dimensions non nulles — un hôte de 0 px ne dessine rien
+  × démonte la viz et vide l'hôte
+  × affiche une carte d'erreur au lieu de tomber quand l'algo échoue
+
+# après correction
+Tests  4 passed (4)
+```
+
+**Leçon généralisable** : un chiffre produit par un instrument ne prouve rien
+tant qu'on n'a pas vérifié que l'objet mesuré existait. Le diagnostic qui a
+tranché lisait le canvas : `canvasPresent: false`, `pixelsAllumes: 0`.
+
+## 3.4 Correction de calibration du test OKLCH
+
+La première version refusait `\b(?:rgba?|hsla?)\s*\(` — donc **rougissait sur la
+phrase « aucune valeur hex/hsl (CLAUDE.md §5.3) » écrite en commentaire** : le
+gate se déclenchait sur l'énoncé de sa propre règle. Un appel de fonction n'a
+jamais d'espace avant sa parenthèse ; exiger l'accolement supprime le faux
+positif sans rien laisser passer. Deux cas de test gardent désormais les deux
+sens (il attrape `rgba(…)`, il ignore la prose).
+
 ## 4. Ce que ce socle ne peut PAS voir
 
 - ~~La couverture n'a pas encore de plancher~~ — **posé à l'étape 4, le

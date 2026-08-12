@@ -1,23 +1,44 @@
 @import "tailwindcss";
 
 /**
- * JETONS DE COULEUR — OKLCH PARTOUT, aucune valeur hex/hsl en dur (CLAUDE.md §5.3).
+ * DIRECTION ARTISTIQUE — « planche contact » (ADR 0009).
  *
- * Le catalogue est un fond noir sur lequel des viz s'allument : la palette reste
- * volontairement sombre et neutre pour ne jamais concurrencer une viz. Chaque
- * jeton est déclaré ICI et nulle part ailleurs — un composant qui a besoin d'une
- * couleur en demande une, il n'en invente pas.
+ * OKLCH partout, aucune valeur hex/hsl (CLAUDE.md §5.3, gate :
+ * `tests/couleurs-oklch.test.ts`).
+ *
+ * LA RÈGLE QUI GOUVERNE TOUTE LA PALETTE : les viz sont froides (les sketches
+ * dessinent des teintes HSB cyan/magenta sur un `background(9)` presque noir).
+ * L'interface est donc CHAUDE — os et ambre — pour qu'elle ne puisse jamais
+ * entrer en concurrence avec une viz. Un seul ton froid subsiste,
+ * `--color-mesure`, réservé aux chiffres de l'instrument : la mesure est froide,
+ * le reste ne l'est pas.
  */
 @theme {
-  --color-canvas: oklch(14% 0.012 265);
-  --color-surface: oklch(19% 0.014 265);
-  --color-surface-raised: oklch(24% 0.016 265);
-  --color-border: oklch(32% 0.018 265);
-  --color-ink: oklch(95% 0.008 265);
-  --color-ink-muted: oklch(72% 0.014 265);
-  --color-ink-faint: oklch(56% 0.014 265);
-  --color-accent: oklch(78% 0.152 196);
-  --color-accent-quiet: oklch(52% 0.098 196);
+  /* L'encre : le fond de planche, très légèrement bleu — la teinte de
+     `background(9)` des sketches d'origine. */
+  --color-encre: oklch(12% 0.014 264);
+  --color-encre-levee: oklch(16.5% 0.016 264);
+
+  /* L'os : le chrome, chaud, pour ne pas rivaliser avec les viz. */
+  --color-os: oklch(93% 0.014 78);
+  --color-os-mat: oklch(70% 0.013 74);
+  --color-os-pale: oklch(52% 0.011 74);
+
+  /* Le filet de planche. Ambre là où une perf est mesurée, os sinon —
+     la grille encode l'état de la mesure (ADR 0009). */
+  --color-filet: oklch(30% 0.008 74);
+  --color-filet-mesure: oklch(46% 0.052 62);
+
+  /* L'ambre : annotation, accent, une seule couleur d'emphase. */
+  --color-ambre: oklch(79% 0.129 62);
+  --color-ambre-sourd: oklch(58% 0.092 62);
+
+  /* Le froid, réservé à l'instrument. */
+  --color-mesure: oklch(78% 0.088 218);
+
+  --font-machine:
+    ui-monospace, "Cascadia Code", "SF Mono", "Menlo", "Consolas", "Liberation Mono", monospace;
+  --font-humain: system-ui, -apple-system, "Segoe UI", "Helvetica Neue", "Noto Sans", sans-serif;
 }
 
 @layer base {
@@ -26,15 +47,28 @@
   }
 
   body {
-    background-color: var(--color-canvas);
-    color: var(--color-ink);
+    background-color: var(--color-encre);
+    color: var(--color-os);
+    font-family: var(--font-machine);
+    /* Le mono en interface a besoin d'être resserré pour ne pas paraître
+       étalé : c'est ce qui le fait lire comme un choix et non comme un
+       repli. */
+    letter-spacing: -0.02em;
   }
 
-  /**
-   * Respect de `prefers-reduced-motion` au niveau du document (SPEC.md §6).
-   * Le socle viz coupera en plus ses boucles d'animation — cette règle-ci ne
-   * couvre que les transitions CSS de la coquille, pas les canvas.
-   */
+  /* La seule voix humaine de la page : la phrase d'ambiance. */
+  .voix-humaine {
+    font-family: var(--font-humain);
+    font-style: italic;
+    letter-spacing: normal;
+  }
+
+  /* Repère de focus visible, sur toute cible atteignable au clavier. */
+  :focus-visible {
+    outline: 2px solid var(--color-ambre);
+    outline-offset: 2px;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -44,5 +78,79 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+}
+
+@layer components {
+  /**
+   * LA PLANCHE. Filets partagés entre cellules : les bordures se touchent au
+   * lieu de se doubler, ce qui donne le trait unique et continu d'une planche
+   * contact plutôt qu'une grille de cartes.
+   */
+  .planche {
+    display: grid;
+    gap: 1px;
+    /* Les cellules portent leur propre filet, la grille n'en porte AUCUN.
+       Peindre le fond de la grille pour obtenir les filets laissait une dalle
+       grise dans les colonnes vides de la dernière rangée — spectaculaire avec
+       un seul spécimen, où elle occupait la moitié de l'écran. */
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    /* Les cellules se dimensionnent sur leur contenu au lieu de s'étirer sur la
+       plus haute de la rangée. */
+    align-content: start;
+    align-items: start;
+  }
+
+  .planche__cellule {
+    background-color: var(--color-encre);
+    display: flex;
+    flex-direction: column;
+    /* `outline` et non `border` : les filets de deux cellules voisines se
+       superposent dans le pas de 1px au lieu de se doubler, ce qui donne le
+       trait continu d'une planche. */
+    outline: 1px solid var(--color-filet);
+    outline-offset: -1px;
+  }
+
+  /* Mesurée : le filet passe à l'ambre sourd. La grille dit ce qui est prouvé. */
+  .planche__cellule--mesuree {
+    outline-color: var(--color-filet-mesure);
+    z-index: 1;
+  }
+
+  /** L'étiquette de spécimen : provenance, en voix de machine. */
+  .etiquette {
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-os-pale);
+  }
+
+  /**
+   * LE FILET DE COÛT — l'élément signature (ADR 0009).
+   *
+   * Une image dure 16,7 ms à 60 i/s. La barre montre quelle PART de ce budget
+   * le JavaScript consomme. Une viz GPU-bound affiche une barre presque vide
+   * tout en tournant lentement : c'est la leçon « ce qu'on lit vs ce que la
+   * mesure montre » rendue visible sans une phrase.
+   */
+  .cout {
+    height: 3px;
+    width: 100%;
+    background-color: var(--color-filet);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cout__js {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    background-color: var(--color-mesure);
+  }
+
+  .cout--gpu .cout__js {
+    background-color: var(--color-ambre-sourd);
   }
 }

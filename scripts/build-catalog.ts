@@ -60,21 +60,7 @@ function lireManifest(slug: string): VizManifest | Echec {
 
   const problemes = validerManifest(brut, slug);
   if (problemes.length > 0) return { slug, problemes };
-
-  const manifest = enManifest(brut);
-  if (manifest.perf === null) {
-    return {
-      slug,
-      problemes: [
-        {
-          chemin: "perf",
-          message:
-            "non mesurée. Lance `pnpm bench` : un catalogue promet un coût mesuré, pas une estimation.",
-        },
-      ],
-    };
-  }
-  return manifest;
+  return enManifest(brut);
 }
 
 const estEchec = (v: VizManifest | Echec): v is Echec => "problemes" in v;
@@ -123,7 +109,24 @@ const ecrits = [
   registreChange ? relative(RACINE, SORTIE_REGISTRE) : null,
 ].filter((v) => v !== null);
 
-console.log(
-  `\nVERT — ${manifests.length} viz publiee(s).` +
-    (ecrits.length > 0 ? ` Regenere : ${ecrits.join(", ")}.` : " Rien a regenerer."),
-);
+const rendu = ecrits.length > 0 ? ` Regenere : ${ecrits.join(", ")}.` : " Rien a regenerer.";
+
+/**
+ * LA PERF MANQUANTE EST CONTRÔLÉE **APRÈS** L'ÉCRITURE, ET C'EST DÉLIBÉRÉ.
+ *
+ * Le bench a besoin du site construit, qui a besoin du registre, que ce script
+ * écrit — refuser d'écrire tant que la perf manque enfermerait le gate dans un
+ * cycle où il réclame une mesure qu'il empêche de produire. Le gate n'est pas
+ * affaibli pour autant : il sort toujours en 1, donc `pnpm verify` reste rouge
+ * tant qu'une viz n'est pas mesurée.
+ */
+const nonMesurees = manifests.filter((m) => m.perf === null);
+if (nonMesurees.length > 0) {
+  console.log(`\nEcrit :${rendu}`);
+  console.error(`\nROUGE — ${nonMesurees.length} viz sans perf mesuree :\n`);
+  for (const m of nonMesurees) console.error(`  x  ${m.slug}`);
+  console.error("\nLance `pnpm bench` : un catalogue promet un cout mesure, pas une estimation.\n");
+  process.exit(1);
+}
+
+console.log(`\nVERT — ${manifests.length} viz publiee(s).${rendu}`);

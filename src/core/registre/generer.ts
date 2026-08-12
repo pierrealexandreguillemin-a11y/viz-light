@@ -21,14 +21,27 @@ export interface EntreeRegistre {
 const BANNIERE = `// GÉNÉRÉ par \`pnpm catalog\` — ne pas éditer à la main.
 // Toute modification sera écrasée à la prochaine génération.`;
 
-const TYPES = `import type { ComponentType } from "react";
+/**
+ * `lazy()` est appelé AU NIVEAU DU MODULE, jamais pendant un rendu : un
+ * composant paresseux recréé à chaque rendu perdrait son état à chaque fois —
+ * pour une viz, cela veut dire redémarrer l'animation au moindre re-rendu de la
+ * planche. La règle `react-hooks` l'a signalé sur la première version, qui
+ * enveloppait `lazy()` dans un `useMemo`.
+ */
+/** Le registre vide n'appelle pas `lazy()` : l'importer laisserait un avertissement. */
+const importReact = (avecViz: boolean): string =>
+  avecViz
+    ? `import { lazy, type ComponentType, type LazyExoticComponent } from "react";`
+    : `import type { ComponentType, LazyExoticComponent } from "react";`;
+
+const types = (avecViz: boolean): string => `${importReact(avecViz)}
 
 import type { VizManifest } from "../core/manifest/types.ts";
 
 export interface EntreeViz {
   readonly manifest: VizManifest;
   /** Chargement paresseux : la viz n'entre dans le bundle que si on l'ouvre. */
-  readonly charger: () => Promise<{ default: ComponentType }>;
+  readonly Composant: LazyExoticComponent<ComponentType>;
 }`;
 
 function importManifest(entree: EntreeRegistre, index: number): string {
@@ -39,7 +52,7 @@ function entree(e: EntreeRegistre, index: number): string {
   return [
     `  "${e.slug}": {`,
     `    manifest: manifest${index} as VizManifest,`,
-    `    charger: () => import("./${e.slug}/${e.composant}.tsx"),`,
+    `    Composant: lazy(() => import("./${e.slug}/${e.composant}.tsx")),`,
     `  },`,
   ].join("\n");
 }
@@ -51,7 +64,7 @@ export function genererRegistre(entrees: readonly EntreeRegistre[]): string {
     return [
       BANNIERE,
       "",
-      TYPES,
+      types(false),
       "",
       "/** Aucune viz migrée pour l'instant — voir `docs/SPEC.md`, fil d'Ariane. */",
       "export const REGISTRE: Readonly<Record<string, EntreeViz>> = {};",
@@ -62,7 +75,7 @@ export function genererRegistre(entrees: readonly EntreeRegistre[]): string {
   return [
     BANNIERE,
     "",
-    TYPES,
+    types(true),
     "",
     triees.map(importManifest).join("\n"),
     "",
