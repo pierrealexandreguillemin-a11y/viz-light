@@ -79,10 +79,15 @@ JS médian de 0 ms — mesuré réellement sur `mesh-gradient` en mode composé.
    la cadence perçue rejoint celle des manifests. Piège documenté : `canvas
    .width = …` efface un canvas, une scène figée se repeint après réglage ou
    redimensionnement.
-5. **La clôture de session est mécanisée** : skill `project-session-end`
-   (`.claude/skills/`), projection minimal-fork du template
-   `C:\Dev\skills-templates` — le handoff daté reste LE mémo, aucun fichier
-   doctrine dupliqué. L'invoquer à chaque fin de session (CLAUDE.md §4).
+5. **La clôture de session est mécanisée ET gâtée** : skill
+   `project-session-end` (minimal-fork du template `C:\Dev\skills-templates`,
+   le handoff daté reste LE mémo) + **`pnpm session`**, gate déterministe à
+   cinq contrôles (arbre propre · check-docs · verify tamponné sur l'empreinte
+   exacte du code · compte du fil d'Ariane = dossiers réels · handoff ≥ dernier
+   commit). Il tourne seul à l'ouverture (hook SessionStart,
+   `.claude/settings.json`) : une clôture bâclée ne passe pas la nuit. Calibré
+   dans les deux sens — il a attrapé en conditions réelles le reformatage
+   prettier du pre-commit qui périmait le tampon verify.
 
 ## 3.5 LA REPRISE EST SANS DÉCISION — tout est déjà tranché
 
