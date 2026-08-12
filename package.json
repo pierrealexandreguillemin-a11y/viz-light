@@ -5,7 +5,7 @@
   "type": "module",
   "packageManager": "pnpm@10.30.2",
   "engines": {
-    "node": "\u003e=24.5.0"
+    "node": ">=24.5.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
@@ -25,11 +25,11 @@
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",
     "dup": "jscpd src tests",
-    "docs": "node scripts/check-docs.mjs",
     "catalog": "node scripts/build-catalog.ts",
-    "verify": "pnpm docs \u0026\u0026 pnpm catalog \u0026\u0026 pnpm format:check \u0026\u0026 pnpm lint \u0026\u0026 pnpm typecheck \u0026\u0026 pnpm dup \u0026\u0026 pnpm test:cov \u0026\u0026 pnpm build",
+    "verify": "pnpm check-docs && pnpm catalog && pnpm format:check && pnpm lint && pnpm typecheck && pnpm dup && pnpm test:cov && pnpm build",
     "prepare": "husky",
-    "bench": "node scripts/bench.ts"
+    "bench": "node scripts/bench.ts",
+    "check-docs": "node scripts/check-docs.mjs"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
