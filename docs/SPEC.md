@@ -188,7 +188,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | 4 | Contrat de données : schéma manifest + registre + générateur CATALOG.md (gate) | ✅ 2026-08-12 |
 | 5 | Socle viz : hooks core + instrument + coquille UI, prouvé par une viz réelle | ✅ 2026-08-12 |
 | 5b | **Direction artistique + revue UI/UX** ([ADR 0009](decisions/0009-direction-artistique-planche-contact.md)) — repassée à l'étape 8, sur planche pleine | ✅ 2026-08-12 |
-| 6 | Migration des viz par lots, deux régimes ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)), dédup | 🟡 **31/31 migrées** — reste l'arbitrage Flow Field (utilisateur) |
+| 6 | Migration des viz par lots, deux régimes ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)), dédup | 🟡 **31/31** migrées — reste l'arbitrage Flow Field (utilisateur) |
 | 7 | Bench Puppeteer + perf tamponnée dans les manifests | ✅ outil livré, tourne à chaque migration |
 | 8 | Recette utilisateur (revue visuelle complète par Pierre-Alexandre) | ⬜ |
 | 9 | Déploiement Vercel + CATALOG.md final | ⬜ |
@@ -198,7 +198,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 sans perf, donc chaque migration se termine par sa mesure. Mesurer en bloc à la
 fin laisserait `pnpm verify` rouge pendant tout le chantier.
 
-### État de l'étape 6 au 2026-08-13 (3e session) — 31 sur 31 migrées
+### État de l'étape 6 au 2026-08-13 (3e session) — **31/31** migrées
 
 **Les 18 sketches @yuruyurau sont migrés** (régime « œuvre », mesurés, chacun
 avec sa paire de captures comparées dans `evidence/captures/`) :
