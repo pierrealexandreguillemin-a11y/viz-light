@@ -60,13 +60,16 @@ JS médian de 0 ms — mesuré réellement sur `mesh-gradient` en mode composé.
 
 ## 3. Ce que la prochaine session doit savoir
 
-1. **Dette de preuve** : les 5 œuvres p5 n'ont toujours AUCUNE capture comparée
-   à l'original (interdit n°1). À produire avant la recette. Le rendu `origine`
-   actuel est le moteur aligné avec saturation 0 — vérifier qu'il correspond
-   bien à l'original, précisément par ces captures.
-2. **Uniformité des défauts `aligne`** : les 5 animations partagent
-   `teinteBase 200` — à l'écran elles se ressemblent beaucoup. C'est un
-   verdict esthétique : le signaler à l'utilisateur, ne pas trancher seul.
+1. **Dette de preuve SOLDÉE en fin de session** : captures comparées dans
+   `evidence/captures/` (une paire par œuvre), et formules vérifiées contre les
+   one-liners golfés lus dans la conversation source « Dé-minification et
+   conversion en TypeScript » (via Chrome). Leçon : l'artifact rapatrié est une
+   TRADUCTION — la référence de fidélité, ce sont les golfés de la conversation.
+2. **Coloration alignée corrigée** : la teinte dérive désormais de l'angle et
+   de la magnitude DE CHAQUE FORMULE (obligatoires au contrat du moteur), plus
+   jamais de la position à l'écran ; `origine` est monochrome sans traînée,
+   alpha exact par sketch ; la souris agit sur les 5. Les animations sont
+   redevenues visuellement distinctes.
 3. **Reste 16 viz** : 14 sketches p5 (une formule chacun) puis les 5 algos de
    l'Atelier (arbitrage Flow Field = utilisateur ; la version banc-essai est
    déjà migrée en `fond` avec la variante notée au manifest).
