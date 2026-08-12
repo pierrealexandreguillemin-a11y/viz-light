@@ -26,7 +26,8 @@
     "test:cov": "vitest run --coverage",
     "dup": "jscpd src tests",
     "docs": "node scripts/check-docs.mjs",
-    "verify": "pnpm docs && pnpm format:check && pnpm lint && pnpm typecheck && pnpm dup && pnpm test && pnpm build",
+    "catalog": "node scripts/build-catalog.ts",
+    "verify": "pnpm docs && pnpm catalog && pnpm format:check && pnpm lint && pnpm typecheck && pnpm dup && pnpm test:cov && pnpm build",
     "prepare": "husky"
   },
   "lint-staged": {

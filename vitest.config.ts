@@ -14,20 +14,39 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       /**
-       * ⚠ `include` et `thresholds` sont VOLONTAIREMENT VIDES À L'ÉTAPE 3.
+       * LE PLANCHER GARDE LE CODE QUI DÉCIDE, PAS LES COQUILLES.
        *
-       * Le socle se câble avant la première viz, mais un plancher de
-       * couverture posé sur un dépôt sans logique métier ne garde rien : il
-       * afficherait 100 % sur trois fichiers de coquille et donnerait
-       * l'illusion d'un gate. « Un seuil documenté que rien n'exécute n'est
-       * pas un gate » vaut aussi pour un seuil que rien ne peut faire rougir.
+       * Posé à l'étape 4 (2026-08-12) sur les trois modules qui tranchent
+       * quelque chose : le validateur de manifest (il refuse ou accepte une
+       * viz), le rendu du catalogue et le générateur de registre (ils
+       * produisent des fichiers que personne ne relit ensuite). Les composants
+       * React et la coquille d'app n'y sont pas : les couvrir gonflerait le
+       * chiffre sans rien garder.
        *
-       * Le plancher est posé à l'ÉTAPE 4, sur le premier code qui décide
-       * quelque chose (schéma de manifest + registre), mesuré avant d'être
-       * fixé, et jamais abaissé ensuite.
+       * Les seuils ci-dessous ont été MESURÉS d'abord, puis fixés juste en
+       * dessous du mesuré. Ils se relèvent quand la mesure monte, jamais
+       * l'inverse — un plancher sous ce que le code atteint déjà ne protège
+       * plus rien.
        */
-      include: [],
+      include: [
+        "src/core/manifest/valider.ts",
+        "src/core/catalogue/rendre.ts",
+        "src/core/registre/generer.ts",
+      ],
       reporter: ["text", "html"],
+      /**
+       * Mesuré le 2026-08-12 AVANT d'être fixé : 94,66 / 93,51 / 97,14 / 100.
+       * Les seuils sont posés juste en dessous — assez près pour qu'une
+       * régression réelle les franchisse, pas assez pour clignoter au moindre
+       * refactor. Ils se relèvent quand la mesure monte ; ils ne s'abaissent
+       * jamais pour faire passer un build.
+       *
+       * ⚠ Piège du rapport `text` : il OMET les fichiers couverts à 100 % sur
+       * les quatre colonnes. `generer.ts` en a disparu alors qu'il était bien
+       * couvert. Pour vérifier qu'un fichier est réellement suivi, lire
+       * `coverage/coverage-summary.json`, pas le tableau de la console.
+       */
+      thresholds: { statements: 94, branches: 93, functions: 97, lines: 99 },
     },
   },
   resolve: { alias: { "@": resolve(import.meta.dirname, "src") } },

@@ -11,6 +11,12 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
+    // Les scripts de gate (`scripts/*.ts`) tournent sous Node 24, qui retire
+    // les types nativement mais exige des specifiers complets. Écrire `.ts`
+    // dans les imports est ce qui permet à UN SEUL validateur de servir à la
+    // fois l'app et le script — sans cette option il faudrait le dupliquer,
+    // c'est-à-dire exactement ce que jscpd est là pour interdire.
+    "allowImportingTsExtensions": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",

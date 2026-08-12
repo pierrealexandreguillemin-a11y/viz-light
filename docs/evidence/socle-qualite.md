@@ -15,8 +15,16 @@ expires: never
 
 ## 1. La chaîne
 
-`pnpm verify` = `docs` → `format:check` → `lint` → `typecheck` → `dup` → `test`
-→ `build`. Un seul rouge suffit à bloquer. Elle est branchée en **pre-push**
+`pnpm verify` = `docs` → `catalog` → `format:check` → `lint` → `typecheck` →
+`dup` → `test:cov` → `build`. Un seul rouge suffit à bloquer.
+
+⚠ **`test:cov`, pas `test`.** Le premier câblage lançait `pnpm test`, donc le
+plancher de couverture n'était **jamais exécuté par la chaîne** — un seuil écrit
+dans `vitest.config.ts` que rien ne faisait tourner. Corrigé le 2026-08-12 :
+c'est exactement la panne que « un seuil documenté que rien n'exécute n'est pas
+un gate » décrit, et elle s'est produite ici.
+
+Elle est branchée en **pre-push**
 (`.husky/pre-push`) ; le **pre-commit** ne lance que `lint-staged` sur les
 fichiers indexés, et le **commit-msg** commitlint.
 
@@ -40,6 +48,9 @@ fichiers indexés, et le **commit-msg** commitlint.
 | `prettier --check` | — | `Code style issues found in 5 files`, **exit 1** |
 | Test OKLCH | — | `Couleur hex interdite — utiliser un jeton OKLCH de globals.css` / `Fonction de couleur héritée interdite — utiliser oklch()` |
 | `commitlint` | conventionnel | `subject may not be empty [subject-empty]` / `type may not be empty [type-empty]`, **exit 1** |
+| `pnpm catalog` — manifest | schéma | `rendus : exactement un rendu par défaut attendu, 2 trouvé(s)` · `rendus[1].params[0].min : min (10) doit être < max (5)` · `extraction.fichiers : au moins 1 entrée(s) attendue(s)`, **exit 1** |
+| `pnpm catalog` — perf | mesurée | `perf : non mesurée. Lance \`pnpm bench\` : un catalogue promet un coût mesuré, pas une estimation.`, **exit 1** |
+| Plancher de couverture | 94/93/97/99 | `ERROR: Coverage for lines (97.58%) does not meet global threshold (99%)` (+ 3 autres), **exit non nul** |
 
 ### Retour au vert, après suppression des états fautifs
 
@@ -93,12 +104,16 @@ ne vérifiant plus rien — le pire mode de panne d'un gate.
 
 ## 4. Ce que ce socle ne peut PAS voir
 
-- **La couverture de tests n'a pas de plancher à cette étape, et c'est délibéré.**
-  `vitest.config.ts` déclare `coverage.include: []` : un plancher posé sur un
-  dépôt sans logique métier afficherait 100 % sur trois fichiers de coquille et
-  donnerait l'illusion d'un gate. Le plancher est posé à l'**étape 4**, mesuré
-  avant d'être fixé, sur le premier code qui décide quelque chose (schéma de
-  manifest + registre), et jamais abaissé ensuite.
+- ~~La couverture n'a pas encore de plancher~~ — **posé à l'étape 4, le
+  2026-08-12.** Mesuré d'abord (94,87 / 93,51 / 97,22 / 100 sur le validateur,
+  le rendu du catalogue et le générateur de registre), seuils fixés juste en
+  dessous : **94 / 93 / 97 / 99**. Les composants React n'y sont pas : les
+  couvrir gonflerait le chiffre sans rien garder.
+  **Piège rencontré** : le rapport `text` de v8 **omet les fichiers couverts à
+  100 % sur les quatre colonnes**. `generer.ts` en avait disparu, ce qui donnait
+  l'impression qu'il n'était pas suivi. Pour vérifier qu'un fichier est
+  réellement dans le périmètre, lire `coverage/coverage-summary.json`, jamais le
+  tableau de la console.
 - **La fidélité d'une viz migrée.** Aucun de ces gates ne regarde un pixel. Un
   algorithme faux passe tout. C'est le rôle des captures comparées de
   l'étape 6, et du verdict de l'utilisateur à l'étape 8.

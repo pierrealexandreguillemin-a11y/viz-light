@@ -92,10 +92,18 @@ Doublons (Tunnel de points ×3, Flow Field ×2) : **la version validée par
 l'utilisateur gagne**, l'autre est notée en variante dans le manifest. Pour le
 Flow Field, l'arbitrage revient à l'utilisateur au moment de la migration.
 
+**Deux rendus par viz p5** ([ADR 0008](decisions/0008-deux-rendus-par-viz-origine-et-aligne.md)) :
+`origine` (portage fidèle, monochrome) et `aligne` (traitement du Tunnel de
+points — teinte HSB dérivée de la géométrie, traînée par fondu, souris,
+paramètres). **`aligne` est le rendu par défaut** ; les deux partagent le même
+`algo.ts`. Le Tunnel n'est pas une trahison du style @yuruyurau, c'en est un
+raffinement — décision de l'utilisateur, 2026-08-12.
+
 **Fidélité non négociable** : chaque viz migrée est vérifiée **visuellement
-contre l'original** par captures comparées (Puppeteer). Substituer une version
-générique à une implémentation validée est une faute grave (historique Viz
-Light).
+contre l'original** par captures comparées (Puppeteer). C'est le rendu
+`origine` qui porte cette preuve — un rendu raffiné rendrait une erreur de
+portage indiscernable d'un choix de couleur. Substituer une version générique à
+une implémentation validée est une faute grave (historique Viz Light).
 
 Hors v1 (après recette) : nouvelles créations à la demande, rapatriement d'autres
 sources (conversations claude.ai, tweets, CodePen, Shadertoy), HTML autonome
@@ -118,13 +126,14 @@ portabilité** (`src/viz/**/algo.ts` ne peut importer React/Next — c'est ce qu
 fait tenir le contrat d'extraction du §3) et le **test OKLCH** (aucune couleur
 hex/hsl en dur dans `src/`).
 
-⚠ Le **plancher de couverture** est délibérément absent à l'étape 3, et posé à
-l'étape 4 : sur un dépôt sans logique métier, un plancher affiche 100 % sur des
-coquilles et n'est pas un gate. Il sera mesuré avant d'être fixé, puis jamais
-abaissé.
+**Plancher de couverture** posé à l'étape 4 (2026-08-12) sur le code qui décide
+— validateur de manifest, rendu du catalogue, générateur de registre : **94 /
+93 / 97 / 99** (statements / branches / functions / lines), mesurés avant d'être
+fixés. Ils se relèvent avec la mesure, jamais l'inverse.
 
-`scripts/build-catalog.mjs` est un gate : manifest invalide ou perf manquante =
-rouge.
+`scripts/build-catalog.ts` est un gate : **manifest invalide ou perf manquante =
+rouge**. Il écrit `CATALOG.md` et `src/viz/registre.genere.ts` — deux fichiers
+générés, jamais édités à la main.
 
 ## 6. Gestion d'erreurs
 
@@ -151,7 +160,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | 1 | **Rapatriement brut des 3 artifacts** dans `sources/` (URLs périssables — en premier) | ✅ 2026-08-12 |
 | 2 | Épinglage versions latest stables + scaffold Next 16 (`evidence/versions-epinglees.md`) | ✅ 2026-08-12 |
 | 3 | Socle qualité câblé + calibré dans les deux sens (`evidence/socle-qualite.md`) | ✅ 2026-08-12 |
-| 4 | Contrat de données : schéma manifest + registre + générateur CATALOG.md (gate) | ⬜ |
+| 4 | Contrat de données : schéma manifest + registre + générateur CATALOG.md (gate) | ✅ 2026-08-12 |
 | 5 | Socle viz : hooks core + instrument + coquille UI (galerie / scène / panneau) | ⬜ |
 | 6 | Migration des viz par lots, fidélité par captures comparées, dédup | ⬜ |
 | 7 | Bench Puppeteer + perf tamponnée dans les manifests | ⬜ |
