@@ -185,6 +185,47 @@ du régime « œuvre ». **Règle** : avant toute vérification de fidélité,
 identifier le maillon zéro de la chaîne — et vérifier contre lui, jamais contre
 un intermédiaire.
 
+## 16. Une capture de preuve qui prouvait le contraire (2026-08-13)
+
+**Défaut** : le banc de captures comparées a produit trois fois de suite des
+images qui ne prouvaient rien, sans jamais échouer :
+
+1. Le clic sur « Origine » partait AVANT l'hydratation React — bouton présent
+   dans le HTML, sans écouteur. Rendu capturé : l'aligné, couleur et traînée
+   comprises.
+2. Corrigé, le clic visait `document.querySelectorAll("button")` — donc le
+   bouton du PREMIER article du document, pas celui de la viz visée (les autres
+   sont masqués en `display:none` mais toujours dans le DOM).
+3. Le chronomètre partait de la navigation, pas du montage de la viz : les deux
+   images comparées étaient prises à des instants différents de l'animation, ce
+   qui déphase une figure qui tourne et rend la comparaison illisible.
+
+**Ce qui l'a rendu possible** : chacune de ces trois versions se terminait par
+« capturé » et un fichier PNG bien formé. Un instrument de preuve qui ne peut
+pas échouer bruyamment ne prouve rien — jumeau des erreurs n°1 et n°14.
+
+**Garde-fou** : le banc attend le canvas (signal d'hydratation), porte le clic
+sur l'article de la viz, **vérifie `aria-pressed="true"`** avant de capturer, et
+cale son chronomètre sur l'apparition du canvas. **Règle** : une preuve visuelle
+se relit à l'œil avant d'être versée au dossier — le fichier produit n'est pas
+la preuve, l'image l'est.
+
+## 17. Cinq golfés du fichier de référence ne s'exécutent pas (2026-08-13)
+
+**Constat** : dans `sources/tweets-golfes.md`, cinq blocs (7 mai, 10 mars,
+8 mars #2, 7 mars, 22 février) se terminent par `}#つぶやきProcessing` **sans
+les `//`**. Tel quel, le script ne PARSE pas : p5 ne démarre jamais, et le banc
+de captures attendait un `frameCount` qui ne viendrait pas — symptôme lu à tort
+comme de la lenteur pendant quinze minutes.
+
+**Nature** : artefact de transcription du rapatriement, pas du code d'auteur.
+Le fichier reste la référence de fidélité (erreur n°15) et n'a **pas** été
+édité ; c'est le banc de captures qui neutralise la fin de ligne.
+
+**Garde-fou** : le banc échoue en 15 s si `frameCount` n'apparaît jamais, au
+lieu d'attendre son long délai. **Règle** : distinguer « lent » de « mort » par
+un signal de démarrage, jamais par la patience.
+
 ## 10. Un « défaut » corrigé sans être constaté (2026-08-12, évité)
 
 **Ce qui a failli arriver** : croire voir des valeurs dupliquées à gauche de la

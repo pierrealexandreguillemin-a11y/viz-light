@@ -1,6 +1,6 @@
 ---
 authority: canonical
-last_verified: 2026-08-12
+last_verified: 2026-08-13
 expires: never
 ---
 
@@ -188,7 +188,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | 4 | Contrat de données : schéma manifest + registre + générateur CATALOG.md (gate) | ✅ 2026-08-12 |
 | 5 | Socle viz : hooks core + instrument + coquille UI, prouvé par une viz réelle | ✅ 2026-08-12 |
 | 5b | **Direction artistique + revue UI/UX** ([ADR 0009](decisions/0009-direction-artistique-planche-contact.md)) — repassée à l'étape 8, sur planche pleine | ✅ 2026-08-12 |
-| 6 | Migration des viz par lots, deux régimes ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)), dédup | 🟡 **15/31** |
+| 6 | Migration des viz par lots, deux régimes ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)), dédup | 🟡 **28/31** |
 | 7 | Bench Puppeteer + perf tamponnée dans les manifests | ✅ outil livré, tourne à chaque migration |
 | 8 | Recette utilisateur (revue visuelle complète par Pierre-Alexandre) | ⬜ |
 | 9 | Déploiement Vercel + CATALOG.md final | ⬜ |
@@ -198,11 +198,28 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 sans perf, donc chaque migration se termine par sa mesure. Mesurer en bloc à la
 fin laisserait `pnpm verify` rouge pendant tout le chantier.
 
-### État de l'étape 6 au 2026-08-12 (2e session) — 15 sur 31
+### État de l'étape 6 au 2026-08-13 (3e session) — 28 sur 31
 
-**Migrées, catégorie `animation`** (régime « œuvre », mesurées) :
+**Les 18 sketches @yuruyurau sont migrés** (régime « œuvre », mesurés, chacun
+avec sa paire de captures comparées dans `evidence/captures/`) :
 `tunnel-de-points` (référence du rendu aligné), `spirale-tressee`,
-`voile-tournante`, `coquille-cannelee`, `anneau-respirant`.
+`voile-tournante`, `coquille-cannelee`, `anneau-respirant`,
+`coquille-jumelle`, `rosace-triple`, `corolle-de-maree`, `eventail-crante`,
+`attracteur-de-lorenz`, `colonne-perlee`, `rosace-jumelle`,
+`medaillon-tournant`, `ruban-plisse`, `ruban-ondule`, `anemone-marine`,
+`couronne-battante`, `rosace-fondatrice`.
+
+**Reste 3 viz** : les 5 algos de l'Atelier génératif moins les doublons
+(Tunnel, Flow Field). L'arbitrage *Flow Field* appartient à l'utilisateur.
+
+**Deux ajouts au moteur, tous deux exigés par une œuvre** : le champ
+`PointCalcule.taille` (les cercles de diamètre variable du 7 mai) et
+`placerEnPolaire(q, c, magnitude, ecart)`, forme partagée par plusieurs
+sketches de la série — arithmétique identique, terme pour terme.
+
+**Le Lorenz est le seul sketch à état** : il intègre pas à pas et se ré-amorce
+quand `i` remonte, ce qui signale une nouvelle image. Les douze autres restent
+des fonctions pures de `i`.
 
 **Migrées, catégorie `fond`** (régime « technique », réécriture libre,
 mesurées) : `orbes-floutees`, `mesh-gradient`, `grain-de-film`,
@@ -212,17 +229,20 @@ survivent intégralement : le schéma de manifest porte désormais **trois genre
 de paramètre** (`curseur`, `interrupteur`, `couleur`). La couleur d'une viz est
 une donnée de la viz, pas de l'UI — même frontière que le gate OKLCH.
 
-Les 5 œuvres migrées ont leur preuve de fidélité : **captures comparées dans
+Les 18 œuvres migrées ont leur preuve de fidélité : **captures comparées dans
 `evidence/captures/`** (rendu `origine` face à l'original p5), et formules
 vérifiées caractère par caractère contre les one-liners golfés, rapatriés
 intégralement dans **`sources/tweets-golfes.md`** — c'est CE fichier qui fait
 foi, l'artifact `tweet-sketches-artifact.html` n'en est qu'une traduction.
 
-### Plan d'exécution des 13 sketches restants — AUCUNE décision à prendre
+### Les 13 derniers sketches — exécutés le 2026-08-13
 
-(Le « 14 » précédent comptait le Tunnel deux fois : 18 golfés uniques, 5 faits.)
+(Le « 14 » précédent comptait le Tunnel deux fois : 18 golfés uniques, 5 faits
+avant cette session, 13 ici.) La table ci-dessous est conservée telle qu'elle a
+été exécutée : elle vaut désormais **carnet de portage** — chaque piège y est
+nommé, chaque constante y est celle du golfé.
 
-**Règles fixes, valables pour les 13** :
+**Règles fixes, appliquées aux 13** :
 
 - `angle` = le `c` de la formule, `magnitude` = la variable passée à `mag`
   (`d` ou `o`) — obligatoires au contrat du moteur.
@@ -253,10 +273,16 @@ foi, l'artifact `tweet-sketches-artifact.html` n'en est qu'une traduction.
 | `couronne-battante` | Couronne battante | 6 mars | 30000 | 0.0698 | 96 | `e = i/1200-13` (`w=400` caché dans `i/w/3`) |
 | `rosace-fondatrice` | Rosace fondatrice | 22 février | 20000 | 0.0524 | 96 | `a()` sans argument ; `c` dépend de `i%2` |
 
-**Après les 13** : les 5 algos de l'Atelier génératif — régime « œuvre ». La
+**Prochaine étape** : les algos de l'Atelier génératif — régime « œuvre ». La
 seule décision restante du chantier appartient à l'utilisateur : l'arbitrage
 *Flow Field* (banc d'essai, déjà migré en `fond`, vs Atelier) — lui montrer
 les deux, ne rien trancher.
+
+**Deux viz tiennent 30 i/s, mesurées** : `attracteur-de-lorenz` et
+`couronne-battante` demandent ~33 ms de JavaScript par image, soit le double du
+budget d'une image à 60 i/s. Ce n'est pas un défaut de portage — trente mille
+points par image, c'est ce que demande le golfé. Le curseur « Points » permet à
+l'utilisateur d'arbitrer ; les manifests portent le chiffre réel.
 
 ### Comment migrer une viz (boucle complète)
 
