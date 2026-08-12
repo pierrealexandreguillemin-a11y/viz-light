@@ -5,7 +5,7 @@ import { CENTRE, creerChampDePoints, type PointCalcule } from "@/core/viz/champ-
  * l'anneau se gonfle et se dégonfle ensemble, au lieu d'onduler par endroits :
  * c'est ce terme unique qui fait la différence entre un souffle et une vague.
  */
-function positionner(i: number, t: number, decalageSouris: number): PointCalcule {
+function anneauRespirant(i: number, t: number, decalageSouris: number): PointCalcule {
   const y = i / 265;
   // La souris module le rayon, comme dans le Tunnel (rendu aligné).
   const k = (4 + Math.cos(y - t)) * Math.cos(i / 29 + decalageSouris * 6);
@@ -22,7 +22,7 @@ function positionner(i: number, t: number, decalageSouris: number): PointCalcule
 }
 
 export const monterAnneauRespirant = creerChampDePoints({
-  formule: positionner,
+  formule: anneauRespirant,
   pointsOrigine: 10000,
   pasParImage: 0.0524,
 });

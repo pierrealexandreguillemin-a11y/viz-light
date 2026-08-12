@@ -37,9 +37,40 @@ export interface PointCalcule {
    */
   readonly angle: number;
   readonly magnitude: number;
+  /**
+   * Côté du point, en unités de l'espace 400×400. Absent = 1, le cas de tous
+   * les sketches qui appellent `point()`. Le 7 mai 2026 (« Colonne perlée »)
+   * appelle `circle(…, k*k>15?2:1)` : sa formule fait varier la grosseur d'un
+   * grain à l'autre, et perdre cette variation aplatirait le relief de l'œuvre.
+   */
+  readonly taille?: number;
 }
 
 export type Formule = (i: number, temps: number, decalageSouris: number) => PointCalcule;
+
+/**
+ * LE PLACEMENT POLAIRE DE LA SÉRIE.
+ *
+ * Plusieurs sketches finissent exactement pareil —
+ * `point(q·sin(c) + 200, (q + ecart)·cos(c) + 200)` : un rayon `q`, un angle
+ * `c`, et un décalage vertical qui ovalise la figure. Seul `ecart` change (30,
+ * 40, 50). Le nommer une fois évite d'en recopier la forme dans chaque œuvre
+ * sans rien retirer à la fidélité : l'arithmétique est identique, terme pour
+ * terme.
+ */
+export function placerEnPolaire(
+  q: number,
+  c: number,
+  magnitude: number,
+  ecart: number,
+): PointCalcule {
+  return {
+    x: q * Math.sin(c) + CENTRE,
+    y: (q + ecart) * Math.cos(c) + CENTRE,
+    angle: c,
+    magnitude,
+  };
+}
 
 interface Reglees {
   readonly points: number;
@@ -156,7 +187,8 @@ export function creerChampDePoints({
             ctx.fillStyle = hsbVersCss(bucket, r.saturation, 100, r.alphaPoint);
             bucketPrecedent = bucket;
           }
-          ctx.fillRect(point.x, point.y, 1, 1);
+          const taille = point.taille ?? 1;
+          ctx.fillRect(point.x, point.y, taille, taille);
         }
       },
       regler(suivants) {

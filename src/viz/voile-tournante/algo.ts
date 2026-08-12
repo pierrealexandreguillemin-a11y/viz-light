@@ -5,7 +5,7 @@ import { CENTRE, creerChampDePoints, type PointCalcule } from "@/core/viz/champ-
  * pas seulement de son indice. D'où le drapé — l'étoffe se creuse d'un côté
  * pendant qu'elle se tend de l'autre.
  */
-function positionner(i: number, t: number, decalageSouris: number): PointCalcule {
+function voileTournante(i: number, t: number, decalageSouris: number): PointCalcule {
   const y = i / 43;
   const k = 5 * Math.cos(i / 14) * Math.cos(y / 30);
   const e = y / 8 - 13;
@@ -22,7 +22,7 @@ function positionner(i: number, t: number, decalageSouris: number): PointCalcule
 }
 
 export const monterVoileTournante = creerChampDePoints({
-  formule: positionner,
+  formule: voileTournante,
   pointsOrigine: 10000,
   pasParImage: 0.1571,
 });

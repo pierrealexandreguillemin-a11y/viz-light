@@ -12,7 +12,7 @@ import { CENTRE, creerChampDePoints, type PointCalcule } from "@/core/viz/champ-
  * formule et non depuis la position à l'écran : c'est ce qui reproduit à
  * l'identique la version que l'utilisateur a validée.
  */
-function positionner(i: number, temps: number, decalageSouris: number): PointCalcule {
+function tunnelDePoints(i: number, temps: number, decalageSouris: number): PointCalcule {
   const indice = i / 353;
   const rayonBase = (indice < 9 ? 9 : 5) + Math.cos(indice * 31 - temps);
   const rayon = rayonBase * Math.cos(i / 44 + decalageSouris * 6);
@@ -35,7 +35,7 @@ function positionner(i: number, temps: number, decalageSouris: number): PointCal
 }
 
 export const monterTunnelDePoints = creerChampDePoints({
-  formule: positionner,
+  formule: tunnelDePoints,
   pointsOrigine: 6000,
   pasParImage: 0.0393,
 });

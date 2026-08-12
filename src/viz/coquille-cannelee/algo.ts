@@ -6,7 +6,7 @@ import { CENTRE, creerChampDePoints, type PointCalcule } from "@/core/viz/champ-
  * divergences qui creusent les cannelures. Vingt mille points — la plus chère
  * du lot, et la mesure le confirme.
  */
-function positionner(i: number, t: number, decalageSouris: number): PointCalcule {
+function coquilleCannelee(i: number, t: number, decalageSouris: number): PointCalcule {
   const x = i % 100;
   const y = i / 233;
   const k = x / 4 - 12.5;
@@ -26,7 +26,7 @@ function positionner(i: number, t: number, decalageSouris: number): PointCalcule
 }
 
 export const monterCoquilleCannelee = creerChampDePoints({
-  formule: positionner,
+  formule: coquilleCannelee,
   pointsOrigine: 20000,
   pasParImage: 0.1047,
 });
