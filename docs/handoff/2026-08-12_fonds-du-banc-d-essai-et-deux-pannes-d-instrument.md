@@ -79,6 +79,20 @@ JS médian de 0 ms — mesuré réellement sur `mesh-gradient` en mode composé.
    le code : `canvas.width = …` efface un canvas, une scène figée doit se
    repeindre après réglage ou redimensionnement.
 
+## 3.5 LA REPRISE EST SANS DÉCISION — tout est déjà tranché
+
+1. Ouvrir `docs/SPEC.md` § « Plan d'exécution des 13 sketches restants » :
+   slugs, noms, constantes exactes (points/vitesse/alpha), pièges identifiés
+   (XOR du 24 juillet, état du Lorenz, cercles pleins du 7 mai, `w` caché du
+   6 mars) et règles fixes (souris, teinte, deux rendus). Il n'y a RIEN à
+   choisir — exécuter la table ligne par ligne.
+2. La référence de fidélité est **`sources/tweets-golfes.md`** (rapatrié
+   intégralement depuis la conversation claude.ai) — jamais l'artifact.
+3. Le champ `taille` (cercles du 7 mai) est LA seule modification de moteur
+   prévue : `PointCalcule.taille?: number`, `fillRect(x, y, taille ?? 1, …)`.
+4. Après les 13 : les 5 algos de l'Atelier. Seule décision restante, et elle
+   appartient à l'utilisateur : l'arbitrage Flow Field (lui montrer les deux).
+
 ## 4. État à la passation
 
 - Fil d'Ariane : 0-5b ✅, **étape 6 : 15/31**, 8-10 ⬜.

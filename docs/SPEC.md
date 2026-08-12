@@ -212,20 +212,51 @@ survivent intégralement : le schéma de manifest porte désormais **trois genre
 de paramètre** (`curseur`, `interrupteur`, `couleur`). La couleur d'une viz est
 une donnée de la viz, pas de l'UI — même frontière que le gate OKLCH.
 
-**Reste 16**, par ordre de priorité :
+Les 5 œuvres migrées ont leur preuve de fidélité : **captures comparées dans
+`evidence/captures/`** (rendu `origine` face à l'original p5), et formules
+vérifiées caractère par caractère contre les one-liners golfés, rapatriés
+intégralement dans **`sources/tweets-golfes.md`** — c'est CE fichier qui fait
+foi, l'artifact `tweet-sketches-artifact.html` n'en est qu'une traduction.
 
-1. **Les 14 sketches p5 restants** — régime « œuvre ». Peu coûteux depuis que
-   `src/core/viz/champ-de-points.ts` porte le traitement : une viz ne coûte que
-   sa formule. Les 5 œuvres migrées ont leur preuve de fidélité :
-   **captures comparées dans `evidence/captures/`** (rendu `origine` face à
-   l'original p5), et formules vérifiées caractère par caractère contre les
-   one-liners golfés de la conversation source (2026-08-12). Le rendu `origine`
-   est monochrome sans traînée, alpha exact par sketch (96/66/116) ; le rendu
-   `aligne` dérive sa teinte de l'angle et de la magnitude **de la formule**,
-   jamais de la position à l'écran.
-2. **Les 5 algos de l'Atelier** — régime « œuvre », dont le *Flow Field* dont
-   **l'arbitrage entre les deux versions appartient à l'utilisateur** (la
-   version banc-essai est migrée en `fond`, la variante est notée au manifest).
+### Plan d'exécution des 13 sketches restants — AUCUNE décision à prendre
+
+(Le « 14 » précédent comptait le Tunnel deux fois : 18 golfés uniques, 5 faits.)
+
+**Règles fixes, valables pour les 13** :
+
+- `angle` = le `c` de la formule, `magnitude` = la variable passée à `mag`
+  (`d` ou `o`) — obligatoires au contrat du moteur.
+- Souris : `c + decalageSouris * 6`, partout.
+- Rendu `origine` : `trainee 255`, `saturation 0`, `influenceSouris 0`,
+  `alphaPoint`/`points`/`vitesse` = les valeurs exactes du golfé (colonnes).
+- Rendu `aligne` (défaut) : `trainee 40`, `alphaPoint 150`, `saturation 70`,
+  `teinteBase 200`, `teinteEtendue 60`, `influenceSouris 0.3`, mêmes
+  points/vitesse que l'origine.
+- `categorie: "animation"`, `origine.source: "tweet-sketches"`, extraction =
+  même liste de socle que `spirale-tressee`.
+- Boucle par sketch : écrire → `pnpm catalog` → `pnpm build` → `pnpm bench` →
+  paire de captures comparées dans `evidence/captures/` → `pnpm verify`.
+
+| slug | nom | golfé (`tweets-golfes.md`) | points | vitesse | alpha | piège identifié |
+|---|---|---|---|---|---|---|
+| `coquille-jumelle` | Coquille jumelle | 8 août #2 | 20000 | 0.1047 | 66 | `x=i%100, y=i/250` ; sœur de la cannelée |
+| `rosace-triple` | Rosace triple | 31 juillet | 10000 | 0.0524 | 96 | `m=i%3*4` |
+| `corolle-de-maree` | Corolle de marée | 25 juillet | 10000 | 0.0393 | 96 | `d` NON élevé au carré ; `k` utilise `i/9` et `i/35` |
+| `eventail-crante` | Éventail cranté | 24 juillet | 10000 | 0.0349 | 116 | `y^9` = XOR entier → `Math.trunc(y) ^ 9` |
+| `attracteur-de-lorenz` | Attracteur de Lorenz | 9 mai | 30000 | 1 | 96 | état `x,y,z=9` réinitialisé quand `i` remonte ; intégrer PUIS tracer ; `t` = numéro d'image (`t++`) ; `magnitude = q/9` |
+| `colonne-perlee` | Colonne perlée | 7 mai | 10000 | 0.0131 | 116 | cercles PLEINS, `taille` 2 si `k*k>15` sinon 1 → champ `taille` à ajouter au moteur |
+| `rosace-jumelle` | Rosace jumelle | 5 mai | 20000 | 0.0698 | 96 | `m=i%2*9` ; ternaire `k*k<19` |
+| `medaillon-tournant` | Médaillon tournant | 10 mars | 20000 | 0.0698 | 96 | `m=i%2*3` ; `sin(sin(…))` imbriqué |
+| `ruban-plisse` | Ruban plissé | 8 mars #1 | 20000 | 0.1047 | 126 | `x=i, y=i/940` |
+| `ruban-ondule` | Ruban ondulé | 8 mars #2 | 20000 | 0.1047 | 126 | `x=i, y=i/1000` |
+| `anemone-marine` | Anémone marine | 7 mars | 20000 | 0.1047 | 96 | ternaire `y<19` ; `o = mag/5` |
+| `couronne-battante` | Couronne battante | 6 mars | 30000 | 0.0698 | 96 | `e = i/1200-13` (`w=400` caché dans `i/w/3`) |
+| `rosace-fondatrice` | Rosace fondatrice | 22 février | 20000 | 0.0524 | 96 | `a()` sans argument ; `c` dépend de `i%2` |
+
+**Après les 13** : les 5 algos de l'Atelier génératif — régime « œuvre ». La
+seule décision restante du chantier appartient à l'utilisateur : l'arbitrage
+*Flow Field* (banc d'essai, déjà migré en `fond`, vs Atelier) — lui montrer
+les deux, ne rien trancher.
 
 ### Comment migrer une viz (boucle complète)
 
