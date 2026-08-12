@@ -1,0 +1,92 @@
+{
+  "slug": "poussiere-d-etoiles",
+  "nom": "Poussière d'étoiles",
+  "ambiance": "Un ciel calme où chaque point scintille à son propre rythme.",
+  "categorie": "fond",
+  "origine": {
+    "source": "banc-essai",
+    "reference": "sparse",
+    "date": "2026-08-05"
+  },
+  "runtime": "canvas2d",
+  "tags": ["etoiles", "scintillement", "nuit"],
+  "rendus": [
+    {
+      "id": "reglages",
+      "libelle": "Réglages",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "count",
+          "libelle": "Points",
+          "min": 40,
+          "max": 1500,
+          "pas": 20,
+          "valeur": 260
+        },
+        {
+          "cle": "size",
+          "libelle": "Taille",
+          "min": 0.3,
+          "max": 3,
+          "pas": 0.1,
+          "valeur": 1
+        },
+        {
+          "cle": "halo",
+          "libelle": "Halo (shadowBlur)",
+          "genre": "interrupteur",
+          "valeur": 0,
+          "note": "Joli, mais c'est un flou par point et par image."
+        },
+        {
+          "cle": "haloSize",
+          "libelle": "Rayon du halo",
+          "min": 2,
+          "max": 30,
+          "pas": 1,
+          "valeur": 8
+        },
+        {
+          "cle": "background",
+          "libelle": "Fond",
+          "genre": "couleur",
+          "valeur": "#080b14"
+        },
+        {
+          "cle": "color",
+          "libelle": "Points",
+          "genre": "couleur",
+          "valeur": "#e8eaf2"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": ["PoussiereDEtoiles.tsx", "algo.ts", "manifest.json"],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/reglages.ts",
+      "core/viz/toile.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-08-12",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 0.1,
+    "jsP95Ms": 0.2,
+    "gpuBound": false
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "slug": "aurore-boreale",
+  "nom": "Aurore boréale",
+  "ambiance": "Des rideaux de lumière qui ondulent dans un ciel noir.",
+  "categorie": "fond",
+  "origine": {
+    "source": "banc-essai",
+    "reference": "aurora",
+    "date": "2026-08-05"
+  },
+  "runtime": "webgl",
+  "tags": ["aurore", "shader", "rideaux"],
+  "rendus": [
+    {
+      "id": "reglages",
+      "libelle": "Réglages",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "octaves",
+          "libelle": "Octaves de bruit",
+          "min": 1,
+          "max": 5,
+          "pas": 1,
+          "valeur": 3,
+          "note": "Multiplie le travail par pixel."
+        },
+        {
+          "cle": "bands",
+          "libelle": "Rideaux",
+          "min": 1,
+          "max": 4,
+          "pas": 1,
+          "valeur": 3
+        },
+        {
+          "cle": "speed",
+          "libelle": "Vitesse",
+          "min": 0.02,
+          "max": 0.6,
+          "pas": 0.02,
+          "valeur": 0.12
+        },
+        {
+          "cle": "scale",
+          "libelle": "Échelle",
+          "min": 0.5,
+          "max": 6,
+          "pas": 0.25,
+          "valeur": 2
+        },
+        {
+          "cle": "intensity",
+          "libelle": "Intensité",
+          "min": 0.2,
+          "max": 2.5,
+          "pas": 0.1,
+          "valeur": 1.1
+        },
+        {
+          "cle": "sky",
+          "libelle": "Ciel",
+          "genre": "couleur",
+          "valeur": "#04070f"
+        },
+        {
+          "cle": "colorA",
+          "libelle": "Teinte basse",
+          "genre": "couleur",
+          "valeur": "#1fd68f"
+        },
+        {
+          "cle": "colorB",
+          "libelle": "Teinte haute",
+          "genre": "couleur",
+          "valeur": "#7a5cf0"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": ["AuroreBoreale.tsx", "algo.ts", "manifest.json"],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/reglages.ts",
+      "core/viz/plein-ecran-gl.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-08-12",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 0.05,
+    "jsP95Ms": 0.1,
+    "gpuBound": false
+  }
+}

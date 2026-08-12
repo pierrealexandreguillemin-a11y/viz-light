@@ -1,0 +1,117 @@
+{
+  "slug": "grille-synthwave",
+  "nom": "Grille synthwave",
+  "ambiance": "Un soleil strié sur une grille qui file vers l'horizon.",
+  "categorie": "fond",
+  "origine": {
+    "source": "banc-essai",
+    "reference": "synthwave",
+    "date": "2026-08-05"
+  },
+  "runtime": "canvas2d",
+  "tags": ["retro", "grille", "horizon"],
+  "rendus": [
+    {
+      "id": "reglages",
+      "libelle": "Réglages",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "horizon",
+          "libelle": "Ligne d'horizon",
+          "min": 0.25,
+          "max": 0.75,
+          "pas": 0.05,
+          "valeur": 0.55
+        },
+        {
+          "cle": "columns",
+          "libelle": "Colonnes",
+          "min": 4,
+          "max": 40,
+          "pas": 2,
+          "valeur": 16
+        },
+        {
+          "cle": "rows",
+          "libelle": "Rangées",
+          "min": 6,
+          "max": 60,
+          "pas": 2,
+          "valeur": 24
+        },
+        {
+          "cle": "speed",
+          "libelle": "Vitesse",
+          "min": 0,
+          "max": 2,
+          "pas": 0.1,
+          "valeur": 0.5
+        },
+        {
+          "cle": "skyTop",
+          "libelle": "Ciel (haut)",
+          "genre": "couleur",
+          "valeur": "#160b2e"
+        },
+        {
+          "cle": "skyBottom",
+          "libelle": "Ciel (bas)",
+          "genre": "couleur",
+          "valeur": "#4b1450"
+        },
+        {
+          "cle": "sunTop",
+          "libelle": "Soleil (haut)",
+          "genre": "couleur",
+          "valeur": "#ffd76e"
+        },
+        {
+          "cle": "sunBottom",
+          "libelle": "Soleil (bas)",
+          "genre": "couleur",
+          "valeur": "#ff4d7d"
+        },
+        {
+          "cle": "ground",
+          "libelle": "Sol",
+          "genre": "couleur",
+          "valeur": "#0a0616"
+        },
+        {
+          "cle": "grid",
+          "libelle": "Grille",
+          "genre": "couleur",
+          "valeur": "#ff5fa8"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": ["GrilleSynthwave.tsx", "algo.ts", "manifest.json"],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/reglages.ts",
+      "core/viz/toile.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-08-12",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 0.1,
+    "jsP95Ms": 0.1,
+    "gpuBound": false
+  }
+}

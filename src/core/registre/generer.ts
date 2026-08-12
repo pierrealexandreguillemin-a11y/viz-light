@@ -54,9 +54,12 @@ function importManifest(entree: EntreeRegistre, index: number): string {
   return `import manifest${index} from "./${entree.slug}/manifest.json";`;
 }
 
+/** Prettier (`quoteProps: as-needed`) dé-cite les clés sans tiret — sortir déjà conforme. */
+const cleObjet = (slug: string): string => (/^[a-z][a-z0-9]*$/.test(slug) ? slug : `"${slug}"`);
+
 function entree(e: EntreeRegistre, index: number): string {
   return [
-    `  "${e.slug}": {`,
+    `  ${cleObjet(e.slug)}: {`,
     `    manifest: manifest${index} as VizManifest,`,
     `    Composant: lazy(() => import("./${e.slug}/${e.composant}.tsx")),`,
     `  },`,

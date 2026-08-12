@@ -1,0 +1,99 @@
+{
+  "slug": "balayage-radar",
+  "nom": "Balayage radar",
+  "ambiance": "Un faisceau qui tourne et réveille des échos au passage.",
+  "categorie": "fond",
+  "origine": {
+    "source": "banc-essai",
+    "reference": "scan",
+    "date": "2026-08-05"
+  },
+  "runtime": "canvas2d",
+  "tags": ["radar", "balayage", "echos"],
+  "rendus": [
+    {
+      "id": "reglages",
+      "libelle": "Réglages",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "cell",
+          "libelle": "Maille",
+          "min": 20,
+          "max": 140,
+          "pas": 5,
+          "valeur": 48
+        },
+        {
+          "cle": "speed",
+          "libelle": "Vitesse",
+          "min": 0.2,
+          "max": 4,
+          "pas": 0.1,
+          "valeur": 1
+        },
+        {
+          "cle": "trail",
+          "libelle": "Traîne",
+          "min": 0.2,
+          "max": 2.4,
+          "pas": 0.1,
+          "valeur": 1
+        },
+        {
+          "cle": "blips",
+          "libelle": "Échos",
+          "min": 0,
+          "max": 60,
+          "pas": 2,
+          "valeur": 18
+        },
+        {
+          "cle": "background",
+          "libelle": "Fond",
+          "genre": "couleur",
+          "valeur": "#04100e"
+        },
+        {
+          "cle": "grid",
+          "libelle": "Grille",
+          "genre": "couleur",
+          "valeur": "#123c33"
+        },
+        {
+          "cle": "sweep",
+          "libelle": "Faisceau",
+          "genre": "couleur",
+          "valeur": "#43e8a0"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": ["BalayageRadar.tsx", "algo.ts", "manifest.json"],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/reglages.ts",
+      "core/viz/toile.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-08-12",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 0.05,
+    "jsP95Ms": 0.1,
+    "gpuBound": false
+  }
+}

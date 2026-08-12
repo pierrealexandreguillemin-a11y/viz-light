@@ -175,10 +175,10 @@
   },
   "perf": {
     "mesureLe": "2026-08-12",
-    "machine": "win32 x64 · Chrome/151.0.7922.77",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
     "cadenceFps": 59.9,
-    "jsMedianMs": 5.9,
-    "jsP95Ms": 7.62,
+    "jsMedianMs": 5.1,
+    "jsP95Ms": 5.8,
     "gpuBound": false
   }
 }

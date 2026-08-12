@@ -128,6 +128,16 @@ describe("genererRegistre", () => {
       { slug: "zebre", composant: "Zebre" },
       { slug: "aurore", composant: "Aurore" },
     ]);
-    expect(source.indexOf('"aurore"')).toBeLessThan(source.indexOf('"zebre"'));
+    expect(source.indexOf("aurore:")).toBeLessThan(source.indexOf("zebre:"));
+  });
+
+  it("ne cite une clé du registre que si Prettier l'exigerait (slug à tiret)", () => {
+    const source = genererRegistre([
+      { slug: "grain-de-film", composant: "GrainDeFilm" },
+      { slug: "constellation", composant: "Constellation" },
+    ]);
+    expect(source).toContain('"grain-de-film": {');
+    expect(source).toContain("constellation: {");
+    expect(source).not.toContain('"constellation"');
   });
 });

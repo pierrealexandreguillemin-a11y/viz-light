@@ -1,0 +1,129 @@
+{
+  "slug": "flow-field",
+  "nom": "Flow field",
+  "ambiance": "Des filaments qui suivent un courant invisible.",
+  "categorie": "fond",
+  "origine": {
+    "source": "banc-essai",
+    "reference": "flow",
+    "date": "2026-08-05"
+  },
+  "runtime": "canvas2d",
+  "tags": ["particules", "bruit", "courant"],
+  "rendus": [
+    {
+      "id": "reglages",
+      "libelle": "Réglages",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "count",
+          "libelle": "Particules",
+          "min": 100,
+          "max": 6000,
+          "pas": 100,
+          "valeur": 1200
+        },
+        {
+          "cle": "octaves",
+          "libelle": "Octaves de bruit",
+          "min": 1,
+          "max": 5,
+          "pas": 1,
+          "valeur": 2,
+          "note": "Multiplicateur direct du temps de calcul."
+        },
+        {
+          "cle": "scale",
+          "libelle": "Échelle du bruit",
+          "min": 0.5,
+          "max": 8,
+          "pas": 0.25,
+          "valeur": 2
+        },
+        {
+          "cle": "speed",
+          "libelle": "Vitesse",
+          "min": 0.2,
+          "max": 4,
+          "pas": 0.1,
+          "valeur": 1.2
+        },
+        {
+          "cle": "evolution",
+          "libelle": "Évolution du champ",
+          "min": 0,
+          "max": 0.4,
+          "pas": 0.01,
+          "valeur": 0.06
+        },
+        {
+          "cle": "fade",
+          "libelle": "Effacement",
+          "min": 0.005,
+          "max": 0.3,
+          "pas": 0.005,
+          "valeur": 0.04
+        },
+        {
+          "cle": "thickness",
+          "libelle": "Épaisseur",
+          "min": 0.3,
+          "max": 3,
+          "pas": 0.1,
+          "valeur": 0.8
+        },
+        {
+          "cle": "opacity",
+          "libelle": "Opacité du trait",
+          "min": 0.05,
+          "max": 1,
+          "pas": 0.05,
+          "valeur": 0.55
+        },
+        {
+          "cle": "background",
+          "libelle": "Fond",
+          "genre": "couleur",
+          "valeur": "#0d1020"
+        },
+        {
+          "cle": "color",
+          "libelle": "Trait",
+          "genre": "couleur",
+          "valeur": "#8fd0ff"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": ["FlowField.tsx", "algo.ts", "manifest.json"],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/reglages.ts",
+      "core/viz/toile.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-08-12",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 0.8,
+    "jsP95Ms": 1.1,
+    "gpuBound": false
+  },
+  "variantes": [
+    "Une seconde version vit dans l'Atelier génératif (« flow-field ») — l'arbitrage esthétique entre les deux appartient à l'utilisateur (SPEC.md §4)."
+  ]
+}

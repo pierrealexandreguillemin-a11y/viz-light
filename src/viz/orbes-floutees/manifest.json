@@ -1,0 +1,106 @@
+{
+  "slug": "orbes-floutees",
+  "nom": "Orbes floutées",
+  "ambiance": "De grandes lueurs molles qui dérivent l'une dans l'autre.",
+  "categorie": "fond",
+  "origine": {
+    "source": "banc-essai",
+    "reference": "orbs",
+    "date": "2026-08-05"
+  },
+  "runtime": "dom-css",
+  "tags": ["flou", "lueurs", "css"],
+  "rendus": [
+    {
+      "id": "reglages",
+      "libelle": "Réglages",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "count",
+          "libelle": "Orbes",
+          "min": 1,
+          "max": 10,
+          "pas": 1,
+          "valeur": 4
+        },
+        {
+          "cle": "size",
+          "libelle": "Taille",
+          "min": 0.15,
+          "max": 1.1,
+          "pas": 0.05,
+          "valeur": 0.6
+        },
+        {
+          "cle": "blur",
+          "libelle": "Flou",
+          "min": 10,
+          "max": 180,
+          "pas": 5,
+          "valeur": 90,
+          "note": "Un grand rayon coûte cher même figé, surtout sur mobile."
+        },
+        {
+          "cle": "speed",
+          "libelle": "Vitesse",
+          "min": 0.05,
+          "max": 1.2,
+          "pas": 0.05,
+          "valeur": 0.3
+        },
+        {
+          "cle": "animateBlur",
+          "libelle": "Animer le flou",
+          "genre": "interrupteur",
+          "valeur": 0,
+          "note": "À éviter en production — présent ici pour rendre le coût visible."
+        },
+        {
+          "cle": "colorA",
+          "libelle": "Teinte 1",
+          "genre": "couleur",
+          "valeur": "#4a5fd6"
+        },
+        {
+          "cle": "colorB",
+          "libelle": "Teinte 2",
+          "genre": "couleur",
+          "valeur": "#c94f8a"
+        },
+        {
+          "cle": "colorC",
+          "libelle": "Teinte 3",
+          "genre": "couleur",
+          "valeur": "#2fae9c"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": ["OrbesFloutees.tsx", "algo.ts", "manifest.json"],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/reglages.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-08-12",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 30,
+    "jsMedianMs": 0.2,
+    "jsP95Ms": 0.3,
+    "gpuBound": true
+  }
+}

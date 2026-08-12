@@ -1,0 +1,108 @@
+{
+  "slug": "plasma-deforme",
+  "nom": "Plasma déformé",
+  "ambiance": "Une matière liquide qui se plie et se replie sans fin.",
+  "categorie": "fond",
+  "origine": {
+    "source": "banc-essai",
+    "reference": "plasma",
+    "date": "2026-08-05"
+  },
+  "runtime": "webgl",
+  "tags": ["plasma", "shader", "liquide"],
+  "rendus": [
+    {
+      "id": "reglages",
+      "libelle": "Réglages",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "octaves",
+          "libelle": "Octaves de bruit",
+          "min": 1,
+          "max": 5,
+          "pas": 1,
+          "valeur": 3
+        },
+        {
+          "cle": "warp",
+          "libelle": "Déformation",
+          "min": 0,
+          "max": 6,
+          "pas": 0.25,
+          "valeur": 3,
+          "note": "À zéro, les passages de bruit superflus disparaissent."
+        },
+        {
+          "cle": "speed",
+          "libelle": "Vitesse",
+          "min": 0.02,
+          "max": 0.8,
+          "pas": 0.02,
+          "valeur": 0.1
+        },
+        {
+          "cle": "scale",
+          "libelle": "Échelle",
+          "min": 0.5,
+          "max": 6,
+          "pas": 0.25,
+          "valeur": 2.5
+        },
+        {
+          "cle": "contrast",
+          "libelle": "Contraste",
+          "min": 0.5,
+          "max": 4,
+          "pas": 0.1,
+          "valeur": 1.2
+        },
+        {
+          "cle": "colorA",
+          "libelle": "Creux",
+          "genre": "couleur",
+          "valeur": "#070a18"
+        },
+        {
+          "cle": "colorB",
+          "libelle": "Crêtes",
+          "genre": "couleur",
+          "valeur": "#3a5cc4"
+        },
+        {
+          "cle": "colorC",
+          "libelle": "Accent",
+          "genre": "couleur",
+          "valeur": "#c2456f"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": ["PlasmaDeforme.tsx", "algo.ts", "manifest.json"],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/reglages.ts",
+      "core/viz/plein-ecran-gl.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-08-12",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 0.1,
+    "jsP95Ms": 0.1,
+    "gpuBound": false
+  }
+}

@@ -1,4 +1,5 @@
 import type { Dimensions, InstanceViz, MonterViz, Reglages } from "./contrat.ts";
+import { creerToile } from "./toile.ts";
 
 /**
  * LE MOTEUR COMMUN DES SKETCHES #つぶやきProcessing.
@@ -100,12 +101,8 @@ export function creerChampDePoints({
   pasParImage,
 }: OptionsChamp): MonterViz {
   return (hote: HTMLElement, dimensions: Dimensions, reglages: Reglages): InstanceViz => {
-    const canvas = document.createElement("canvas");
-    canvas.style.display = "block";
-    hote.append(canvas);
-    const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("Contexte 2D indisponible sur ce navigateur.");
-
+    const toile = creerToile(hote, dimensions);
+    const { ctx } = toile;
     let r = normaliser(reglages, pointsOrigine, pasParImage);
     let sourisX = 0;
 
@@ -115,11 +112,11 @@ export function creerChampDePoints({
     };
     hote.addEventListener("pointermove", surPointeur);
 
-    const redimensionner = ({ largeur, hauteur, dpr }: Dimensions) => {
-      canvas.width = Math.round(largeur * dpr);
-      canvas.height = Math.round(hauteur * dpr);
-      canvas.style.width = `${largeur}px`;
-      canvas.style.height = `${hauteur}px`;
+    const redimensionner = (suivantes: Dimensions) => {
+      toile.redimensionner(suivantes);
+      const { largeur, hauteur, dpr } = suivantes;
+      // Le moteur raisonne dans l'espace 400×400 des sketches d'origine : sa
+      // transformation remplace celle (en pixels CSS) posée par la toile.
       const echelle = (Math.min(largeur, hauteur) / ESPACE) * dpr;
       ctx.setTransform(
         echelle,
@@ -172,7 +169,7 @@ export function creerChampDePoints({
       redimensionner,
       demonter() {
         hote.removeEventListener("pointermove", surPointeur);
-        canvas.remove();
+        toile.demonter();
       },
     };
   };

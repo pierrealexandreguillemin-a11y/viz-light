@@ -1,0 +1,106 @@
+{
+  "slug": "constellation",
+  "nom": "Constellation",
+  "ambiance": "Des points en dérive lente qui se relient quand ils se frôlent.",
+  "categorie": "fond",
+  "origine": {
+    "source": "banc-essai",
+    "reference": "constellation",
+    "date": "2026-08-05"
+  },
+  "runtime": "canvas2d",
+  "tags": ["reseau", "liaisons", "points"],
+  "rendus": [
+    {
+      "id": "reglages",
+      "libelle": "Réglages",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "naive",
+          "libelle": "Mode naïf (n²)",
+          "genre": "interrupteur",
+          "valeur": 0,
+          "note": "La version qu'on trouve dans la plupart des tutoriels."
+        },
+        {
+          "cle": "count",
+          "libelle": "Points",
+          "min": 40,
+          "max": 900,
+          "pas": 20,
+          "valeur": 160
+        },
+        {
+          "cle": "distance",
+          "libelle": "Distance de liaison",
+          "min": 40,
+          "max": 220,
+          "pas": 10,
+          "valeur": 110
+        },
+        {
+          "cle": "speed",
+          "libelle": "Vitesse",
+          "min": 0.2,
+          "max": 4,
+          "pas": 0.2,
+          "valeur": 1.4
+        },
+        {
+          "cle": "nodeSize",
+          "libelle": "Taille des points",
+          "min": 0.5,
+          "max": 4,
+          "pas": 0.5,
+          "valeur": 1.5
+        },
+        {
+          "cle": "background",
+          "libelle": "Fond",
+          "genre": "couleur",
+          "valeur": "#070d12"
+        },
+        {
+          "cle": "line",
+          "libelle": "Liaisons",
+          "genre": "couleur",
+          "valeur": "#2f6f7a"
+        },
+        {
+          "cle": "node",
+          "libelle": "Points",
+          "genre": "couleur",
+          "valeur": "#7fe3d4"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": ["Constellation.tsx", "algo.ts", "manifest.json"],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/reglages.ts",
+      "core/viz/toile.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-08-12",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 0.8,
+    "jsP95Ms": 1.2,
+    "gpuBound": false
+  }
+}
