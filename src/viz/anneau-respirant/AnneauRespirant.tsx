@@ -2,7 +2,7 @@
 
 import { creerCoquille } from "@/core/composants/creerCoquille.tsx";
 
-import { monterTunnelDePoints } from "./algo.ts";
+import { monterAnneauRespirant } from "./algo.ts";
 import manifest from "./manifest.json";
 
-export default creerCoquille(manifest, monterTunnelDePoints);
+export default creerCoquille(manifest, monterAnneauRespirant);

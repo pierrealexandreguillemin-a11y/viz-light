@@ -44,6 +44,11 @@ export interface InstanceViz {
  * Point d'entrée d'une viz. `hote` est un élément vide dont la viz a la pleine
  * propriété : le socle le vide avant chaque montage et après chaque démontage.
  */
+/** Ce que toute coquille de viz reçoit : les réglages courants du panneau. */
+export interface ProprietesViz {
+  readonly reglages: Reglages;
+}
+
 export type MonterViz = (
   hote: HTMLElement,
   dimensions: Dimensions,

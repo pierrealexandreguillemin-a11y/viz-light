@@ -1,16 +1,16 @@
 {
-  "slug": "tunnel-de-points",
-  "nom": "Tunnel de points",
-  "ambiance": "Une gorge de poussière lumineuse qui respire et se tord lentement.",
+  "slug": "voile-tournante",
+  "nom": "Voile tournante",
+  "ambiance": "Une étoffe prise dans un courant, qui claque et retombe.",
   "categorie": "animation",
   "origine": {
     "source": "tweet-sketches",
-    "reference": "29 juillet 2026 — Tunnel de points (HSB)",
+    "reference": "9 août 2026 — #2",
     "auteur": "@yuruyurau",
-    "date": "2026-07-29"
+    "date": "2026-08-09"
   },
   "runtime": "canvas2d",
-  "tags": ["tunnel", "particules", "hsb", "souris"],
+  "tags": ["voile", "rotation", "particules"],
   "rendus": [
     {
       "id": "origine",
@@ -21,7 +21,7 @@
           "cle": "points",
           "libelle": "Points",
           "min": 1000,
-          "max": 12000,
+          "max": 24000,
           "pas": 500,
           "valeur": 10000
         },
@@ -29,9 +29,9 @@
           "cle": "vitesse",
           "libelle": "Vitesse",
           "min": 0.005,
-          "max": 0.15,
+          "max": 0.3,
           "pas": 0.005,
-          "valeur": 0.04
+          "valeur": 0.157
         },
         {
           "cle": "trainee",
@@ -39,8 +39,7 @@
           "min": 5,
           "max": 255,
           "pas": 5,
-          "valeur": 255,
-          "note": "255 efface le fond à chaque image — le sketch d'origine n'a pas de traînée."
+          "valeur": 255
         },
         {
           "cle": "alphaPoint",
@@ -56,8 +55,7 @@
           "min": 0,
           "max": 100,
           "pas": 5,
-          "valeur": 0,
-          "note": "0 = blanc, la couleur exacte du sketch publié."
+          "valeur": 0
         },
         {
           "cle": "teinteBase",
@@ -94,17 +92,17 @@
           "cle": "points",
           "libelle": "Points",
           "min": 1000,
-          "max": 12000,
+          "max": 24000,
           "pas": 500,
-          "valeur": 6000
+          "valeur": 10000
         },
         {
           "cle": "vitesse",
           "libelle": "Vitesse",
           "min": 0.005,
-          "max": 0.15,
+          "max": 0.3,
           "pas": 0.005,
-          "valeur": 0.04
+          "valeur": 0.157
         },
         {
           "cle": "trainee",
@@ -158,9 +156,10 @@
     }
   ],
   "extraction": {
-    "fichiers": ["TunnelDePoints.tsx", "algo.ts", "manifest.json"],
+    "fichiers": ["VoileTournante.tsx", "algo.ts", "manifest.json"],
     "socle": [
       "core/viz/contrat.ts",
+      "core/viz/champ-de-points.ts",
       "core/composants/creerCoquille.tsx",
       "core/composants/SceneViz.tsx",
       "core/composants/LimiteErreur.tsx",
@@ -178,12 +177,8 @@
     "mesureLe": "2026-08-12",
     "machine": "win32 x64 · Chrome/151.0.7922.77",
     "cadenceFps": 59.9,
-    "jsMedianMs": 3.3,
-    "jsP95Ms": 4.71,
+    "jsMedianMs": 5.9,
+    "jsP95Ms": 7.62,
     "gpuBound": false
-  },
-  "variantes": [
-    "29 juillet 2026 — original (version golfée, rendue par le préréglage « Origine »)",
-    "atelier-generatif / tunnel (même reprise, paramétrée autrement)"
-  ]
+  }
 }

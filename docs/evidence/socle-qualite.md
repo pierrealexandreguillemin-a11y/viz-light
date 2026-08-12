@@ -145,6 +145,28 @@ jamais d'espace avant sa parenthèse ; exiger l'accolement supprime le faux
 positif sans rien laisser passer. Deux cas de test gardent désormais les deux
 sens (il attrape `rgba(…)`, il ignore la prose).
 
+## 3.5 `jscpd` recalibré de 25 à 40 tokens (2026-08-12)
+
+25 était **la valeur par défaut de l'outil**, jamais confrontée à ce dépôt — or
+le tier global interdit précisément de faire confiance à un seuil par défaut.
+
+Ce qu'il signalait à cinq viz : l'`import` du moteur et la signature
+`function positionner(i, t): PointCalcule` — identiques dans chaque `algo.ts`
+**par construction**, puisque c'est le contrat. Ce n'est pas de la duplication,
+c'est de la conformité. (`mode: "weak"` a été essayé d'abord : sans effet, la
+correspondance ne venait pas des commentaires.)
+
+Recalibré dans les deux sens après le changement :
+
+```
+etat sain           : Found 0 clones — exit 0
+duplication de code : Found 1 clones — exit 1   (deux fois la même fonction de 8 lignes)
+apres suppression   : Found 0 clones — exit 0
+```
+
+40 tokens ≈ une petite fonction. Le gate attrape toujours ce pour quoi il
+existe ; il ne compte plus l'obligation contractuelle comme une faute.
+
 ## 4. Ce que ce socle ne peut PAS voir
 
 - ~~La couverture n'a pas encore de plancher~~ — **posé à l'étape 4, le

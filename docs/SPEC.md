@@ -167,8 +167,25 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | 4 | Contrat de données : schéma manifest + registre + générateur CATALOG.md (gate) | ✅ 2026-08-12 |
 | 5 | Socle viz : hooks core + instrument + coquille UI, prouvé par une viz réelle | ✅ 2026-08-12 |
 | 5b | **Direction artistique + revue UI/UX** ([ADR 0009](decisions/0009-direction-artistique-planche-contact.md)) — repassée à l'étape 8, sur planche pleine | ✅ 2026-08-12 |
-| 6 | Migration des viz par lots, fidélité par captures comparées, dédup | 🟡 1/31 (Tunnel de points) |
-| 7 | Bench Puppeteer + perf tamponnée dans les manifests | ⬜ |
+| 6 | Migration des viz par lots, fidélité par captures comparées, dédup | 🟡 1/31 |
+| 7 | Bench Puppeteer + perf tamponnée dans les manifests | ✅ outil livré, tourne à chaque migration |
 | 8 | Recette utilisateur (revue visuelle complète par Pierre-Alexandre) | ⬜ |
 | 9 | Déploiement Vercel + CATALOG.md final | ⬜ |
 | 10 | Entretien + ajouts au fil de l'eau (`scripts/new-viz.mjs`) — livrable permanent | ⬜ |
+
+**L'étape 7 a fusionné dans l'étape 6** : le gate du catalogue refuse une viz
+sans perf, donc chaque migration se termine par sa mesure. Mesurer en bloc à la
+fin laisserait `pnpm verify` rouge pendant tout le chantier.
+
+### Exigences ajoutées par l'utilisateur le 2026-08-12
+
+Elles ne sont pas négociables et s'appliquent à **chaque** viz migrée :
+
+1. **Les réglages survivent à la migration.** Le matériel d'origine se réglait
+   en direct ; une viz migrée sans ses curseurs est une régression, pas une
+   étape. `InstanceViz.regler()` change les valeurs sans remonter l'animation.
+2. **Fonds et animations sont séparés** (champ `categorie`, requis et validé) —
+   on ne les choisit pas de la même façon.
+3. **Aucune légende.** Si un élément d'interface demande une explication, c'est
+   l'élément qu'il faut remplacer.
+4. **L'espace appartient aux visuels.** L'en-tête tient sur une ligne.

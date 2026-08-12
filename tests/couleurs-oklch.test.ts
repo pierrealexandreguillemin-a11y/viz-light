@@ -42,9 +42,20 @@ function walk(dir: string): string[] {
   });
 }
 
-/** Les algos de viz vivent sous `src/viz/<slug>/algo*` — hors périmètre UI. */
+/**
+ * LA FRONTIÈRE : ce qui DESSINE une viz n'est pas de l'UI.
+ *
+ * Une teinte HSB calculée par point est la viz elle-même — l'imposer en OKLCH
+ * n'aurait aucun sens et changerait le rendu. Sont donc hors périmètre :
+ * - `src/viz/<slug>/algo*` : la formule propre à chaque viz ;
+ * - `src/core/viz/**` : le contrat et le moteur de dessin partagé.
+ *
+ * Tout le reste — coquille, planche, panneau, jetons — reste tenu par la règle.
+ * La frontière est le dossier, pas le goût.
+ */
 function isVizAlgorithm(relativePath: string): boolean {
   const parts = relativePath.split(sep);
+  if (parts[0] === "core" && parts[1] === "viz") return true;
   return parts[0] === "viz" && parts.some((part) => part === "algo" || part.startsWith("algo."));
 }
 

@@ -77,25 +77,60 @@ await new Promise<void>((resoudre) => serveur.listen(PORT, resoudre));
 const navigateur = await puppeteer.launch();
 const page = await navigateur.newPage();
 await page.setViewport({ width: 1440, height: 1000, deviceScaleFactor: 1 });
-await page.goto(`http://localhost:${PORT}/`, { waitUntil: "networkidle0", timeout: 60000 });
 
-console.log(`\nMesure en cours (${DUREE_MESURE_MS / 1000} s par passage)…`);
-await new Promise((r) => setTimeout(r, DUREE_MESURE_MS));
+/**
+ * UNE VIZ À LA FOIS — condition pour que le chiffre veuille dire quelque chose.
+ *
+ * Laisser tourner la page entière donnerait deux erreurs simultanées : les viz
+ * visibles se disputent le processeur (chacune paraîtrait plus lente qu'elle
+ * n'est), et celles hors écran sont mises en pause par le socle, donc ne
+ * produisent rien. On recharge, on masque toutes les autres, et on laisse
+ * celle-ci seule remplir sa fenêtre de mesure.
+ *
+ * `domcontentloaded` et non `networkidle0` : une page qui anime en permanence
+ * n'atteint pas toujours l'état « réseau au repos », et l'attente expirait.
+ *
+ * Le sélecteur est `[data-fps]` : la barre de coût a été remplacée par une
+ * phrase, et l'ancien `.cout[data-fps]` ne trouvait plus rien — en sortant
+ * proprement, ce qui est le pire mode de panne pour un instrument.
+ */
+async function mesurerUne(slug: string): Promise<Releve | null> {
+  await page.goto(`http://localhost:${PORT}/`, { waitUntil: "domcontentloaded", timeout: 60000 });
+  await page.evaluate((cible: string) => {
+    for (const article of document.querySelectorAll<HTMLElement>("article")) {
+      if (!article.querySelector(`[data-viz="${cible}"]`)) article.style.display = "none";
+    }
+    window.scrollTo(0, 0);
+  }, slug);
 
-// `[data-fps]` et non `.cout[data-fps]` : la barre de coût a été remplacée par
-// une phrase (une interface qui a besoin d'une légende ne s'explique pas), et
-// le sélecteur de classe a suivi le composant supprimé — le bench ne relevait
-// alors plus rien, en sortant proprement.
-const releves: Releve[] = await page.evaluate(() =>
-  [...document.querySelectorAll<HTMLElement>("[data-fps]")].map((noeud) => ({
-    slug: noeud.dataset["viz"] ?? "",
-    cadenceFps: Number(noeud.dataset["fps"]),
-    jsMedianMs: Number(noeud.dataset["jsMedian"]),
-    jsP95Ms: Number(noeud.dataset["jsP95"]),
-    gpuBound: noeud.dataset["gpuBound"] === "true",
-    echantillons: Number(noeud.dataset["echantillons"]),
-  })),
-);
+  await new Promise((r) => setTimeout(r, DUREE_MESURE_MS));
+
+  return page.evaluate((cible: string) => {
+    const noeud = document.querySelector<HTMLElement>(`[data-viz="${cible}"][data-fps]`);
+    if (!noeud) return null;
+    return {
+      slug: cible,
+      cadenceFps: Number(noeud.dataset["fps"]),
+      jsMedianMs: Number(noeud.dataset["jsMedian"]),
+      jsP95Ms: Number(noeud.dataset["jsP95"]),
+      gpuBound: noeud.dataset["gpuBound"] === "true",
+      echantillons: Number(noeud.dataset["echantillons"]),
+    };
+  }, slug);
+}
+
+const aMesurer = readdirSync(DOSSIER_VIZ, { withFileTypes: true })
+  .filter((e) => e.isDirectory())
+  .map((e) => e.name)
+  .sort();
+
+console.log(`\nMesure de ${aMesurer.length} viz, ${DUREE_MESURE_MS / 1000} s chacune…`);
+const releves: Releve[] = [];
+for (const slug of aMesurer) {
+  const releve = await mesurerUne(slug);
+  if (releve) releves.push(releve);
+  else console.error(`  x  ${slug} : aucune mesure produite.`);
+}
 
 const version = await navigateur.version();
 await navigateur.close();
@@ -127,14 +162,6 @@ for (const releve of releves) {
     `  ${releve.slug} : ${releve.cadenceFps} i/s · JS ${releve.jsMedianMs}/${releve.jsP95Ms} ms ` +
       `· ${releve.gpuBound ? "GPU-bound" : "CPU-bound"} · ${releve.echantillons} images`,
   );
-}
-
-const slugs = new Set(releves.map((r) => r.slug));
-const manquantes = readdirSync(DOSSIER_VIZ, { withFileTypes: true })
-  .filter((e) => e.isDirectory() && !slugs.has(e.name))
-  .map((e) => e.name);
-if (manquantes.length > 0) {
-  console.log(`\n⚠ Non mesurees (absentes de la page ou hors viewport) : ${manquantes.join(", ")}`);
 }
 
 console.log(`\nVERT — ${releves.length} viz mesuree(s), manifests mis a jour.\n`);
