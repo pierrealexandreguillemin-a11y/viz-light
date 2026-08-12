@@ -73,11 +73,16 @@ JS médian de 0 ms — mesuré réellement sur `mesh-gradient` en mode composé.
 3. **Reste 16 viz** : 14 sketches p5 (une formule chacun) puis les 5 algos de
    l'Atelier (arbitrage Flow Field = utilisateur ; la version banc-essai est
    déjà migrée en `fond` avec la variante notée au manifest).
-4. **Une seule viz vit à la fois** (`useScenePrincipale`, décision utilisateur
-   en fin de session) : la plus visible anime, les autres sont figées sur une
-   image — la cadence perçue rejoint celle des manifests. Piège documenté dans
-   le code : `canvas.width = …` efface un canvas, une scène figée doit se
-   repeindre après réglage ou redimensionnement.
+4. **Une seule viz vit à la fois**
+   ([ADR 0011](../decisions/0011-une-seule-scene-vivante.md), décision
+   utilisateur) : la plus visible anime, les autres sont figées sur une image —
+   la cadence perçue rejoint celle des manifests. Piège documenté : `canvas
+   .width = …` efface un canvas, une scène figée se repeint après réglage ou
+   redimensionnement.
+5. **La clôture de session est mécanisée** : skill `project-session-end`
+   (`.claude/skills/`), projection minimal-fork du template
+   `C:\Dev\skills-templates` — le handoff daté reste LE mémo, aucun fichier
+   doctrine dupliqué. L'invoquer à chaque fin de session (CLAUDE.md §4).
 
 ## 3.5 LA REPRISE EST SANS DÉCISION — tout est déjà tranché
 

@@ -168,6 +168,23 @@ mesure et **refuse** (ROUGE) sous 55 i/s ; il lance Chrome en `headless:
 de coût nul avant de mesurer quoi que ce soit ; une valeur uniforme sur des
 sujets hétérogènes accuse l'environnement, pas les sujets.
 
+## 15. Vérifier la fidélité contre une traduction, pas contre l'original (2026-08-12)
+
+**Défaut** : les 5 œuvres p5 ont d'abord été « vérifiées » contre
+`sources/tweet-sketches-artifact.html` — qui est lui-même une TRADUCTION
+(dé-golfage fait côté claude.ai, avec ses propres erreurs corrigées en cours de
+route). L'utilisateur a dû exiger la relecture des one-liners golfés de la
+conversation d'origine.
+
+**Ce qui l'a rendu possible** : prendre le document le plus commode pour le
+document de référence. Une chaîne de copies a toujours un maillon zéro.
+
+**Garde-fou** : les golfés intégraux sont rapatriés dans
+`sources/tweets-golfes.md`, et `SPEC.md` §4 nomme ce fichier comme LA référence
+du régime « œuvre ». **Règle** : avant toute vérification de fidélité,
+identifier le maillon zéro de la chaîne — et vérifier contre lui, jamais contre
+un intermédiaire.
+
 ## 10. Un « défaut » corrigé sans être constaté (2026-08-12, évité)
 
 **Ce qui a failli arriver** : croire voir des valeurs dupliquées à gauche de la
