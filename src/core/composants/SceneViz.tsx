@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useBoucleAnimation } from "../hooks/useBoucleAnimation.ts";
 import { useInstrument } from "../hooks/useInstrument.ts";
 import { usePreferenceMouvement } from "../hooks/usePreferenceMouvement.ts";
+import { useScenePrincipale } from "../hooks/useScenePrincipale.ts";
 import { mesurerElement, useSurface } from "../hooks/useSurface.ts";
 import { useVisible } from "../hooks/useVisible.ts";
 import type { InstanceViz, MonterViz, Reglages } from "../viz/contrat.ts";
@@ -27,6 +28,7 @@ function Scene({ monter, reglages, slug }: Omit<Proprietes, "nom">) {
   const { refHote, hote, dimensions } = useSurface();
   const conteneurRef = useRef<HTMLDivElement | null>(null);
   const visible = useVisible(conteneurRef);
+  const principale = useScenePrincipale(conteneurRef);
   const mouvementReduit = usePreferenceMouvement();
   const [animerQuandMeme, setAnimerQuandMeme] = useState(false);
   const { enregistrer, mesures, reinitialiser } = useInstrument();
@@ -55,6 +57,9 @@ function Scene({ monter, reglages, slug }: Omit<Proprietes, "nom">) {
     hote.replaceChildren();
     const instance = monter(hote, mesurerElement(hote), reglagesRef.current);
     instanceRef.current = instance;
+    // Première image immédiate : une scène non élue (une seule viz vit à la
+    // fois) doit montrer quelque chose, pas un carré vide.
+    instance.frame(0, 0);
     reinitialiser();
     return () => {
       instance.demonter?.();
@@ -63,13 +68,24 @@ function Scene({ monter, reglages, slug }: Omit<Proprietes, "nom">) {
     };
   }, [hote, monter, reinitialiser]);
 
+  /**
+   * Une scène NON ÉLUE est figée : sa boucle ne tourne pas. Tout ce qui change
+   * son image (réglage, redimensionnement — `canvas.width = …` EFFACE le
+   * canvas) doit donc repeindre une image lui-même, sinon la vignette reste
+   * noire jusqu'à sa prochaine élection.
+   */
+  const animeRef = useRef(false);
+
   // Réglages à chaud. Une viz sans `regler` garde ceux du montage.
   useEffect(() => {
     instanceRef.current?.regler?.(reglages);
+    if (!animeRef.current) instanceRef.current?.frame(0, 0);
   }, [reglages]);
 
   useEffect(() => {
-    if (dimensions) instanceRef.current?.redimensionner?.(dimensions);
+    if (!dimensions) return;
+    instanceRef.current?.redimensionner?.(dimensions);
+    if (!animeRef.current) instanceRef.current?.frame(0, 0);
   }, [dimensions]);
 
   /**
@@ -78,7 +94,13 @@ function Scene({ monter, reglages, slug }: Omit<Proprietes, "nom">) {
    * au système qu'il ne supporte pas le mouvement — on ne lui interdit pas non
    * plus de regarder.
    */
-  const anime = visible && (!mouvementReduit || animerQuandMeme);
+  // Une seule viz vit à la fois (la plus visible) : les autres restent figées
+  // sur leur dernière image — décision utilisateur, 2026-08-12.
+  const anime = visible && principale && (!mouvementReduit || animerQuandMeme);
+
+  useEffect(() => {
+    animeRef.current = anime;
+  }, [anime]);
 
   useEffect(() => {
     if (mouvementReduit && !animerQuandMeme) instanceRef.current?.frame(0, 0);

@@ -138,7 +138,7 @@ export function Reglages({
         onClick={surReinitialiser}
         className="etiquette self-start text-(--color-os-pale) underline underline-offset-4 hover:text-(--color-ambre)"
       >
-        Revenir aux valeurs du rendu
+        Revenir aux valeurs par défaut
       </button>
     </div>
   );
