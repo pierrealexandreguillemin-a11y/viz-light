@@ -15,6 +15,7 @@
 import { createServer } from "node:http";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { extname, join } from "node:path";
+import { format } from "prettier";
 import puppeteer from "puppeteer";
 
 const RACINE = join(import.meta.dirname, "..");
@@ -195,7 +196,14 @@ for (const releve of releves) {
     jsP95Ms: releve.jsP95Ms,
     gpuBound: releve.gpuBound,
   };
-  writeFileSync(chemin, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+  // Repasser par Prettier : sans ça, `pnpm bench` laisse systématiquement
+  // `pnpm verify` rouge sur le formatage des manifests qu'il vient d'écrire —
+  // un gate qui salit ce qu'un autre gate vérifie.
+  writeFileSync(
+    chemin,
+    await format(JSON.stringify(manifest, null, 2), { parser: "json", filepath: chemin }),
+    "utf8",
+  );
   console.log(
     `  ${releve.slug} : ${releve.cadenceFps} i/s · JS ${releve.jsMedianMs}/${releve.jsP95Ms} ms ` +
       `· ${releve.gpuBound ? "GPU-bound" : "CPU-bound"} · ${releve.echantillons} images`,
