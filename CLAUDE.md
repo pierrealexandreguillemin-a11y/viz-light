@@ -60,7 +60,9 @@ jamais).
 ## 4. Protocole de session — obligatoire
 
 **À l'ouverture**, dans cet ordre :
-1. `node scripts/check-docs.mjs` → **rouge = réparer la doc avant de coder.**
+1. `pnpm session` (tourne aussi seul via hook SessionStart) → **rouge =
+   réparer la clôture précédente avant de coder.** Il vérifie : arbre propre,
+   docs, verify tamponné sur le code exact, fil d'Ariane exact, handoff daté.
 2. Lire `docs/SPEC.md` en entier.
 3. Annoncer en une ligne à quelle étape du fil d'Ariane (`SPEC.md §8`) tu es et
    ce que tu vises aujourd'hui.

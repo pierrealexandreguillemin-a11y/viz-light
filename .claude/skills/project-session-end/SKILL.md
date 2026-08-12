@@ -21,8 +21,11 @@ et dans les documents du projet, jamais ici (minimal-fork).
    un choix restant est nommé et attribué à l'utilisateur.
 4. **Mémoire projet** : `etat-viz-light.md` réécrit, leçon nouvelle = un
    fichier feedback, une ligne dans `MEMORY.md`.
-5. **Fin** : `node scripts/check-docs.mjs` VERT **et** arbre git propre —
-   sinon corriger maintenant, jamais reporter. Puis récapitulatif :
+5. **Fin — LE gate** : `pnpm session` VERT (arbre propre + docs + verify
+   tamponné sur ce code exact + fil d'Ariane exact + handoff du jour) —
+   sinon corriger maintenant, jamais reporter. Le même gate tourne seul à
+   l'ouverture suivante (hook SessionStart) : une clôture bâclée ne passe pas
+   la nuit. Puis récapitulatif :
 
 ```
 Session close.

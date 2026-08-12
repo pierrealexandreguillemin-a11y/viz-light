@@ -26,10 +26,11 @@
     "test:cov": "vitest run --coverage",
     "dup": "jscpd src tests",
     "catalog": "node scripts/build-catalog.ts",
-    "verify": "pnpm check-docs && pnpm catalog && pnpm format:check && pnpm lint && pnpm typecheck && pnpm dup && pnpm test:cov && pnpm build",
+    "verify": "pnpm check-docs && pnpm catalog && pnpm format:check && pnpm lint && pnpm typecheck && pnpm dup && pnpm test:cov && pnpm build && node scripts/stamp-verify.mjs",
     "prepare": "husky",
     "bench": "node scripts/bench.ts",
-    "check-docs": "node scripts/check-docs.mjs"
+    "check-docs": "node scripts/check-docs.mjs",
+    "session": "node scripts/check-session.mjs"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
