@@ -82,8 +82,12 @@ await page.goto(`http://localhost:${PORT}/`, { waitUntil: "networkidle0", timeou
 console.log(`\nMesure en cours (${DUREE_MESURE_MS / 1000} s par passage)…`);
 await new Promise((r) => setTimeout(r, DUREE_MESURE_MS));
 
+// `[data-fps]` et non `.cout[data-fps]` : la barre de coût a été remplacée par
+// une phrase (une interface qui a besoin d'une légende ne s'explique pas), et
+// le sélecteur de classe a suivi le composant supprimé — le bench ne relevait
+// alors plus rien, en sortant proprement.
 const releves: Releve[] = await page.evaluate(() =>
-  [...document.querySelectorAll<HTMLElement>(".cout[data-fps]")].map((noeud) => ({
+  [...document.querySelectorAll<HTMLElement>("[data-fps]")].map((noeud) => ({
     slug: noeud.dataset["viz"] ?? "",
     cadenceFps: Number(noeud.dataset["fps"]),
     jsMedianMs: Number(noeud.dataset["jsMedian"]),

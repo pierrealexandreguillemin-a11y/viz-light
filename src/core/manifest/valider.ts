@@ -1,4 +1,4 @@
-import { RUNTIMES, SOURCES, type VizManifest } from "./types.ts";
+import { CATEGORIES, RUNTIMES, SOURCES, type VizManifest } from "./types.ts";
 
 /**
  * VALIDATION DU CONTRAT DE DONNÉES — c'est le gate de `pnpm catalog`.
@@ -216,6 +216,9 @@ export function validerManifest(valeur: unknown, slugAttendu: string): Probleme[
   ];
   if (!RUNTIMES.includes(valeur["runtime"] as never)) {
     problemes.push(probleme("runtime", `attendu : ${RUNTIMES.join(" | ")}`));
+  }
+  if (!CATEGORIES.includes(valeur["categorie"] as never)) {
+    problemes.push(probleme("categorie", `attendu : ${CATEGORIES.join(" | ")}`));
   }
   return problemes;
 }

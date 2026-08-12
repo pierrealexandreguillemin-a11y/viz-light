@@ -1,6 +1,7 @@
 "use client";
 
 import { SceneViz } from "@/core/composants/SceneViz.tsx";
+import type { ProprietesViz } from "@/viz/registre.genere.ts";
 
 import { monterTunnelDePoints } from "./algo.ts";
 import manifest from "./manifest.json";
@@ -8,24 +9,17 @@ import manifest from "./manifest.json";
 /**
  * LA COQUILLE — volontairement mince (SPEC.md §3).
  *
- * Elle ne fait que choisir un rendu et le passer à la scène. Tout le reste —
- * boucle, pause hors viewport, plafond DPR, instrument, mouvement réduit,
- * barrière d'erreur — vient du socle, et l'algorithme n'en sait rien.
+ * Elle transmet les réglages courants à la scène, et rien d'autre. Boucle,
+ * pause hors viewport, plafond DPR, instrument, mouvement réduit et barrière
+ * d'erreur viennent du socle ; l'algorithme n'en sait rien.
  */
-const REGLAGES = Object.fromEntries(
-  (manifest.rendus.find((r) => r.defaut) ?? manifest.rendus[0])!.params.map((p) => [
-    p.cle,
-    p.valeur,
-  ]),
-);
-
-export default function TunnelDePoints() {
+export default function TunnelDePoints({ reglages }: ProprietesViz) {
   return (
     <SceneViz
       nom={manifest.nom}
       slug={manifest.slug}
       monter={monterTunnelDePoints}
-      reglages={REGLAGES}
+      reglages={reglages}
     />
   );
 }

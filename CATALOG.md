@@ -22,9 +22,9 @@ exécuté — jamais d'estimation.
 | Tags | tunnel, particules, hsb, souris |
 | Rendus | Origine · **Aligné** (défaut) |
 | Origine | 29 juillet 2026 — Tunnel de points (HSB) (tweet-sketches) |
-| Coût mesuré | 59.9 i/s · JS 3.1 ms médian, 3.55 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · Chrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 5.5 ms médian, 7.11 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · Chrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/tunnel-de-points/TunnelDePoints.tsx` · `src/viz/tunnel-de-points/algo.ts` · `src/viz/tunnel-de-points/manifest.json` · `src/core/viz/contrat.ts` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/FiletCout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/tunnel-de-points/TunnelDePoints.tsx` · `src/viz/tunnel-de-points/algo.ts` · `src/viz/tunnel-de-points/manifest.json` · `src/core/viz/contrat.ts` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 | Variantes écartées | 29 juillet 2026 — original (version golfée, rendue par le préréglage « Origine ») · atelier-generatif / tunnel (même reprise, paramétrée autrement) |
 
 ## Hôte non-React

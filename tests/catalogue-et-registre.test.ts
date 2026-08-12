@@ -9,6 +9,7 @@ const viz = (surcharge: Partial<VizManifest> = {}): VizManifest => ({
   nom: "Flow Field",
   ambiance: "Des rubans qui suivent un vent invisible.",
   origine: { source: "atelier-generatif", reference: "flow-field" },
+  categorie: "fond",
   runtime: "canvas2d",
   tags: ["organique", "bruit"],
   rendus: [

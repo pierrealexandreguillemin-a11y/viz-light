@@ -1,39 +1,30 @@
-import { Legende } from "@/core/composants/Legende.tsx";
 import { Planche } from "@/core/composants/Planche.tsx";
 import { REGISTRE } from "@/viz/registre.genere.ts";
 
 /**
- * LA PLANCHE — page d'accueil du catalogue (ADR 0009).
- *
- * L'en-tête est court et ne porte QUE l'identité : dans un catalogue de
- * visuels, l'espace appartient aux visuels. Ce qui explique la planche descend
- * contre la planche (`Legende`), là où on en a besoin.
+ * L'en-tête tient sur UNE ligne. La version précédente occupait autant de
+ * hauteur que la viz elle-même — sur un catalogue de visuels, c'est la place
+ * prise à ce qu'on vient voir.
  */
 export default function Accueil() {
   const entrees = Object.values(REGISTRE);
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-[1400px] flex-col gap-10 px-4 py-10 sm:px-8">
-      <header className="flex flex-col gap-4">
-        <p className="etiquette">
-          Planche contact · {entrees.length} spécimen{entrees.length > 1 ? "s" : ""}
-        </p>
-        <h1 className="text-5xl leading-[0.85] tracking-tighter text-(--color-os) sm:text-7xl">
+    <main className="mx-auto flex min-h-dvh w-full max-w-[1500px] flex-col gap-10 px-4 py-8 sm:px-8">
+      <header className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <h1 className="text-xl tracking-tighter text-(--color-os)">
           viz<span className="text-(--color-ambre)">·</span>light
         </h1>
-        <p className="voix-humaine max-w-prose text-base text-(--color-os-mat)">
-          Des fonds animés à regarder, et à emporter tels quels.
+        <p className="voix-humaine text-sm text-(--color-os-mat)">
+          Des fonds animés à régler, à regarder, et à emporter tels quels.
         </p>
       </header>
 
-      <div className="flex flex-1 flex-col gap-3">
-        <Legende />
-        <Planche entrees={entrees} />
-      </div>
+      <Planche entrees={entrees} />
 
-      <footer className="etiquette border-t border-(--color-filet) pt-6 normal-case">
-        Extraction : <code className="text-(--color-os-mat)">CATALOG.md</code> donne, pour chaque
-        viz, la liste exacte des fichiers à copier.
+      <footer className="etiquette mt-auto border-t border-(--color-filet) pt-6 normal-case">
+        <code className="text-(--color-os-mat)">CATALOG.md</code> donne, pour chaque viz, la liste
+        exacte des fichiers à copier.
       </footer>
     </main>
   );

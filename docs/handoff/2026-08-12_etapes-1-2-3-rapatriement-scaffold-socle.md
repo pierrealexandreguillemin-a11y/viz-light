@@ -4,12 +4,12 @@ last_verified: 2026-08-12
 expires: never
 ---
 
-# Handoff — 2026-08-12 · étapes 1, 2, 3 et 4
+# Handoff — 2026-08-12 · étapes 1 à 5b, et 1re migration
 
 **Session** : première de `claude-viz-light`. Point de départ : étape 0 seule
 verte, aucun code applicatif.
-**Point d'arrivée** : étapes **1 à 4 vertes**. La prochaine session ouvre sur
-l'**étape 5** (socle viz : hooks core + instrument + coquille UI).
+**Point d'arrivée** : étapes **1 à 5b vertes**, **étape 6 entamée (1 viz sur
+31)**. La vitrine tourne, avec le Tunnel de points mesuré à 59,9 i/s.
 
 ---
 
@@ -44,6 +44,28 @@ Schéma de manifest, validateur, rendu de `CATALOG.md`, générateur de registre
 Logique pure dans `src/core/`, entrées-sorties isolées dans
 `scripts/build-catalog.ts`. Le gate rougit sur manifest invalide **et** sur perf
 non mesurée. Plancher de couverture posé ici, mesuré avant d'être fixé.
+
+### Étape 5 — socle viz
+
+Contrat `src/core/viz/contrat.ts` : une viz reçoit un élément hôte et rend
+`{ frame, redimensionner?, demonter? }`. Il ne nomme aucun runtime, donc
+canvas2d, webgl, p5 et dom-css passent sans adaptateur par famille. Hooks :
+`useBoucleAnimation`, `useSurface`, `useVisible`, `usePreferenceMouvement`,
+`useInstrument`, composés par `<SceneViz>`.
+
+### Étape 5b — direction artistique ([ADR 0009](../decisions/0009-direction-artistique-planche-contact.md))
+
+Ajoutée à la demande de l'utilisateur. La palette du scaffold était un **défaut
+d'IA** (fond quasi-noir + accent cyan vif), remplacée par la « planche
+contact ». **À repasser à l'étape 8**, sur planche pleine : une direction se
+juge sur du contenu réel.
+
+### Étape 6 — 1 viz sur 31
+
+**Tunnel de points**, porté en TypeScript pur canvas2d : la formule n'appelait
+que `cos`, `sin` et `mag`, donc **p5 disparaît du bundle**. Deux rendus
+(`origine`, `aligne`) issus du même algo. Mesuré : 59,9 i/s, JS 3,1 ms médian /
+3,55 ms p95, CPU-bound.
 
 ### Décision de l'utilisateur en cours de session
 
@@ -114,6 +136,20 @@ Perlin optionnel, rotation souris, bucketing des teintes à 3°).
   colonnes. `generer.ts` en avait disparu et paraissait hors périmètre. Vérifier
   via `coverage/coverage-summary.json`, jamais via le tableau console.
 
+### 3.3bis LE BUG À NE JAMAIS REFAIRE — l'instrument mesurait le vide
+
+L'effet de montage de `SceneViz` lisait les dimensions du `ResizeObserver` tout
+en les excluant de ses dépendances (`eslint-disable`). À l'instant où l'hôte
+apparaît, la mesure n'existe pas : l'effet sortait par sa garde et ne rejouait
+jamais. **Aucune viz ne se montait — et l'instrument annonçait 59,9 i/s et 0 ms
+de JavaScript**, parce qu'il mesurait une boucle vide. Le bench a failli
+tamponner ces chiffres dans le manifest.
+
+Ce qui a tranché : lire le canvas dans la page (`canvasPresent: false`,
+`pixelsAllumes: 0`). **Règle à garder** : un chiffre d'instrument ne prouve rien
+tant qu'on n'a pas vérifié que l'objet mesuré existe. `tests/scene-viz.test.tsx`
+l'exige désormais ; calibré dans les deux sens.
+
 ### 3.4 Le gate du catalogue bloque tant que le bench n'a pas tourné
 
 `pnpm catalog` refuse de publier une viz dont `perf` vaut `null`. Conséquence
@@ -131,8 +167,12 @@ rappel que l'auto-revue ne suffit pas (`evidence/socle-qualite.md §4`).
 
 ## 4. État à la passation
 
-- Fil d'Ariane : **0-1-2-3-4 ✅**, 5 à 10 ⬜.
-- 6 commits sur `master`. **Aucun push, aucun remote** — conforme.
+- Fil d'Ariane : **0 à 5b ✅**, étape 6 à 1/31, 7 à 10 ⬜.
+- 7 commits sur `master`. **Aucun push, aucun remote** — conforme.
+- Chaîne : `pnpm verify` (docs → catalog → format → lint → typecheck → dup →
+  test:cov → build) et `pnpm bench` (mesure réelle, écrit les manifests).
+- ⚠ `next dev` réécrit un bloc `nextjs-agent-rules` dans `CLAUDE.md` à chaque
+  démarrage. Il est commité pour garder l'arbre propre.
 - `pnpm verify` → **exit 0**. `node scripts/check-docs.mjs` → **VERT**.
 - Puppeteer opérationnel (Chrome 151.0.7922.77) — prêt pour les captures de
   fidélité (étape 6) et le bench (étape 7).

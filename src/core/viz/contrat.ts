@@ -27,6 +27,13 @@ export type Reglages = Readonly<Record<string, number>>;
 export interface InstanceViz {
   /** Une image. `temps` en secondes depuis le montage, `delta` déjà borné. */
   frame(temps: number, delta: number): void;
+  /**
+   * Nouveaux réglages, SANS REMONTER. C'est ce qui rend les curseurs vivants :
+   * on voit l'effet d'un réglage pendant qu'on le déplace, au lieu de voir
+   * l'animation repartir de zéro à chaque cran. Une viz qui ne l'implémente pas
+   * est remontée — correct, mais moins agréable.
+   */
+  regler?(reglages: Reglages): void;
   /** Le conteneur a changé de taille. Optionnel : beaucoup d'algos s'en moquent. */
   redimensionner?(dimensions: Dimensions): void;
   /** Libérer contextes, tampons, instances p5. Optionnel. */

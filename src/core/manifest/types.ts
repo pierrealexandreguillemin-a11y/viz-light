@@ -15,6 +15,20 @@ export type Source = (typeof SOURCES)[number];
 export const RUNTIMES = ["canvas2d", "webgl", "p5", "dom-css", "iframe"] as const;
 export type Runtime = (typeof RUNTIMES)[number];
 
+/**
+ * DEUX USAGES QU'ON NE CHOISIT PAS DE LA MÊME FAÇON.
+ *
+ * - `fond` : destiné à vivre DERRIÈRE du contenu. On le juge discret, on le
+ *   regarde avec du texte par-dessus, et sa densité compte plus que son motif.
+ * - `animation` : une pièce qu'on regarde pour elle-même. On la juge sur son
+ *   mouvement, plein cadre.
+ *
+ * Les mélanger dans une même liste force à comparer des choses incomparables —
+ * d'où la séparation, dans le manifest et dans la vitrine.
+ */
+export const CATEGORIES = ["fond", "animation"] as const;
+export type Categorie = (typeof CATEGORIES)[number];
+
 /** D'où vient la viz, et à quoi la comparer pour prouver sa fidélité. */
 export interface Origine {
   readonly source: Source;
@@ -80,6 +94,7 @@ export interface VizManifest {
   /** Une phrase pour parcourir : ce qu'on ressent, pas ce que ça calcule. */
   readonly ambiance: string;
   readonly origine: Origine;
+  readonly categorie: Categorie;
   readonly runtime: Runtime;
   readonly tags: readonly string[];
   readonly rendus: readonly Rendu[];

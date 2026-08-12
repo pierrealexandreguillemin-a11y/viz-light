@@ -4,11 +4,17 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 
 import type { VizManifest } from "../core/manifest/types.ts";
+import type { Reglages } from "../core/viz/contrat.ts";
+
+/** Toute coquille de viz accepte les réglages courants — c'est ce qui rend les curseurs vivants. */
+export interface ProprietesViz {
+  readonly reglages: Reglages;
+}
 
 export interface EntreeViz {
   readonly manifest: VizManifest;
   /** Chargement paresseux : la viz n'entre dans le bundle que si on l'ouvre. */
-  readonly Composant: LazyExoticComponent<ComponentType>;
+  readonly Composant: LazyExoticComponent<ComponentType<ProprietesViz>>;
 }
 
 import manifest0 from "./tunnel-de-points/manifest.json";

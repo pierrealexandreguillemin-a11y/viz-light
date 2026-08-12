@@ -2,6 +2,7 @@
   "slug": "tunnel-de-points",
   "nom": "Tunnel de points",
   "ambiance": "Une gorge de poussière lumineuse qui respire et se tord lentement.",
+  "categorie": "animation",
   "origine": {
     "source": "tweet-sketches",
     "reference": "29 juillet 2026 — Tunnel de points (HSB)",
@@ -30,7 +31,7 @@
           "min": 0.005,
           "max": 0.15,
           "pas": 0.005,
-          "valeur": 0.0393
+          "valeur": 0.04
         },
         {
           "cle": "trainee",
@@ -47,7 +48,7 @@
           "min": 20,
           "max": 255,
           "pas": 5,
-          "valeur": 96
+          "valeur": 95
         },
         {
           "cle": "saturation",
@@ -103,7 +104,7 @@
           "min": 0.005,
           "max": 0.15,
           "pas": 0.005,
-          "valeur": 0.0393
+          "valeur": 0.04
         },
         {
           "cle": "trainee",
@@ -162,7 +163,7 @@
       "core/viz/contrat.ts",
       "core/composants/SceneViz.tsx",
       "core/composants/LimiteErreur.tsx",
-      "core/composants/FiletCout.tsx",
+      "core/composants/Cout.tsx",
       "core/hooks/useBoucleAnimation.ts",
       "core/hooks/useSurface.ts",
       "core/hooks/useVisible.ts",
@@ -176,8 +177,8 @@
     "mesureLe": "2026-08-12",
     "machine": "win32 x64 · Chrome/151.0.7922.77",
     "cadenceFps": 59.9,
-    "jsMedianMs": 3.1,
-    "jsP95Ms": 3.55,
+    "jsMedianMs": 5.5,
+    "jsP95Ms": 7.11,
     "gpuBound": false
   },
   "variantes": [

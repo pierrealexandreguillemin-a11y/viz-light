@@ -18,6 +18,7 @@ const manifestValide = () => ({
     auteur: "@yuruyurau",
     date: "2026-07-29",
   },
+  categorie: "animation",
   runtime: "p5",
   tags: ["tunnel", "particules", "hsb"],
   rendus: [
@@ -92,6 +93,12 @@ describe("validerManifest — identité et champs de base", () => {
     expect(cheminsFautifs((m) => (m["ambiance"] = 7))).toContain("ambiance");
     expect(cheminsFautifs((m) => (m["tags"] = []))).toContain("tags");
     expect(cheminsFautifs((m) => (m["tags"] = ["ok", ""]))).toContain("tags");
+  });
+
+  it("exige une catégorie — un fond et une animation ne se jugent pas pareil", () => {
+    expect(cheminsFautifs((m) => (m["categorie"] = "joli"))).toContain("categorie");
+    expect(cheminsFautifs((m) => delete m["categorie"])).toContain("categorie");
+    expect(cheminsFautifs((m) => (m["categorie"] = "fond"))).toEqual([]);
   });
 
   it("refuse un runtime ou une source hors énumération", () => {

@@ -95,7 +95,10 @@ export function monterTunnelDePoints(
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Contexte 2D indisponible sur ce navigateur.");
 
-  const r = normaliser(reglages);
+  // `let` et non `const` : les curseurs remplacent ce bloc à chaud, sans
+  // remonter la viz — c'est ce qui permet de voir l'effet d'un réglage PENDANT
+  // qu'on le déplace, au lieu de voir l'animation repartir de zéro.
+  let r = normaliser(reglages);
   let sourisX = 0;
 
   const surPointeur = (evenement: PointerEvent) => {
@@ -146,6 +149,9 @@ export function monterTunnelDePoints(
         }
         ctx.fillRect(x, y, 1, 1);
       }
+    },
+    regler(suivants) {
+      r = normaliser(suivants);
     },
     redimensionner,
     demonter() {
