@@ -21,8 +21,11 @@ export interface Dimensions {
   readonly dpr: number;
 }
 
-/** Réglages d'un rendu, tels que déclarés dans le manifest. */
-export type Reglages = Readonly<Record<string, number>>;
+/**
+ * Réglages d'un rendu, tels que déclarés dans le manifest. Nombres pour les
+ * curseurs et interrupteurs (0|1), chaînes CSS pour les couleurs.
+ */
+export type Reglages = Readonly<Record<string, number | string>>;
 
 export interface InstanceViz {
   /** Une image. `temps` en secondes depuis le montage, `delta` déjà borné. */

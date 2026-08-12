@@ -142,6 +142,14 @@ describe("validerManifest — paramètres", () => {
       params[0]![champ] = valeur;
     };
 
+  /** Remplace le premier paramètre en entier — pour tester un autre genre. */
+  const muterParamComplet =
+    (param: Record<string, unknown>): Mutation =>
+    (m) => {
+      const params = lireRendus(m)[1]!["params"] as Record<string, unknown>[];
+      params[0] = param;
+    };
+
   it("refuse min >= max, un pas nul et une valeur hors bornes", () => {
     expect(cheminsFautifs(muterParam("min", 20000))).toContain("rendus[1].params[0].min");
     expect(cheminsFautifs(muterParam("pas", 0))).toContain("rendus[1].params[0].pas");
@@ -150,6 +158,29 @@ describe("validerManifest — paramètres", () => {
 
   it("refuse un nombre non fini", () => {
     expect(cheminsFautifs(muterParam("max", Number.NaN))).toContain("rendus[1].params[0].max");
+  });
+
+  const CHEMIN_VALEUR = "rendus[1].params[0].valeur";
+
+  it("accepte un interrupteur 0|1 et refuse toute autre valeur", () => {
+    const brancher = (valeur: unknown): Mutation =>
+      muterParamComplet({ cle: "halo", libelle: "Halo", genre: "interrupteur", valeur });
+    expect(cheminsFautifs(brancher(1))).toEqual([]);
+    expect(cheminsFautifs(brancher(0))).toEqual([]);
+    expect(cheminsFautifs(brancher(2))).toContain(CHEMIN_VALEUR);
+    expect(cheminsFautifs(brancher(true))).toContain(CHEMIN_VALEUR);
+  });
+
+  it("accepte une couleur chaîne et refuse une couleur vide ou numérique", () => {
+    const colorer = (valeur: unknown): Mutation =>
+      muterParamComplet({ cle: "fond", libelle: "Fond", genre: "couleur", valeur });
+    expect(cheminsFautifs(colorer("#080b14"))).toEqual([]);
+    expect(cheminsFautifs(colorer(""))).toContain(CHEMIN_VALEUR);
+    expect(cheminsFautifs(colorer(42))).toContain(CHEMIN_VALEUR);
+  });
+
+  it("refuse un genre hors énumération", () => {
+    expect(cheminsFautifs(muterParam("genre", "case"))).toContain("rendus[1].params[0].genre");
   });
 
   it("refuse deux paramètres partageant la même clé", () => {
@@ -175,6 +206,24 @@ describe("validerManifest — perf mesurée", () => {
 
   it("refuse un p95 inférieur à la médiane", () => {
     expect(cheminsFautifs((m) => (lirePerf(m)["jsP95Ms"] = 0.5))).toContain("perf.jsP95Ms");
+  });
+
+  it("accepte un temps JS de 0 ms (mesuré : un fond composé arrondit à 0)", () => {
+    expect(
+      cheminsFautifs((m) => {
+        const perf = m["perf"] as Record<string, unknown>;
+        perf["jsMedianMs"] = 0;
+        perf["jsP95Ms"] = 0;
+      }),
+    ).toEqual([]);
+  });
+
+  it("refuse un temps JS négatif", () => {
+    expect(
+      cheminsFautifs((m) => {
+        (m["perf"] as Record<string, unknown>)["jsMedianMs"] = -1;
+      }),
+    ).toContain("perf.jsMedianMs");
   });
 
   it("refuse une cadence nulle ou négative", () => {

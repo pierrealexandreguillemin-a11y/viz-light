@@ -1,4 +1,4 @@
-import { CATEGORIES, RUNTIMES, SOURCES, type VizManifest } from "./types.ts";
+import { CATEGORIES, GENRES_PARAM, RUNTIMES, SOURCES, type VizManifest } from "./types.ts";
 
 /**
  * VALIDATION DU CONTRAT DE DONNÉES — c'est le gate de `pnpm catalog`.
@@ -67,12 +67,8 @@ function validerOrigine(valeur: unknown, chemin: string): Probleme[] {
   return problemes;
 }
 
-function validerParam(valeur: unknown, chemin: string): Probleme[] {
-  if (!estDict(valeur)) return [probleme(chemin, OBJET_ATTENDU)];
-  const problemes = [
-    ...chaineNonVide(valeur, "cle", chemin),
-    ...chaineNonVide(valeur, "libelle", chemin),
-  ];
+function validerCurseur(valeur: Dict, chemin: string): Probleme[] {
+  const problemes: Probleme[] = [];
   const nombres = ["min", "max", "pas", "valeur"] as const;
   for (const cle of nombres) {
     if (typeof valeur[cle] !== "number" || !Number.isFinite(valeur[cle])) {
@@ -90,6 +86,32 @@ function validerParam(valeur: unknown, chemin: string): Probleme[] {
   if (pas <= 0) problemes.push(probleme(`${chemin}.pas`, `pas (${pas}) doit être > 0`));
   if (defaut < min || defaut > max) {
     problemes.push(probleme(`${chemin}.valeur`, `${defaut} hors des bornes [${min}, ${max}]`));
+  }
+  return problemes;
+}
+
+function validerParam(valeur: unknown, chemin: string): Probleme[] {
+  if (!estDict(valeur)) return [probleme(chemin, OBJET_ATTENDU)];
+  const problemes = [
+    ...chaineNonVide(valeur, "cle", chemin),
+    ...chaineNonVide(valeur, "libelle", chemin),
+  ];
+  const genre = valeur["genre"] ?? "curseur";
+  if (!GENRES_PARAM.includes(genre as never)) {
+    problemes.push(probleme(`${chemin}.genre`, `attendu : ${GENRES_PARAM.join(" | ")}`));
+    return problemes;
+  }
+  if (genre === "curseur") return [...problemes, ...validerCurseur(valeur, chemin)];
+  if (genre === "interrupteur") {
+    if (valeur["valeur"] !== 0 && valeur["valeur"] !== 1) {
+      problemes.push(probleme(`${chemin}.valeur`, "0 ou 1 attendu pour un interrupteur"));
+    }
+    return problemes;
+  }
+  // couleur : une chaîne CSS. La couleur d'une viz est une donnée de la viz,
+  // pas de l'UI — même frontière que le gate OKLCH (tests/couleurs-oklch).
+  if (typeof valeur["valeur"] !== "string" || valeur["valeur"].trim() === "") {
+    problemes.push(probleme(`${chemin}.valeur`, "chaîne CSS non vide attendue pour une couleur"));
   }
   return problemes;
 }
@@ -154,12 +176,19 @@ function validerExtraction(valeur: unknown, chemin: string): Probleme[] {
  * catalogue qui refuse de la publier. Un objet partiel, en revanche, est une
  * mesure inventée : c'est exactement ce que ce projet interdit.
  */
+const nombreFiniAuDela = (valeur: unknown, plancher: number): valeur is number =>
+  typeof valeur === "number" && Number.isFinite(valeur) && valeur >= plancher;
+
 function validerDureesPerf(valeur: Dict, chemin: string): Probleme[] {
   const problemes: Probleme[] = [];
-  for (const cle of ["cadenceFps", "jsMedianMs", "jsP95Ms"] as const) {
-    const n = valeur[cle];
-    if (typeof n !== "number" || !Number.isFinite(n) || n <= 0) {
-      problemes.push(probleme(`${chemin}.${cle}`, "nombre fini > 0 attendu"));
+  if (!nombreFiniAuDela(valeur["cadenceFps"], Number.MIN_VALUE)) {
+    problemes.push(probleme(`${chemin}.cadenceFps`, "nombre fini > 0 attendu"));
+  }
+  // Les temps JS acceptent 0 : mesuré le 2026-08-12, un fond dom-css en mode
+  // composé tient sous les 0,05 ms par image — l'instrument arrondit à 0.
+  for (const cle of ["jsMedianMs", "jsP95Ms"] as const) {
+    if (!nombreFiniAuDela(valeur[cle], 0)) {
+      problemes.push(probleme(`${chemin}.${cle}`, "nombre fini >= 0 attendu"));
     }
   }
   const median = valeur["jsMedianMs"];

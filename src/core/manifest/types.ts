@@ -39,14 +39,25 @@ export interface Origine {
   readonly date?: string;
 }
 
-/** Un réglage exposé par un rendu. */
+/**
+ * Un réglage exposé par un rendu. Trois genres, calqués sur ce que le matériel
+ * d'origine savait faire (banc d'essai : curseurs, interrupteurs, couleurs) —
+ * en perdre un à la migration serait refaire l'erreur n°7 du registre.
+ */
+export const GENRES_PARAM = ["curseur", "interrupteur", "couleur"] as const;
+export type GenreParam = (typeof GENRES_PARAM)[number];
+
 export interface Param {
   readonly cle: string;
   readonly libelle: string;
-  readonly min: number;
-  readonly max: number;
-  readonly pas: number;
-  readonly valeur: number;
+  /** Absent = `curseur`, le cas de loin majoritaire. */
+  readonly genre?: GenreParam;
+  /** Bornes du curseur — requises pour `curseur`, sans objet sinon. */
+  readonly min?: number;
+  readonly max?: number;
+  readonly pas?: number;
+  /** Nombre (curseur), 0|1 (interrupteur), chaîne CSS (couleur). */
+  readonly valeur: number | string;
   readonly note?: string;
 }
 

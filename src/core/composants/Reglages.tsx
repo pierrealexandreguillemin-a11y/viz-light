@@ -8,37 +8,74 @@ interface Proprietes {
   readonly renduActif: string;
   readonly surRendu: (id: string) => void;
   readonly valeurs: ValeursReglages;
-  readonly surValeur: (cle: string, valeur: number) => void;
+  readonly surValeur: (cle: string, valeur: number | string) => void;
   readonly surReinitialiser: () => void;
 }
 
-/** Un curseur affiche sa valeur : sinon on règle à l'aveugle. */
-function Curseur({
-  param,
-  valeur,
-  surValeur,
-}: {
+interface ProprietesControle {
   readonly param: Param;
-  readonly valeur: number;
-  readonly surValeur: (v: number) => void;
-}) {
+  readonly valeur: number | string;
+  readonly surValeur: (v: number | string) => void;
+}
+
+/** Un curseur affiche sa valeur : sinon on règle à l'aveugle. */
+function Curseur({ param, valeur, surValeur }: ProprietesControle) {
+  const nombre = typeof valeur === "number" ? valeur : Number(param.valeur);
   return (
     <label className="flex flex-col gap-1">
       <span className="etiquette flex items-baseline justify-between gap-3 normal-case">
         <span>{param.libelle}</span>
-        <span className="text-(--color-os)">{valeur}</span>
+        <span className="text-(--color-os)">{nombre}</span>
       </span>
       <input
         type="range"
         min={param.min}
         max={param.max}
         step={param.pas}
-        value={valeur}
+        value={nombre}
         onChange={(e) => surValeur(Number(e.target.value))}
         className="h-1 w-full cursor-pointer appearance-none rounded-none bg-(--color-filet) accent-(--color-ambre)"
       />
     </label>
   );
+}
+
+/** 0|1 dans les réglages : l'algorithme n'a qu'à tester `> 0`. */
+function Interrupteur({ param, valeur, surValeur }: ProprietesControle) {
+  return (
+    <label className="etiquette flex cursor-pointer items-center justify-between gap-3 normal-case">
+      <span>{param.libelle}</span>
+      <input
+        type="checkbox"
+        checked={valeur === 1}
+        onChange={(e) => surValeur(e.target.checked ? 1 : 0)}
+        className="h-4 w-4 cursor-pointer accent-(--color-ambre)"
+      />
+    </label>
+  );
+}
+
+/** `input color` ne parle que l'hexadécimal — la donnée de viz aussi. */
+function Couleur({ param, valeur, surValeur }: ProprietesControle) {
+  const chaine = typeof valeur === "string" ? valeur : String(param.valeur);
+  return (
+    <label className="etiquette flex cursor-pointer items-center justify-between gap-3 normal-case">
+      <span>{param.libelle}</span>
+      <input
+        type="color"
+        value={chaine}
+        onChange={(e) => surValeur(e.target.value)}
+        className="h-6 w-10 cursor-pointer border border-(--color-filet) bg-transparent p-0"
+      />
+    </label>
+  );
+}
+
+function Controle(proprietes: ProprietesControle) {
+  const genre = proprietes.param.genre ?? "curseur";
+  if (genre === "interrupteur") return <Interrupteur {...proprietes} />;
+  if (genre === "couleur") return <Couleur {...proprietes} />;
+  return <Curseur {...proprietes} />;
 }
 
 /**
@@ -87,7 +124,7 @@ export function Reglages({
 
       <div className="flex flex-col gap-4">
         {rendu.params.map((param) => (
-          <Curseur
+          <Controle
             key={param.cle}
             param={param}
             valeur={valeurs[param.cle] ?? param.valeur}

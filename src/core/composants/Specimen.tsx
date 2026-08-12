@@ -6,7 +6,7 @@ import type { EntreeViz } from "@/viz/registre.genere.ts";
 
 import { Reglages } from "./Reglages.tsx";
 
-const valeursDuRendu = (params: readonly { cle: string; valeur: number }[]) =>
+const valeursDuRendu = (params: readonly { cle: string; valeur: number | string }[]) =>
   Object.fromEntries(params.map((p) => [p.cle, p.valeur]));
 
 /**
@@ -43,7 +43,7 @@ export function Specimen({ entree }: { readonly entree: EntreeViz }) {
   }, [rendu]);
 
   const changerValeur = useCallback(
-    (cle: string, valeur: number) => setValeurs((v) => ({ ...v, [cle]: valeur })),
+    (cle: string, valeur: number | string) => setValeurs((v) => ({ ...v, [cle]: valeur })),
     [],
   );
 
