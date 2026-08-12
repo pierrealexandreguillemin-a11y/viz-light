@@ -137,7 +137,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 |---|-------|------|
 | 0 | Genèse : cadrage, décisions, projection bootstrap (gardien) | ✅ 2026-08-11 |
 | 1 | **Rapatriement brut des 3 artifacts** dans `sources/` (URLs périssables — en premier) | ✅ 2026-08-12 |
-| 2 | Épinglage versions latest stables (Context7) + scaffold Next 16 | ⬜ |
+| 2 | Épinglage versions latest stables + scaffold Next 16 (`evidence/versions-epinglees.md`) | ✅ 2026-08-12 |
 | 3 | Socle qualité câblé + calibré dans les deux sens | ⬜ |
 | 4 | Contrat de données : schéma manifest + registre + générateur CATALOG.md (gate) | ⬜ |
 | 5 | Socle viz : hooks core + instrument + coquille UI (galerie / scène / panneau) | ⬜ |

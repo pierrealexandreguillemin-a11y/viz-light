@@ -1,0 +1,10 @@
+pnpm-lock.yaml
+CLAUDE.md
+docs/
+.next/
+out/
+coverage/
+# Sources brutes rapatriées : elles sont archivées telles que publiées, y compris
+# leurs bundles minifiés. Les formater détruirait la trace de provenance et
+# invaliderait les SHA-256 consignés dans docs/evidence/sources-viz-light.md.
+sources/

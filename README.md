@@ -7,7 +7,7 @@ source of truth.
 **Two audiences:**
 
 - **Humans** — browse a deployed showcase (Vercel) for beautiful, original,
-  *measured* background effects: real FPS, JS frame time, GPU-bound detection.
+  _measured_ background effects: real FPS, JS frame time, GPU-bound detection.
 - **Claude agents** — sent from any host project to pick a visualization and
   extract it: read `CATALOG.md`, copy the viz folder + the listed core files,
   drop the component in. Done.
@@ -19,14 +19,14 @@ Tailwind 4 · OKLCH colors. Static output, no backend.
 
 ## Where truth lives
 
-| File | Role |
-|---|---|
-| `docs/SPEC.md` | **Canonical** — settles every contradiction |
-| `docs/decisions/` | Immutable ADRs (the *why*) |
-| `docs/evidence/` | Measurements, by subject, rewritten in place |
-| `docs/handoff/` | Dated session narratives |
-| `CLAUDE.md` | Project agent charter (`claude-viz-light`) |
-| `CATALOG.md` | *(generated later)* — entry point for extracting agents |
+| File              | Role                                                    |
+| ----------------- | ------------------------------------------------------- |
+| `docs/SPEC.md`    | **Canonical** — settles every contradiction             |
+| `docs/decisions/` | Immutable ADRs (the _why_)                              |
+| `docs/evidence/`  | Measurements, by subject, rewritten in place            |
+| `docs/handoff/`   | Dated session narratives                                |
+| `CLAUDE.md`       | Project agent charter (`claude-viz-light`)              |
+| `CATALOG.md`      | _(generated later)_ — entry point for extracting agents |
 
 ## Gates
 

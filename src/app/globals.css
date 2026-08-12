@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/**
+ * JETONS DE COULEUR — OKLCH PARTOUT, aucune valeur hex/hsl en dur (CLAUDE.md §5.3).
+ *
+ * Le catalogue est un fond noir sur lequel des viz s'allument : la palette reste
+ * volontairement sombre et neutre pour ne jamais concurrencer une viz. Chaque
+ * jeton est déclaré ICI et nulle part ailleurs — un composant qui a besoin d'une
+ * couleur en demande une, il n'en invente pas.
+ */
+@theme {
+  --color-canvas: oklch(14% 0.012 265);
+  --color-surface: oklch(19% 0.014 265);
+  --color-surface-raised: oklch(24% 0.016 265);
+  --color-border: oklch(32% 0.018 265);
+  --color-ink: oklch(95% 0.008 265);
+  --color-ink-muted: oklch(72% 0.014 265);
+  --color-ink-faint: oklch(56% 0.014 265);
+  --color-accent: oklch(78% 0.152 196);
+  --color-accent-quiet: oklch(52% 0.098 196);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+  }
+
+  /**
+   * Respect de `prefers-reduced-motion` au niveau du document (SPEC.md §6).
+   * Le socle viz coupera en plus ses boucles d'animation — cette règle-ci ne
+   * couvre que les transitions CSS de la coquille, pas les canvas.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
