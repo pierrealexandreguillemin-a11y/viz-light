@@ -13,17 +13,26 @@ expires: never
 
 ## 1. Fichiers rapatriés
 
-| Fichier (`sources/`) | Octets | SHA-256 (16 premiers) | URL d'origine |
+| Fichier (`sources/`) | Octets | SHA-256 | URL d'origine |
 |---|---:|---|---|
-| `tweet-sketches-artifact.html` | 17 869 | `2CF7A274E10930D1` | https://claude.ai/public/artifacts/9eb103da-83a0-424c-bd0e-cac1365ae85d |
-| `banc-essai-effets.html` | 57 052 | `F268D4E3C3566C06` | https://claude.ai/public/artifacts/c8acd119-bc03-40c5-854b-1bb62e1d1f07 |
-| `genart-studio-standalone.html` | 24 573 | `A052B45016618BB3` | https://claude.ai/public/artifacts/b39973e0-64e3-4f88-8f10-135b83cd121e |
+| `tweet-sketches-artifact.html` | 17 368 | `D434DF85A7B050076AA830282BC46F03CCD610A86ABE34FB44BBD9E6561B8EBC` | https://claude.ai/public/artifacts/9eb103da-83a0-424c-bd0e-cac1365ae85d |
+| `banc-essai-effets.html` | 56 325 | `38BC45A111904892E6F2563C1C51601E8756B5877460003A1A13063231790505` | https://claude.ai/public/artifacts/c8acd119-bc03-40c5-854b-1bb62e1d1f07 |
+| `genart-studio-standalone.html` | 24 124 | `86F32CD2518924B54EDF270AD064AB31F793373B5F817B09C0AA8CA1D8768C59` | https://claude.ai/public/artifacts/b39973e0-64e3-4f88-8f10-135b83cd121e |
+
+Vérifier l'intégrité : `Get-FileHash sources\<fichier> -Algorithm SHA256`.
 
 **Méthode** (reproductible si un fichier doit être re-tiré) : les URLs publiques
 sont des SPA — un `GET` direct ne renvoie que la coquille (47 854 octets,
 identique pour les trois). Il faut la page rendue : ouvrir l'artifact dans
 Chrome, cliquer **« Copier »** dans la barre supérieure (met la source complète
 dans le presse-papiers), puis écrire le fichier **sans BOM**.
+
+**Fins de ligne** : le presse-papiers Windows livre du CRLF ; les fichiers ont
+été ramenés en **LF** (forme d'origine des artifacts) et `.gitattributes` fige
+`sources/** -text` pour qu'aucune conversion ne rejoue. Les empreintes ci-dessus
+sont donc celles du contenu versionné — un tirage refait sous Windows donnera
+des tailles supérieures (respectivement 17 869 / 57 052 / 24 573 octets) tant
+que le CRLF n'est pas ramené en LF.
 
 ## 2. Inventaire vérifié (compté dans les fichiers, pas estimé)
 
