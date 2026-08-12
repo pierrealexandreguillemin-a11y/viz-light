@@ -36,7 +36,7 @@ exécuté — jamais d'estimation.
 | Tags | anneau, souffle, particules |
 | Rendus | Origine · **Aligné** (défaut) |
 | Origine | 1er août 2026 (tweet-sketches) |
-| Coût mesuré | 59.9 i/s · JS 5 ms médian, 5.5 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 4.2 ms médian, 4.7 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/anneau-respirant/AnneauRespirant.tsx` · `src/viz/anneau-respirant/algo.ts` · `src/viz/anneau-respirant/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
@@ -51,7 +51,7 @@ exécuté — jamais d'estimation.
 | Tags | aurore, shader, rideaux |
 | Rendus | **Réglages** (défaut) |
 | Origine | aurora (banc-essai) |
-| Coût mesuré | 59.9 i/s · JS 0.05 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/aurore-boreale/AuroreBoreale.tsx` · `src/viz/aurore-boreale/algo.ts` · `src/viz/aurore-boreale/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
@@ -66,7 +66,7 @@ exécuté — jamais d'estimation.
 | Tags | radar, balayage, echos |
 | Rendus | **Réglages** (défaut) |
 | Origine | scan (banc-essai) |
-| Coût mesuré | 59.9 i/s · JS 0.05 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 0 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/balayage-radar/BalayageRadar.tsx` · `src/viz/balayage-radar/algo.ts` · `src/viz/balayage-radar/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
@@ -81,7 +81,7 @@ exécuté — jamais d'estimation.
 | Tags | reseau, liaisons, points |
 | Rendus | **Réglages** (défaut) |
 | Origine | constellation (banc-essai) |
-| Coût mesuré | 59.9 i/s · JS 0.8 ms médian, 1.2 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 0.9 ms médian, 1.6 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/constellation/Constellation.tsx` · `src/viz/constellation/algo.ts` · `src/viz/constellation/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
@@ -96,7 +96,7 @@ exécuté — jamais d'estimation.
 | Tags | coquille, cannelure, dense |
 | Rendus | Origine · **Aligné** (défaut) |
 | Origine | 8 août 2026 — #1 (tweet-sketches) |
-| Coût mesuré | 59.9 i/s · JS 10.05 ms médian, 14.51 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 7.3 ms médian, 8.2 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/coquille-cannelee/CoquilleCannelee.tsx` · `src/viz/coquille-cannelee/algo.ts` · `src/viz/coquille-cannelee/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
@@ -111,7 +111,7 @@ exécuté — jamais d'estimation.
 | Tags | particules, bruit, courant |
 | Rendus | **Réglages** (défaut) |
 | Origine | flow (banc-essai) |
-| Coût mesuré | 59.9 i/s · JS 0.8 ms médian, 1.1 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 0.9 ms médian, 1.06 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/flow-field/FlowField.tsx` · `src/viz/flow-field/algo.ts` · `src/viz/flow-field/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 | Variantes écartées | Une seconde version vit dans l'Atelier génératif (« flow-field ») — l'arbitrage esthétique entre les deux appartient à l'utilisateur (SPEC.md §4). |
@@ -127,7 +127,7 @@ exécuté — jamais d'estimation.
 | Tags | grain, texture, pellicule |
 | Rendus | **Réglages** (défaut) |
 | Origine | grain (banc-essai) |
-| Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.16 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.2 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/grain-de-film/GrainDeFilm.tsx` · `src/viz/grain-de-film/algo.ts` · `src/viz/grain-de-film/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
@@ -142,7 +142,7 @@ exécuté — jamais d'estimation.
 | Tags | retro, grille, horizon |
 | Rendus | **Réglages** (défaut) |
 | Origine | synthwave (banc-essai) |
-| Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.2 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/grille-synthwave/GrilleSynthwave.tsx` · `src/viz/grille-synthwave/algo.ts` · `src/viz/grille-synthwave/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
@@ -187,7 +187,7 @@ exécuté — jamais d'estimation.
 | Tags | plasma, shader, liquide |
 | Rendus | **Réglages** (défaut) |
 | Origine | plasma (banc-essai) |
-| Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.2 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/plasma-deforme/PlasmaDeforme.tsx` · `src/viz/plasma-deforme/algo.ts` · `src/viz/plasma-deforme/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
@@ -202,7 +202,7 @@ exécuté — jamais d'estimation.
 | Tags | etoiles, scintillement, nuit |
 | Rendus | **Réglages** (défaut) |
 | Origine | sparse (banc-essai) |
-| Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.2 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 0.2 ms médian, 0.3 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/poussiere-d-etoiles/PoussiereDEtoiles.tsx` · `src/viz/poussiere-d-etoiles/algo.ts` · `src/viz/poussiere-d-etoiles/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
@@ -217,7 +217,7 @@ exécuté — jamais d'estimation.
 | Tags | spirale, tresse, particules |
 | Rendus | Origine · **Aligné** (défaut) |
 | Origine | 9 août 2026 — #1 (tweet-sketches) |
-| Coût mesuré | 59.9 i/s · JS 7.9 ms médian, 8.65 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 6.4 ms médian, 7.51 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/spirale-tressee/SpiraleTressee.tsx` · `src/viz/spirale-tressee/algo.ts` · `src/viz/spirale-tressee/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
@@ -232,7 +232,7 @@ exécuté — jamais d'estimation.
 | Tags | tunnel, particules, hsb, souris |
 | Rendus | Origine · **Aligné** (défaut) |
 | Origine | 29 juillet 2026 — Tunnel de points (HSB) (tweet-sketches) |
-| Coût mesuré | 59.9 i/s · JS 2.6 ms médian, 3 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 2.8 ms médian, 3.1 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/tunnel-de-points/TunnelDePoints.tsx` · `src/viz/tunnel-de-points/algo.ts` · `src/viz/tunnel-de-points/manifest.json` · `src/core/viz/contrat.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 | Variantes écartées | 29 juillet 2026 — original (version golfée, rendue par le préréglage « Origine ») · atelier-generatif / tunnel (même reprise, paramétrée autrement) |
@@ -248,7 +248,7 @@ exécuté — jamais d'estimation.
 | Tags | voile, rotation, particules |
 | Rendus | Origine · **Aligné** (défaut) |
 | Origine | 9 août 2026 — #2 (tweet-sketches) |
-| Coût mesuré | 59.9 i/s · JS 5.1 ms médian, 5.8 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Coût mesuré | 59.9 i/s · JS 4.4 ms médian, 5 ms p95 · CPU-bound · mesuré le 2026-08-12 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/voile-tournante/VoileTournante.tsx` · `src/viz/voile-tournante/algo.ts` · `src/viz/voile-tournante/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 

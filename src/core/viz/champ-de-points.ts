@@ -29,14 +29,14 @@ export interface PointCalcule {
   readonly x: number;
   readonly y: number;
   /**
-   * Angle et magnitude servent à dériver la teinte. Une formule peut fournir
-   * les siens — le Tunnel de points le fait, et c'est ce qui préserve à
-   * l'identique la version validée par l'utilisateur. Sinon, ils sont déduits
-   * de la position à l'écran, ce qui donne le même genre de dégradé suivant la
-   * forme.
+   * Angle et magnitude de la GÉOMÉTRIE DE LA FORMULE (son `c` et son `d`) —
+   * OBLIGATOIRES. Le traitement du Tunnel validé dérive la teinte de ces
+   * quantités-là ; les déduire de la position à l'écran (première version)
+   * donnait une autre logique de coloration, constatée fausse par
+   * l'utilisateur le 2026-08-12.
    */
-  readonly angle?: number;
-  readonly magnitude?: number;
+  readonly angle: number;
+  readonly magnitude: number;
 }
 
 export type Formule = (i: number, temps: number, decalageSouris: number) => PointCalcule;
@@ -146,12 +146,8 @@ export function creerChampDePoints({
           const point = formule(i, t, decalage);
           if (!Number.isFinite(point.x) || !Number.isFinite(point.y)) continue;
 
-          const dx = point.x - CENTRE;
-          const dy = point.y - CENTRE;
-          const angle = point.angle ?? Math.atan2(dy, dx);
-          const magnitude = point.magnitude ?? Math.sqrt(dx * dx + dy * dy) / 12;
-
-          const teinte = r.teinteBase + r.teinteEtendue * Math.sin(angle * 0.5) + magnitude * 4;
+          const teinte =
+            r.teinteBase + r.teinteEtendue * Math.sin(point.angle * 0.5) + point.magnitude * 4;
           // Regroupement par pas de 3° : sans lui on changerait de couleur de
           // remplissage des milliers de fois par image, ce qui coûte plus cher
           // que le calcul des points.

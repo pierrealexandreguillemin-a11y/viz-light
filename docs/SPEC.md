@@ -216,8 +216,13 @@ une donnée de la viz, pas de l'UI — même frontière que le gate OKLCH.
 
 1. **Les 14 sketches p5 restants** — régime « œuvre ». Peu coûteux depuis que
    `src/core/viz/champ-de-points.ts` porte le traitement : une viz ne coûte que
-   sa formule. ⚠ Dette de preuve : **aucune capture comparée n'existe encore**
-   pour les 5 œuvres migrées — à produire avant la recette (étape 8).
+   sa formule. Les 5 œuvres migrées ont leur preuve de fidélité :
+   **captures comparées dans `evidence/captures/`** (rendu `origine` face à
+   l'original p5), et formules vérifiées caractère par caractère contre les
+   one-liners golfés de la conversation source (2026-08-12). Le rendu `origine`
+   est monochrome sans traînée, alpha exact par sketch (96/66/116) ; le rendu
+   `aligne` dérive sa teinte de l'angle et de la magnitude **de la formule**,
+   jamais de la position à l'écran.
 2. **Les 5 algos de l'Atelier** — régime « œuvre », dont le *Flow Field* dont
    **l'arbitrage entre les deux versions appartient à l'utilisateur** (la
    version banc-essai est migrée en `fond`, la variante est notée au manifest).

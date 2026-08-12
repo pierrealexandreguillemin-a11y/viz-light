@@ -31,7 +31,7 @@
           "min": 0.005,
           "max": 0.3,
           "pas": 0.005,
-          "valeur": 0.052
+          "valeur": 0.0524
         },
         {
           "cle": "trainee",
@@ -47,7 +47,7 @@
           "min": 20,
           "max": 255,
           "pas": 5,
-          "valeur": 95
+          "valeur": 96
         },
         {
           "cle": "saturation",
@@ -177,8 +177,8 @@
     "mesureLe": "2026-08-12",
     "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
     "cadenceFps": 59.9,
-    "jsMedianMs": 7.9,
-    "jsP95Ms": 8.65,
+    "jsMedianMs": 6.4,
+    "jsP95Ms": 7.51,
     "gpuBound": false
   }
 }

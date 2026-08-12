@@ -6,17 +6,23 @@ import { CENTRE, creerChampDePoints, type PointCalcule } from "@/core/viz/champ-
  * divergences qui creusent les cannelures. Vingt mille points — la plus chère
  * du lot, et la mesure le confirme.
  */
-function positionner(i: number, t: number): PointCalcule {
+function positionner(i: number, t: number, decalageSouris: number): PointCalcule {
   const x = i % 100;
   const y = i / 233;
   const k = x / 4 - 12.5;
   const e = y / 9 + 6;
   const o = Math.sqrt(k * k + e * e) / 9;
-  const c = o / 2 + e / 2 - t / 4;
+  // La souris tourne la scène — même geste que le Tunnel (rendu aligné).
+  const c = o / 2 + e / 2 - t / 4 + decalageSouris * 6;
   const q =
     (3 * (Math.tan(y / 2) / 2 + Math.cos(y))) / k +
     k * (5 / o + o * Math.sin(y) * Math.sin(e + o * 4 - t));
-  return { x: q + 40 * Math.cos(c) + CENTRE, y: q * Math.sin(c) - (k * k * o) / 6 + e * o * 12 };
+  return {
+    x: q + 40 * Math.cos(c) + CENTRE,
+    y: q * Math.sin(c) - (k * k * o) / 6 + e * o * 12,
+    angle: c,
+    magnitude: o,
+  };
 }
 
 export const monterCoquilleCannelee = creerChampDePoints({
