@@ -110,6 +110,18 @@ fonction **et** de fichier · duplication intra (linter) **et** inter-fichiers
 (jscpd) · formatage · Vitest (hooks du socle, schéma manifest, registre) ·
 Husky pre-commit + message conventionnel · **chaque gate calibré dans les deux
 sens**. Gate documentaire déjà en place : `node scripts/check-docs.mjs`.
+Preuves de calibration : `evidence/socle-qualite.md`. Chaîne complète :
+`pnpm verify`, branchée en pre-push.
+
+Deux gates propres à ce projet s'ajoutent au socle générique : la **frontière de
+portabilité** (`src/viz/**/algo.ts` ne peut importer React/Next — c'est ce qui
+fait tenir le contrat d'extraction du §3) et le **test OKLCH** (aucune couleur
+hex/hsl en dur dans `src/`).
+
+⚠ Le **plancher de couverture** est délibérément absent à l'étape 3, et posé à
+l'étape 4 : sur un dépôt sans logique métier, un plancher affiche 100 % sur des
+coquilles et n'est pas un gate. Il sera mesuré avant d'être fixé, puis jamais
+abaissé.
 
 `scripts/build-catalog.mjs` est un gate : manifest invalide ou perf manquante =
 rouge.
@@ -138,7 +150,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | 0 | Genèse : cadrage, décisions, projection bootstrap (gardien) | ✅ 2026-08-11 |
 | 1 | **Rapatriement brut des 3 artifacts** dans `sources/` (URLs périssables — en premier) | ✅ 2026-08-12 |
 | 2 | Épinglage versions latest stables + scaffold Next 16 (`evidence/versions-epinglees.md`) | ✅ 2026-08-12 |
-| 3 | Socle qualité câblé + calibré dans les deux sens | ⬜ |
+| 3 | Socle qualité câblé + calibré dans les deux sens (`evidence/socle-qualite.md`) | ✅ 2026-08-12 |
 | 4 | Contrat de données : schéma manifest + registre + générateur CATALOG.md (gate) | ⬜ |
 | 5 | Socle viz : hooks core + instrument + coquille UI (galerie / scène / panneau) | ⬜ |
 | 6 | Migration des viz par lots, fidélité par captures comparées, dédup | ⬜ |

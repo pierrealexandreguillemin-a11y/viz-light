@@ -21,7 +21,22 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "docs": "node scripts/check-docs.mjs"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:cov": "vitest run --coverage",
+    "dup": "jscpd src tests",
+    "docs": "node scripts/check-docs.mjs",
+    "verify": "pnpm docs && pnpm format:check && pnpm lint && pnpm typecheck && pnpm dup && pnpm test && pnpm build",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,mjs}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "next": "16.3.0",

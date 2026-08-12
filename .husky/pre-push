@@ -1,0 +1,5 @@
+# Pre-commit ne voit que les fichiers indexés (lint-staged). Le dépôt entier
+# n'est verifié qu'ici : c'est le dernier point avant que le code quitte la
+# machine. `pnpm verify` enchaîne docs, format, lint, typecheck, duplication,
+# tests et build — un seul rouge suffit à bloquer.
+pnpm verify

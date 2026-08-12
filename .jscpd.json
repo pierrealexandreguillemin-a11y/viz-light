@@ -1,0 +1,9 @@
+{
+  "format": ["typescript", "tsx", "css"],
+  "gitignore": true,
+  "ignore": ["**/node_modules/**", "**/.next/**", "**/out/**", "**/coverage/**", "**/sources/**"],
+  "minTokens": 25,
+  "threshold": 0,
+  "reporters": ["consoleFull"],
+  "absolute": true
+}

@@ -1,0 +1,109 @@
+---
+authority: ledger
+subject: socle-qualite
+last_verified: 2026-08-12
+expires: never
+---
+
+# Socle qualité — calibration de chaque gate, dans les deux sens
+
+> **Un seuil qu'on n'a jamais vu rougir n'est pas un gate, c'est une décoration.**
+> Chaque ligne ci-dessous a été prouvée le 2026-08-12 en deux temps : un état
+> fautif écrit exprès (le gate **doit** échouer, avec un message qui nomme le
+> défaut), puis sa suppression (le gate **doit** repasser). Les états fautifs
+> vivaient dans `src/_calibration/` et `src/viz/_calibration/`, supprimés depuis.
+
+## 1. La chaîne
+
+`pnpm verify` = `docs` → `format:check` → `lint` → `typecheck` → `dup` → `test`
+→ `build`. Un seul rouge suffit à bloquer. Elle est branchée en **pre-push**
+(`.husky/pre-push`) ; le **pre-commit** ne lance que `lint-staged` sur les
+fichiers indexés, et le **commit-msg** commitlint.
+
+## 2. Calibration — sortie réelle de chaque gate sur l'état fautif
+
+| Gate | Seuil | Message obtenu sur l'état fautif |
+|---|---|---|
+| `complexity` | 10 | `Function 'tropDeChemins' has a complexity of 12. Maximum allowed is 10` |
+| `sonarjs/cognitive-complexity` | 15 | `Refactor this function to reduce its Cognitive Complexity from 80 to the 15 allowed` |
+| `max-depth` | 4 | `Blocks are nested too deeply (5). Maximum allowed is 4` |
+| `max-lines-per-function` | 80 | `Function 'fonctionFleuve' has too many lines (99). Maximum allowed is 80` |
+| `max-lines` | 300 | `File has too many lines (340). Maximum allowed is 300` |
+| `@typescript-eslint/no-explicit-any` | — | `Unexpected any. Specify a different type` |
+| `@typescript-eslint/no-floating-promises` | — | `Promises must be awaited, end with a call to .catch…` |
+| `@typescript-eslint/require-await` | — | `Async function 'attendre' has no 'await' expression` |
+| `sonarjs/no-identical-functions` (intra) | — | `Update this function so that its implementation is not identical to the one on line 46` |
+| `jscpd` (inter-fichiers) | 0 % | `Clone found (typescript) — dup-a.ts [1:33 - 9:2] / dup-b.ts [1:33 - 9:2]`, **exit 1** |
+| `no-restricted-imports` (portabilité) | — | `'react' import is restricted… algo.ts est du TS pur (SPEC.md §3)` |
+| `tsc` `noUncheckedIndexedAccess` | — | `TS2322: Type 'number \| undefined' is not assignable to type 'number'` |
+| `tsc` `exactOptionalPropertyTypes` | — | `TS2375: … with 'exactOptionalPropertyTypes: true'` |
+| `prettier --check` | — | `Code style issues found in 5 files`, **exit 1** |
+| Test OKLCH | — | `Couleur hex interdite — utiliser un jeton OKLCH de globals.css` / `Fonction de couleur héritée interdite — utiliser oklch()` |
+| `commitlint` | conventionnel | `subject may not be empty [subject-empty]` / `type may not be empty [type-empty]`, **exit 1** |
+
+### Retour au vert, après suppression des états fautifs
+
+```
+> pnpm verify
+All matched files use Prettier code style!
+Found 0 clones.
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+✓ Compiled successfully in 619ms
+✓ Generating static pages using 4 workers (3/3) in 773ms
+verify EXIT=0
+```
+
+Et `commitlint --edit` sur `feat(socle): cabler le gate de duplication` → **exit 0**.
+
+## 3. Deux gates que ce projet ajoute au socle générique
+
+### 3.1 La frontière de portabilité (`eslint.config.mjs`)
+
+`src/viz/**/algo.ts` ne peut importer ni `react`, ni `react-dom`, ni `next`, ni
+`@/core/hooks/*`.
+
+**Ce qu'aucun autre gate ne voit** : le contrat d'extraction (`SPEC.md §3`)
+repose entièrement sur le fait qu'`algo.ts` est du TS pur. Le jour où un algo
+importe un hook du socle, la copie de dossier cesse de suffire — et **rien** ne
+le signale : le fichier compile, il est court, il n'est pas dupliqué, il est
+formaté. « Qui a le droit d'importer React » est un fait d'**architecture**,
+qu'aucun linter ne connaît tant qu'on ne l'écrit pas.
+
+**Son angle mort, déclaré** : la règle voit les imports, pas les intentions. Un
+`algo.ts` qui lirait `window` ou `document` reste portable au sens du lint mais
+pas au sens du contrat. C'est la revue qui l'attrape, pas cette règle.
+
+### 3.2 Le test OKLCH (`tests/couleurs-oklch.test.ts`)
+
+« OKLCH partout dans l'UI — aucune couleur hex/hsl en dur » était une règle
+écrite (`CLAUDE.md §5.3`) que **rien n'exécutait**. Elle allait céder exactement
+à l'étape 6, quand 31 viz venues de fichiers pleins de `#111` seront migrées.
+Le test balaie `src/**/*.{css,ts,tsx}` et échoue sur tout `#rrggbb`, `rgb()`,
+`rgba()`, `hsl()`, `hsla()`.
+
+**Périmètre assumé** : `src/` seulement. `sources/` est une archive brute, et
+les couleurs internes d'un **algorithme** (une teinte HSB calculée par point)
+sont la viz elle-même, pas de l'UI — d'où l'exclusion de `src/viz/**/algo*`. La
+frontière est le dossier, pas le goût.
+
+**Garde-fou du garde-fou** : le premier cas du test vérifie que le balayage a
+bien trouvé des fichiers. Sans lui, un `src/` déplacé rendrait le test vert en
+ne vérifiant plus rien — le pire mode de panne d'un gate.
+
+## 4. Ce que ce socle ne peut PAS voir
+
+- **La couverture de tests n'a pas de plancher à cette étape, et c'est délibéré.**
+  `vitest.config.ts` déclare `coverage.include: []` : un plancher posé sur un
+  dépôt sans logique métier afficherait 100 % sur trois fichiers de coquille et
+  donnerait l'illusion d'un gate. Le plancher est posé à l'**étape 4**, mesuré
+  avant d'être fixé, sur le premier code qui décide quelque chose (schéma de
+  manifest + registre), et jamais abaissé ensuite.
+- **La fidélité d'une viz migrée.** Aucun de ces gates ne regarde un pixel. Un
+  algorithme faux passe tout. C'est le rôle des captures comparées de
+  l'étape 6, et du verdict de l'utilisateur à l'étape 8.
+- **La qualité d'une abstraction.** ESLint compte des lignes et des chemins ; il
+  ne dit pas si un hook est au bon niveau. **Et l'auto-revue est biaisée** — je
+  relis avec les angles morts qui ont produit le code. La forme forte est une
+  revue par un tiers ; la forme faible, celle pratiquée ici par défaut, est ma
+  propre relecture. C'est dit, pas caché.
