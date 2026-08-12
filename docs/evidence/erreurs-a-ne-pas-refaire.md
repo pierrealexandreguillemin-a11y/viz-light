@@ -99,6 +99,39 @@ PowerShell 5.1 : les accents du manifest sont devenus `poussiÃ¨re`,
 PowerShell. Utiliser l'outil d'écriture de fichiers, ou Node. Même famille de
 piège que le BOM signalé au handoff de genèse.
 
+## 12. Avoir reporté les effets les plus simples (2026-08-12)
+
+**Défaut** : les 10 effets du banc d'essai — grain de film, orbes floutées, mesh
+gradient, constellation, poussière d'étoiles — sont les plus SIMPLES du lot, et
+les seuls de catégorie `fond`. Je les ai reportés au motif que leur source est
+un bundle minifié, et j'ai migré à la place des sketches p5 plus spectaculaires.
+Résultat : la section « Fonds » est restée vide, alors que c'est elle que
+l'utilisateur voulait voir séparée.
+
+**Ce qui l'a rendu possible** : avoir pris « la source est minifiée » pour un
+obstacle. Un grain de film ou un dégradé flouté s'écrit depuis sa description et
+ses paramètres — tous deux lisibles en clair dans le fichier rapatrié
+(`claim`, `reality`, `params`). Le désassemblage n'était nécessaire pour aucun
+d'eux.
+
+**Règle** : trier les migrations par **ce que l'utilisateur attend de voir**, pas
+par le confort de la source. Et quand un obstacle est invoqué pour reporter,
+vérifier qu'il s'applique vraiment — ici il ne s'appliquait pas.
+
+## 11. « Recharge, c'est en place » — sur un serveur mort (2026-08-12)
+
+**Défaut** : toutes mes vérifications visuelles passaient par un serveur statique
+que je lançais moi-même sur un port de test, servant `out/`. J'ai dit à
+l'utilisateur de recharger `localhost:3000` sans jamais vérifier ce port. Le
+serveur de développement était tombé — il n'avait plus rien à afficher.
+
+**Ce qui l'a rendu possible** : vérifier une *représentation* du produit au lieu
+du produit tel que l'utilisateur y accède.
+
+**Règle** : la vérification doit porter sur l'URL que la personne va ouvrir, pas
+sur un équivalent commode. Et « HTTP 200 » ne suffit pas : contrôler que la page
+rend bien ce qu'elle promet (éléments présents, canvas non vides).
+
 ## 10. Un « défaut » corrigé sans être constaté (2026-08-12, évité)
 
 **Ce qui a failli arriver** : croire voir des valeurs dupliquées à gauche de la

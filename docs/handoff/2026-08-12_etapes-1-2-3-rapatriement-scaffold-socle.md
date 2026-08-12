@@ -165,6 +165,21 @@ rappel que l'auto-revue ne suffit pas (`evidence/socle-qualite.md §4`).
 
 ---
 
+## 3.5 CE QU'IL FAUT FAIRE EN PREMIER À LA REPRISE
+
+**Les 10 effets `fond` du banc d'essai.** Ce sont les plus simples du
+catalogue — grain de film, orbes floutées, mesh gradient, constellation,
+poussière d'étoiles, grille synthwave, balayage radar, plus deux WebGL — et
+**la section « Fonds » de la vitrine est vide sans eux**. C'est ce que
+l'utilisateur attend de voir, et c'est le reproche qu'il a formulé en fin de
+session.
+
+Ne pas se laisser arrêter par le fait que `sources/banc-essai-effets.html` est
+un bundle minifié : chaque effet y porte, **en clair**, son `id`, son `name`,
+sa `family`, sa `surface`, ses `params` et ses textes `claim` / `reality`. Un
+grain ou un dégradé se réécrit depuis cette description ; il n'y a rien à
+désassembler. Cf. `evidence/erreurs-a-ne-pas-refaire.md` §12.
+
 ## 4. État à la passation
 
 - Fil d'Ariane : **0 à 5b ✅**, étape 6 à 1/31, 7 à 10 ⬜.
