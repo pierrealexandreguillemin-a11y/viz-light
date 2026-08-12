@@ -65,7 +65,8 @@ jamais).
 3. Annoncer en une ligne à quelle étape du fil d'Ariane (`SPEC.md §8`) tu es et
    ce que tu vises aujourd'hui.
 
-**À la fermeture** :
+**À la fermeture** — invoquer le skill **`project-session-end`**
+(`.claude/skills/`), qui mécanise ces étapes ; ne pas les dérouler de tête :
 1. Mettre `SPEC.md` à jour si le périmètre a bougé ; ADR pour toute décision ;
    mesures dans `evidence/`.
 2. Handoff daté dans `docs/handoff/`.
