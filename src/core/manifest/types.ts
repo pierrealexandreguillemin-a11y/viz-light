@@ -16,17 +16,23 @@ export const RUNTIMES = ["canvas2d", "webgl", "p5", "dom-css", "iframe"] as cons
 export type Runtime = (typeof RUNTIMES)[number];
 
 /**
- * DEUX USAGES QU'ON NE CHOISIT PAS DE LA MÊME FAÇON.
+ * QUATRE USAGES QU'ON NE CHOISIT PAS DE LA MÊME FAÇON.
  *
  * - `fond` : destiné à vivre DERRIÈRE du contenu. On le juge discret, on le
  *   regarde avec du texte par-dessus, et sa densité compte plus que son motif.
  * - `animation` : une pièce qu'on regarde pour elle-même. On la juge sur son
  *   mouvement, plein cadre.
+ * - `interactif` : on ne le regarde pas, on le MANIPULE — il répond au zoom, au
+ *   déplacement, au clic. Un claude+n qui l'embarque emporte une surface
+ *   d'interaction, pas un décor : il doit le savoir avant de copier.
+ * - `composant` : un élément d'interface (un loader, une carte au survol). Il a
+ *   une place dans une page, pas un cadre à lui.
  *
  * Les mélanger dans une même liste force à comparer des choses incomparables —
- * d'où la séparation, dans le manifest et dans la vitrine.
+ * d'où la séparation, dans le manifest et dans la vitrine
+ * ([ADR 0012](../../../docs/decisions/0012-taxonomie-interactif-et-composant.md)).
  */
-export const CATEGORIES = ["fond", "animation"] as const;
+export const CATEGORIES = ["fond", "animation", "interactif", "composant"] as const;
 export type Categorie = (typeof CATEGORIES)[number];
 
 /** D'où vient la viz, et à quoi la comparer pour prouver sa fidélité. */

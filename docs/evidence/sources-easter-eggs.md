@@ -40,7 +40,7 @@ est supprimé, renommé ni modifié.
    `Aurora Veil` contre notre `aurore-boreale`, `Plasma Tide` contre notre
    `plasma-deforme` — verdict esthétique, donc décision utilisateur (même
    traitement que le Flow Field).
-2. **Mandelbrot** (catégorie à créer, cf. §3). Son `domain/` est déjà du
+2. **Mandelbrot** (catégorie `interactif`, cf. §3). Son `domain/` est déjà du
    TypeScript pur sans React : c'est **exactement** la frontière qu'impose
    `SPEC.md §3`. Le portage sera court.
 3. **L'explorateur de fractales**, à comparer au Mandelbrot avant de porter les
@@ -66,10 +66,9 @@ est supprimé, renommé ni modifié.
 
 ## 3. Ce que ces candidats disent de notre taxonomie
 
-`categorie` ne connaît aujourd'hui que **`fond`** et **`animation`**
-(`core/manifest/types.ts`). Trois candidats n'entrent proprement dans ni l'un
-ni l'autre, et c'est la taxonomie qu'il faut élargir, pas les candidats qu'il
-faut jeter :
+`categorie` ne connaissait que **`fond`** et **`animation`**. Trois candidats
+n'entraient proprement dans ni l'un ni l'autre, et c'est la taxonomie qu'il
+fallait élargir, pas les candidats qu'il fallait jeter :
 
 - **Mandelbrot, explorateur de fractales** — on ne les *regarde* pas, on les
   *manipule* : ils réagissent au zoom et au déplacement. Une catégorie
@@ -80,11 +79,12 @@ faut jeter :
   ouvrirait le catalogue à un besoin réel du portefeuille (« il me faut un
   loader qui ne ressemble pas à un spinner Bootstrap »).
 
-**Recommandation** : ajouter `interactif` et `composant` à `CATEGORIES`, et
-élargir d'une ligne l'objet du projet (`SPEC.md §1`). Le coût est faible — le
-champ est déjà validé et déjà utilisé pour séparer les sections de la vitrine.
-Le risque est de diluer le catalogue : à trancher par l'utilisateur, puisque
-cela touche à ce qu'il veut parcourir.
+**TRANCHÉ le 2026-08-13** : `interactif` et `composant` sont entrés dans
+`CATEGORIES` ([ADR 0012](../decisions/0012-taxonomie-interactif-et-composant.md)),
+validateur calibré sur les quatre dans les deux sens, et la vitrine ne peut
+plus oublier une catégorie — un titre manquant est une erreur de compilation,
+vérifiée en la provoquant. Ces candidats ne sont donc plus bloqués par le
+périmètre.
 
 ## 4. Plan d'import proposé (à exécuter après la recette, étape 10)
 
@@ -95,9 +95,9 @@ cela touche à ce qu'il veut parcourir.
 2. **Trois arbitrages, tous à l'utilisateur** (aucun n'est technique) :
    `Aurora Veil` vs `aurore-boreale` · `Plasma Tide` vs `plasma-deforme` ·
    Mandelbrot vs explorateur de fractales.
-3. **Décision de taxonomie** (§3) : `interactif` et `composant`, oui ou non. Si
-   oui : ADR + extension de `CATEGORIES` + calibration du validateur dans les
-   deux sens, avant la première viz de ces catégories.
+3. ~~Décision de taxonomie~~ — **faite le 2026-08-13** (ADR 0012). Le
+   Mandelbrot et l'explorateur seront `interactif` ; le loader et la carte,
+   `composant`.
 4. **Migrer par lots**, boucle inchangée : écrire → `pnpm catalog` →
    `pnpm build` → `pnpm bench` → captures → `pnpm verify`. Les shaders relèvent
    du régime technique (réécriture libre) ; le Mandelbrot et le halo SVG aussi

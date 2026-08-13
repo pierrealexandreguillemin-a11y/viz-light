@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { CATEGORIES } from "@/core/manifest/types.ts";
 import { validerManifest } from "@/core/manifest/valider.ts";
 
 /**
@@ -95,10 +96,15 @@ describe("validerManifest — identité et champs de base", () => {
     expect(cheminsFautifs((m) => (m["tags"] = ["ok", ""]))).toContain("tags");
   });
 
-  it("exige une catégorie — un fond et une animation ne se jugent pas pareil", () => {
+  it("exige une catégorie — les quatre usages ne se jugent pas pareil", () => {
     expect(cheminsFautifs((m) => (m["categorie"] = "joli"))).toContain("categorie");
     expect(cheminsFautifs((m) => delete m["categorie"])).toContain("categorie");
-    expect(cheminsFautifs((m) => (m["categorie"] = "fond"))).toEqual([]);
+    // Calibré dans les deux sens sur CHACUNE des quatre : une catégorie
+    // annoncée dans le type mais refusée par le validateur donnerait un gate
+    // qui ment (ADR 0012).
+    for (const categorie of CATEGORIES) {
+      expect(cheminsFautifs((m) => (m["categorie"] = categorie))).toEqual([]);
+    }
   });
 
   it("refuse un runtime ou une source hors énumération", () => {

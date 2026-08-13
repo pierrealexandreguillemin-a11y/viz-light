@@ -125,10 +125,12 @@ soit. En résumé :
 - **T1 — Montrer les trois arbitrages** (tous esthétiques, donc à lui) :
   `Aurora Veil` contre `aurore-boreale`, `Plasma Tide` contre `plasma-deforme`,
   Mandelbrot contre explorateur de fractales.
-- **T2 — Trancher la taxonomie** : ajouter `interactif` et `composant` à
-  `CATEGORIES` ? Décision utilisateur (elle change ce qu'il parcourt). Si oui :
-  ADR + extension du validateur, calibrée dans les deux sens, AVANT la première
-  viz concernée.
+- **T2 — ~~Trancher la taxonomie~~ : FAIT le 2026-08-13.** `interactif` et
+  `composant` sont dans `CATEGORIES` (ADR 0012), validateur calibré sur les
+  quatre dans les deux sens, et `Planche.tsx` tient ses titres dans un
+  `Record<Categorie, string>` : une catégorie sans section ne compile plus —
+  garde-fou vérifié en le provoquant. Aucune viz existante ne change de
+  catégorie.
 - **T3 — Rapatrier par COPIE** les candidats retenus dans
   `sources/easter-eggs/`. `C:\Dev\Easter_eggs` reste intact : rien n'y est
   déplacé, supprimé ni modifié. C'est une consigne explicite de l'utilisateur.

@@ -1,18 +1,28 @@
-import type { Categorie } from "../manifest/types.ts";
+import { CATEGORIES, type Categorie } from "../manifest/types.ts";
 import type { EntreeViz } from "@/viz/registre.genere.ts";
 
 import { Specimen } from "./Specimen.tsx";
 
 /**
- * FONDS ET ANIMATIONS SONT SÉPARÉS, parce qu'on ne les choisit pas de la même
- * façon : un fond se juge discret, derrière du texte ; une animation se regarde
- * pour elle-même. Les mélanger dans une liste unique force à comparer des
- * choses incomparables.
+ * LES CATÉGORIES SONT SÉPARÉES, parce qu'on ne les choisit pas de la même
+ * façon : un fond se juge discret derrière du texte ; une animation se regarde
+ * pour elle-même ; un interactif se manipule ; un composant se pose dans une
+ * page. Les mélanger dans une liste unique force à comparer des choses
+ * incomparables.
+ *
+ * `Record<Categorie, …>` ET NON UN TABLEAU : une catégorie ajoutée à
+ * `CATEGORIES` sans titre ici devient une **erreur de compilation**. Avec un
+ * tableau, elle aurait produit une viz valide, mesurée, cataloguée… et
+ * INVISIBLE dans la vitrine — le pire mode de panne, celui qui ne dit rien.
  */
-const SECTIONS: readonly { readonly categorie: Categorie; readonly titre: string }[] = [
-  { categorie: "fond", titre: "Fonds" },
-  { categorie: "animation", titre: "Animations" },
-];
+const TITRES: Record<Categorie, string> = {
+  fond: "Fonds",
+  animation: "Animations",
+  interactif: "Interactifs",
+  composant: "Composants",
+};
+
+const SECTIONS = CATEGORIES.map((categorie) => ({ categorie, titre: TITRES[categorie] }));
 
 export function Planche({ entrees }: { readonly entrees: readonly EntreeViz[] }) {
   if (entrees.length === 0) return <PlancheVide />;

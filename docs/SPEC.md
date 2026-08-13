@@ -13,8 +13,13 @@ expires: never
 
 ## 1. Objet
 
-Catalogue unifié des visualisations / backgrounds animés du portefeuille, né du
-projet claude.ai « Viz Light ». Deux publics :
+Catalogue unifié des visualisations du portefeuille, né du projet claude.ai
+« Viz Light ». Quatre usages, séparés dans la vitrine parce qu'on ne les
+choisit pas de la même façon : **fonds** (derrière du contenu), **animations**
+(qu'on regarde), **interactifs** (qu'on manipule) et **composants**
+(loader, carte — un élément d'interface). Les deux derniers sont entrés par
+l'[ADR 0012](decisions/0012-taxonomie-interactif-et-composant.md) ; les 31 viz
+du périmètre v1 restent des fonds et des animations. Deux publics :
 
 1. **Pierre-Alexandre** — parcourir pour le beau et l'original (wow effect,
    élégance), sur une vitrine déployée.
@@ -136,9 +141,10 @@ généré si un besoin réel apparaît, PWA, remote GitHub.
 
 **Premier lot hors v1 déjà inventorié** : `C:\Dev\Easter_eggs` — tri, plan
 d'import **par copie** et arbitrages en attente dans
-`evidence/sources-easter-eggs.md`. Il pose aussi une question de périmètre
-(deux catégories à créer, `interactif` et `composant`) qui appartient à
-l'utilisateur.
+`evidence/sources-easter-eggs.md`. La question de périmètre qu'il posait est
+tranchée : `interactif` et `composant` sont entrés dans la taxonomie
+([ADR 0012](decisions/0012-taxonomie-interactif-et-composant.md), décision de
+l'utilisateur du 2026-08-13). Restent trois arbitrages esthétiques.
 
 ## 5. Socle qualité
 
@@ -322,8 +328,10 @@ Elles ne sont pas négociables et s'appliquent à **chaque** viz migrée :
 1. **Les réglages survivent à la migration.** Le matériel d'origine se réglait
    en direct ; une viz migrée sans ses curseurs est une régression, pas une
    étape. `InstanceViz.regler()` change les valeurs sans remonter l'animation.
-2. **Fonds et animations sont séparés** (champ `categorie`, requis et validé) —
-   on ne les choisit pas de la même façon.
+2. **Les usages sont séparés** (champ `categorie`, requis et validé) — on ne
+   les choisit pas de la même façon. Quatre valeurs depuis l'ADR 0012 ; une
+   catégorie sans section dans la vitrine est une erreur de COMPILATION, pas
+   une viz invisible.
 3. **Aucune légende.** Si un élément d'interface demande une explication, c'est
    l'élément qu'il faut remplacer.
 4. **L'espace appartient aux visuels.** L'en-tête tient sur une ligne.
