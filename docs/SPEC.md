@@ -144,7 +144,10 @@ d'import **par copie** et arbitrages en attente dans
 `evidence/sources-easter-eggs.md`. La question de périmètre qu'il posait est
 tranchée : `interactif` et `composant` sont entrés dans la taxonomie
 ([ADR 0012](decisions/0012-taxonomie-interactif-et-composant.md), décision de
-l'utilisateur du 2026-08-13). Restent trois arbitrages esthétiques.
+l'utilisateur du 2026-08-13). Restent **deux** arbitrages esthétiques : le
+troisième (Mandelbrot contre explorateur de fractales) est tombé à la
+re-vérification du 2026-08-13 — les deux sources se composent en une seule viz
+`interactif`, il n'y avait rien à faire choisir.
 
 ## 5. Socle qualité
 
