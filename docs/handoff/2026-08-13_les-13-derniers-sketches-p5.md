@@ -109,6 +109,23 @@ captures montraient une spirale remise à zéro. Capturer par découpe
 chiffré (pixels allumés à format égal : 3 632 contre 3 577) disait la vérité
 quand l'image mentait.
 
+## 4ter. La taxonomie s'ouvre — ADR 0012
+
+Décision de l'utilisateur en fin de session : `CATEGORIES` devient
+`fond | animation | interactif | composant`. Motif : le lot Easter_eggs a sorti
+trois candidats qui n'entraient dans aucune des deux cases (deux explorateurs
+qu'on manipule, un loader et une carte d'interface) — élargir la taxonomie
+plutôt que laisser la case décider à la place du goût.
+
+Deux gates, calibrés dans les deux sens : le validateur accepte les quatre et
+refuse le reste ; `Planche.tsx` tient ses titres dans un
+`Record<Categorie, string>`, donc une catégorie sans section **ne compile
+plus** (TS2741 sur l'état fautif, vert sur l'état corrigé — vérifié en le
+provoquant). Avec l'ancien tableau, une viz de catégorie neuve aurait été
+valide, mesurée, cataloguée… et invisible.
+
+Aucune viz existante ne change de catégorie.
+
 ## 5. Ce que la prochaine session doit faire
 
 1. **La seule décision du chantier v1 appartient à l'utilisateur** :
