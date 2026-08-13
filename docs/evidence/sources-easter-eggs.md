@@ -117,6 +117,13 @@ périmètre.
 
 ## 4. Plan d'import proposé (à exécuter après la recette, étape 10)
 
+> **Ce résumé est dépassé par le plan détaillé** :
+> [`plans/portage-easter-eggs.md`](../plans/portage-easter-eggs.md) — slugs,
+> catégories, runtimes, pièges par élément, definition of done en dix points,
+> tableau des gates et ordre d'exécution. Ce document-ci reste le **registre de
+> la source** (ce qu'elle contient, ce qu'on en retient et pourquoi) ; il ne
+> dit pas comment porter.
+
 1. **Rapatrier avant de migrer** — copier les candidats retenus dans
    `sources/easter-eggs/`, en conservant les noms d'origine. Même principe que
    l'étape 1 du fil d'Ariane : la source vit dans le dépôt avant qu'on y

@@ -98,8 +98,9 @@ vérifié : `evidence/sources-viz-light.md`) :
 - 5 algos paramétrables de l'« Atelier génératif »
 
 Doublons (Tunnel de points ×3, Flow Field ×2) : **la version validée par
-l'utilisateur gagne**, l'autre est notée en variante dans le manifest. Pour le
-Flow Field, l'arbitrage revient à l'utilisateur au moment de la migration.
+l'utilisateur gagne**, l'autre est notée en variante dans le manifest. Le Flow
+Field a été tranché le **2026-08-13** : la version du banc d'essai gagne ; celle
+de l'Atelier reste à la source, hors catalogue.
 
 **Deux rendus par viz p5** ([ADR 0008](decisions/0008-deux-rendus-par-viz-origine-et-aligne.md)) :
 `origine` (portage fidèle, monochrome) et `aligne` (traitement du Tunnel de
@@ -139,9 +140,13 @@ Hors v1 (après recette) : nouvelles créations à la demande, rapatriement d'au
 sources (conversations claude.ai, tweets, CodePen, Shadertoy), HTML autonome
 généré si un besoin réel apparaît, PWA, remote GitHub.
 
-**Premier lot hors v1 déjà inventorié** : `C:\Dev\Easter_eggs` — tri, plan
-d'import **par copie** et arbitrages en attente dans
-`evidence/sources-easter-eggs.md`. La question de périmètre qu'il posait est
+**Premier lot hors v1 déjà inventorié** : `C:\Dev\Easter_eggs` — inventaire
+vérifié et tri argumenté dans `evidence/sources-easter-eggs.md`, **spec de
+portage, DoD et gates dans [`plans/portage-easter-eggs.md`](plans/portage-easter-eggs.md)**
+(neuf éléments retenus, import **par copie**, exécution à l'étape 10). Ce plan
+est le premier document du dossier `docs/plans/` : autorité `annex`, rangé par
+thème comme les autres — un plan se réécrit en place, il ne se date pas dans son
+nom. La question de périmètre que le lot posait est
 tranchée : `interactif` et `composant` sont entrés dans la taxonomie
 ([ADR 0012](decisions/0012-taxonomie-interactif-et-composant.md), décision de
 l'utilisateur du 2026-08-13). Restent **deux** arbitrages esthétiques : le
@@ -203,7 +208,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | 4 | Contrat de données : schéma manifest + registre + générateur CATALOG.md (gate) | ✅ 2026-08-12 |
 | 5 | Socle viz : hooks core + instrument + coquille UI, prouvé par une viz réelle | ✅ 2026-08-12 |
 | 5b | **Direction artistique + revue UI/UX** ([ADR 0009](decisions/0009-direction-artistique-planche-contact.md)) — repassée à l'étape 8, sur planche pleine | ✅ 2026-08-12 |
-| 6 | Migration des viz par lots, deux régimes ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)), dédup | 🟡 **31/31** migrées — reste l'arbitrage Flow Field (utilisateur) |
+| 6 | Migration des viz par lots, deux régimes ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)), dédup | ✅ **31/31** migrées, arbitrage Flow Field tranché le 2026-08-13 |
 | 7 | Bench Puppeteer + perf tamponnée dans les manifests | ✅ outil livré, tourne à chaque migration |
 | 8 | Recette utilisateur (revue visuelle complète par Pierre-Alexandre) | ⬜ |
 | 9 | Déploiement Vercel + CATALOG.md final | ⬜ |
@@ -301,16 +306,31 @@ nommé, chaque constante y est celle du golfé.
 | `couronne-battante` | Couronne battante | 6 mars | 30000 | 0.0698 | 96 | `e = i/1200-13` (`w=400` caché dans `i/w/3`) |
 | `rosace-fondatrice` | Rosace fondatrice | 22 février | 20000 | 0.0524 | 96 | `a()` sans argument ; `c` dépend de `i%2` |
 
-**Prochaine étape** : les algos de l'Atelier génératif — régime « œuvre ». La
-seule décision restante du chantier appartient à l'utilisateur : l'arbitrage
-*Flow Field* (banc d'essai, déjà migré en `fond`, vs Atelier) — lui montrer
-les deux, ne rien trancher.
+**L'arbitrage *Flow Field* est tranché** (2026-08-13, 4e session) : les deux
+versions ont été montrées côte à côte — la nôtre sur la planche, celle de
+l'Atelier ouverte depuis `sources/genart-studio-standalone.html` — et
+l'utilisateur a retenu **celle du banc d'essai**. Elle gagne à cette occasion un
+onzième réglage, **« Longueur de traînée »** : la durée de vie d'un filament
+était en dur (`60 + hasard × 240` images), elle est désormais un curseur
+(30 → 600, défaut 180 — valeur qui reproduit exactement l'ancien comportement).
+Elle est complémentaire d'« Effacement » : l'un dissout l'image entière, l'autre
+décide combien de temps chaque filament écrit. **Vérifié en regardant**, à
+`Effacement` par défaut : `evidence/captures/flow-field--trainee-30.png`
+(texture fine et uniforme) contre `flow-field--trainee-600.png` (longues plumes
+qui suivent le courant). L'hypothèse inverse — « le fondu bornera l'effet, il ne
+se verra qu'à `Effacement` minimal » — a été posée puis **démentie par
+l'image**. **L'étape 6 est close.**
 
-**Deux viz tiennent 30 i/s, mesurées** : `attracteur-de-lorenz` et
-`couronne-battante` demandent ~33 ms de JavaScript par image, soit le double du
-budget d'une image à 60 i/s. Ce n'est pas un défaut de portage — trente mille
-points par image, c'est ce que demande le golfé. Le curseur « Points » permet à
-l'utilisateur d'arbitrer ; les manifests portent le chiffre réel.
+**Trois viz tiennent 30 i/s, mesurées** — détail et méthode dans
+[`evidence/cadence-mesuree.md`](evidence/cadence-mesuree.md) :
+`attracteur-de-lorenz` et `couronne-battante` demandent ~33 ms de JavaScript par
+image, soit le double du budget d'une image à 60 i/s. Ce n'est pas un défaut de
+portage — trente mille points par image, c'est ce que demande le golfé, et le
+curseur « Points » permet à l'utilisateur d'arbitrer. `orbes-floutees` s'y
+ajoute le 2026-08-13 pour une **raison opposée** : 0,1 ms de JavaScript mais
+`gpuBound: true` — c'est le flou qui coûte, pas notre code. Son manifest portait
+59,9 i/s ; deux passes consécutives le corrigent à 30. Les manifests portent le
+chiffre réel.
 
 ### Comment migrer une viz (boucle complète)
 
