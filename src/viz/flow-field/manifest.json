@@ -66,6 +66,14 @@
           "valeur": 0.04
         },
         {
+          "cle": "trail",
+          "libelle": "Longueur de traînée",
+          "min": 30,
+          "max": 600,
+          "pas": 10,
+          "valeur": 180
+        },
+        {
           "cle": "thickness",
           "libelle": "Épaisseur",
           "min": 0.3,
@@ -116,14 +124,14 @@
     "deps": []
   },
   "perf": {
-    "mesureLe": "2026-08-12",
+    "mesureLe": "2026-08-13",
     "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
     "cadenceFps": 59.9,
-    "jsMedianMs": 0.8,
-    "jsP95Ms": 1,
+    "jsMedianMs": 0.9,
+    "jsP95Ms": 1.1,
     "gpuBound": false
   },
   "variantes": [
-    "Une seconde version vit dans l'Atelier génératif (« flow-field ») — l'arbitrage esthétique entre les deux appartient à l'utilisateur (SPEC.md §4)."
+    "Arbitrage tranché par l'utilisateur le 2026-08-13 : cette version (banc d'essai) gagne. La seconde, dans l'Atelier génératif (« flow-field », sources/genart-studio-standalone.html), reste consultable à la source mais n'entre pas au catalogue — SPEC.md §4, « la version validée par l'utilisateur gagne »."
   ]
 }

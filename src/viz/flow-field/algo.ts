@@ -9,8 +9,9 @@ import { creerAleatoire, creerToile } from "@/core/viz/toile.ts";
  * particules × octaves — « très peu de calculs » était l'affirmation la plus
  * trompeuse du tableau d'origine, et le curseur d'octaves le prouve en direct.
  *
- * NOTE (SPEC.md §4) : il existe une seconde version dans l'Atelier génératif ;
- * l'arbitrage esthétique entre les deux appartient à l'utilisateur.
+ * NOTE (SPEC.md §4) : il existait une seconde version dans l'Atelier génératif.
+ * L'utilisateur a tranché le 2026-08-13 en faveur de celle-ci ; l'autre reste
+ * à la source, hors catalogue.
  */
 const hacher = (x: number, y: number, z: number): number => {
   const s = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453;
@@ -65,10 +66,20 @@ export const monterFlowField: MonterViz = (hote, dimensions, reglages) => {
   const { ctx } = toile;
   let r = reglages;
   const alea = creerAleatoire(2026);
+  /**
+   * La longueur d'un filament EST sa durée de vie : une image tracée par image
+   * vécue. À 180 (le défaut), on retrouve exactement le `60 + hasard × 240`
+   * d'origine — le réglage ouvre l'échelle, il ne déplace pas le point de départ.
+   */
+  const dureeDeVie = (): number => {
+    const longueur = lireNombre(r, "trail", 180);
+    return longueur / 3 + alea() * longueur * (4 / 3);
+  };
+  const plafondDeVie = (): number => lireNombre(r, "trail", 180) * (5 / 3);
   const naitre = (): Particule => ({
     x: alea() * toile.largeur,
     y: alea() * toile.hauteur,
-    vie: 60 + alea() * 240,
+    vie: dureeDeVie(),
   });
   let particules = Array.from({ length: Math.round(lireNombre(r, "count", 1200)) }, naitre);
   ctx.fillStyle = lireCouleur(r, "background", "#0d1020");
@@ -106,10 +117,16 @@ export const monterFlowField: MonterViz = (hote, dimensions, reglages) => {
     },
     regler(suivants: Reglages) {
       const compte = Math.round(lireNombre(suivants, "count", 1200));
+      const longueurChangee = lireNombre(suivants, "trail", 180) !== lireNombre(r, "trail", 180);
+      r = suivants;
       if (compte !== particules.length) {
         particules = Array.from({ length: compte }, naitre);
+      } else if (longueurChangee) {
+        // Raccourcir doit se voir tout de suite, pas dans dix secondes : on
+        // rabote les vies déjà en cours au nouveau plafond.
+        const plafond = plafondDeVie();
+        for (const p of particules) p.vie = Math.min(p.vie, plafond);
       }
-      r = suivants;
     },
     redimensionner: (d) => toile.redimensionner(d),
     demonter: () => toile.demonter(),
