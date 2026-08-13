@@ -98,10 +98,10 @@
     "deps": []
   },
   "perf": {
-    "mesureLe": "2026-08-12",
+    "mesureLe": "2026-08-13",
     "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
     "cadenceFps": 59.9,
-    "jsMedianMs": 1.2,
+    "jsMedianMs": 1.1,
     "jsP95Ms": 1.4,
     "gpuBound": false
   }
