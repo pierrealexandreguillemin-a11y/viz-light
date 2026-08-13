@@ -134,6 +134,12 @@ Hors v1 (après recette) : nouvelles créations à la demande, rapatriement d'au
 sources (conversations claude.ai, tweets, CodePen, Shadertoy), HTML autonome
 généré si un besoin réel apparaît, PWA, remote GitHub.
 
+**Premier lot hors v1 déjà inventorié** : `C:\Dev\Easter_eggs` — tri, plan
+d'import **par copie** et arbitrages en attente dans
+`evidence/sources-easter-eggs.md`. Il pose aussi une question de périmètre
+(deux catégories à créer, `interactif` et `composant`) qui appartient à
+l'utilisateur.
+
 ## 5. Socle qualité
 
 Câblé **avant la première viz** (étape 3 du fil d'Ariane), principes du tier

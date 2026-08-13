@@ -111,10 +111,31 @@ quand l'image mentait.
 
 ## 5. Ce que la prochaine session doit faire
 
-1. **La seule décision du chantier appartient à l'utilisateur** : l'arbitrage
-   *Flow Field* (version banc d'essai déjà migrée en `fond`, contre celle de
-   l'Atelier). Lui montrer les deux, ne rien trancher.
+1. **La seule décision du chantier v1 appartient à l'utilisateur** :
+   l'arbitrage *Flow Field* (version banc d'essai déjà migrée en `fond`, contre
+   celle de l'Atelier). Lui montrer les deux, ne rien trancher.
 2. Puis étape 8 : recette visuelle complète par Pierre-Alexandre.
+
+### Tâches préparées pour la suite — lot `C:\Dev\Easter_eggs`
+
+Demandé par l'utilisateur le 2026-08-13. Inventaire vérifié et tri argumenté :
+**`evidence/sources-easter-eggs.md`** — le lire avant de toucher à quoi que ce
+soit. En résumé :
+
+- **T1 — Montrer les trois arbitrages** (tous esthétiques, donc à lui) :
+  `Aurora Veil` contre `aurore-boreale`, `Plasma Tide` contre `plasma-deforme`,
+  Mandelbrot contre explorateur de fractales.
+- **T2 — Trancher la taxonomie** : ajouter `interactif` et `composant` à
+  `CATEGORIES` ? Décision utilisateur (elle change ce qu'il parcourt). Si oui :
+  ADR + extension du validateur, calibrée dans les deux sens, AVANT la première
+  viz concernée.
+- **T3 — Rapatrier par COPIE** les candidats retenus dans
+  `sources/easter-eggs/`. `C:\Dev\Easter_eggs` reste intact : rien n'y est
+  déplacé, supprimé ni modifié. C'est une consigne explicite de l'utilisateur.
+- **T4 — Migrer par lots** : les 5 fonds shader (le meilleur lot), le
+  Mandelbrot (son `domain/` est déjà du TS pur), le halo du tracé SVG.
+- **T5 — Laisser sur place** : boîte à rythmes, bannières console, 64 logos
+  NFL, archive `.zip` — argumenté au §2 du document.
 
 ## 6. État à la passation
 
