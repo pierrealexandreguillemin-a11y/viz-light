@@ -20,8 +20,9 @@ expires: never
 
 ## 1. Ce que ce plan couvre
 
-Huit éléments retenus sur les treize inventoriés. Tous relèvent du **régime
-technique** de l'[ADR 0010](../decisions/0010-deux-regimes-de-migration.md)
+Neuf éléments retenus sur les treize inventoriés (le tableau ci-dessous en
+liste neuf ; concorde avec SPEC §4 et le handoff du 2026-08-13). Tous relèvent
+du **régime technique** de l'[ADR 0010](../decisions/0010-deux-regimes-de-migration.md)
 (réécriture libre) : aucun n'est une œuvre d'auteur, donc **aucune capture
 comparée au pixel n'est exigée** — mais chacun doit être *regardé* (§4).
 
@@ -35,7 +36,7 @@ comparée au pixel n'est exigée** — mais chacun doit être *regardé* (§4).
 | 6 | `explorateur-de-fractales` | `interactif` | `canvas2d` | `fractal-explorer.html` **+** `mandelbrot-easter-egg/react/src/domain/` |
 | 7 | `halo-de-trace` | `animation` | `dom-css` | `Miami_circuit_easter-egg/miami-circuit-glow.html` |
 | 8 | `globe-chargement` | `composant` | `canvas2d` | `Globe loader/Globe Loader.html` |
-| 9 | `carte-iridescente` *(optionnel)* | `composant` | `dom-css` | `Iridescent card (1)/card-app.jsx` |
+| 9 | `carte-iridescente` | `composant` | `dom-css` | `Iridescent card (1)/card-app.jsx` (l'effet, pas l'illustration) |
 
 Les catégories `interactif` et `composant` sont ouvertes depuis l'
 [ADR 0012](../decisions/0012-taxonomie-interactif-et-composant.md) : ce lot est
@@ -110,10 +111,16 @@ seul canvas. Les **seuls** uniformes sont `u_time`, `u_mouse`, `u_mouseSmooth`,
 
 ### 3.2 Les deux fonds shader en concurrence (`Aurora Veil`, `Plasma Tide`)
 
-**Arbitrage esthétique en attente — il appartient à l'utilisateur.** Le fait
-technique à lui donner avant qu'il tranche : nos `aurore-boreale` et
+**Contrainte pré-tranchée par l'utilisateur, le 2026-08-21 : ON GARDE LES
+CURSEURS.** Le fait technique lui a été donné — nos `aurore-boreale` et
 `plasma-deforme` sont **déjà en WebGL, portent 8 curseurs chacun et sont mesurés
-à 59,9 i/s** ; les versions Easter_eggs n'exposent aucun réglage.
+à 59,9 i/s** ; les versions Easter_eggs n'exposent aucun réglage. Sa réponse
+fait des curseurs un **critère non négociable** : la version qui ship doit
+exposer des curseurs. En pratique, nos deux fonds (déjà construits et mesurés)
+restent la base. Une version Easter_eggs ne peut être adoptée que si elle est
+préférée **visuellement** *et* qu'on lui **crée** des curseurs (travail neuf,
+comme §3.1) — jamais adoptée nue. Le verdict purement visuel reste à poser au
+lot, mais il ne peut plus faire perdre les réglages.
 
 **Mécanique du verdict** (SPEC §4, « la version validée par l'utilisateur
 gagne ») :
@@ -179,18 +186,27 @@ moitié de l'animation échapperait à la mesure.
   taille d'emploi** (~200 px), pas seulement en grand — la planche l'affiche
   dans une carte.
 
-### 3.6 `carte-iridescente` (`composant`, `dom-css`) — optionnel, priorité la plus basse
+### 3.6 `carte-iridescente` (`composant`, `dom-css`)
 
-**Réserve documentée, à ne pas perdre** : ce n'est pas un composant d'interface,
-c'est une **carte à jouer** — `card-art.jsx` dessine « Ace of Auras » en SVG
-360 × 540. Le besoin du portefeuille (« un loader qui ne ressemble pas à un
-spinner générique ») est servi par le §3.5, pas par elle.
+**Candidat de plein droit — retenu par l'utilisateur le 2026-08-21.** Le premier
+cadrage (« carte à jouer, candidat faible ») confondait l'objet et l'effet.
+L'**effet** — le `conic-gradient` iridescent qui suit le pointeur — est une
+technique portable qui tient sur ses propres mérites, exactement comme les
+fonds du banc d'essai. C'est lui qu'on importe.
 
-- Si elle est portée : n'emporter que **la technique** (le `conic-gradient`
-  iridescent qui suit le pointeur), pas l'illustration.
-- Même piège d'instrument : la teinte suit le pointeur **depuis `frame()`**.
-- **À porter en dernier, ou pas du tout.** C'est l'utilisateur qui tranche, sur
-  la carte réelle.
+- **Ce qu'on laisse à la source** : uniquement l'**illustration** « Ace of
+  Auras » (`card-art.jsx`, SVG 360 × 540, enseigne inventée). On porte l'effet,
+  pas le dessin — même principe que le halo de Miami (§3.4), dont on prend la
+  technique et non le circuit.
+- **Catégorie à confirmer à la recette** : `composant` (surface iridescente
+  qu'on pose dans une interface) est l'hypothèse de départ ; si l'utilisateur
+  juge que l'effet se regarde plus qu'il ne s'emploie, `fond` conviendrait — un
+  champ du manifest à changer, pas du code.
+- **Piège d'instrument** : la teinte suit le pointeur **depuis `frame()`**,
+  jamais en CSS pur — sinon l'instrument mesure du vide (§3.4, §3.5).
+- Priorité basse dans l'ordre d'exécution (§6, lot 5) parce que c'est le seul
+  `dom-css` de type surface interactive, pas parce que le candidat serait
+  faible.
 
 ## 4. Definition of Done
 
@@ -280,7 +296,7 @@ déclaratif : chacun est constaté.
 | **2** | les 2 arbitrages esthétiques (aurore, plasma) | montrer les deux versions, ne rien trancher |
 | **3** | `explorateur-de-fractales` | le plus gros morceau ; dépend du genre `choix` du lot 0 |
 | **4** | `halo-de-trace` puis `globe-chargement` | premiers usages réels de `dom-css` et de `composant` |
-| **5** | `carte-iridescente` — ou son abandon | décision de l'utilisateur, sur la carte réelle |
+| **5** | `carte-iridescente` (l'effet iridescent) | dernier car seul `dom-css` de surface interactive ; retenu, cf. §3.6 |
 
 Boucle par viz, inchangée depuis l'étape 6 :
 
@@ -303,5 +319,7 @@ même octet près.
 
 ## 8. Ce qui reste à l'utilisateur
 
-Deux arbitrages esthétiques (§3.2), le sort de la carte à jouer (§3.6), et le
-**verdict sur chaque viz portée** : le beau lui appartient, ici comme ailleurs.
+Deux verdicts esthétiques désormais **cadrés** par ses décisions du 2026-08-21 —
+l'aurore/plasma se jouent avec curseurs obligatoires (§3.2), la carte iridescente
+est retenue comme effet (§3.6) — mais le **verdict visuel final sur chaque viz
+portée** lui appartient toujours, ici comme ailleurs.

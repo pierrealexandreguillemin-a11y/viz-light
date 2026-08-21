@@ -70,11 +70,12 @@ est supprimé, renommé ni modifié.
    ne dépend en rien du tracé qu'il parcourt. Importer l'effet, pas le tracé.
 4. **Globe loader** : voir §3. Il tient la promesse — un loader qui ne
    ressemble pas à un spinner générique, réutilisable tel quel.
-5. **Iridescent card** : voir §3, mais **avec une réserve que le premier
-   inventaire n'avait pas** — ce n'est pas une carte d'interface, c'est une
-   **carte à jouer** dessinée en SVG. La technique (le `conic-gradient`
-   iridescent réactif au survol) est réemployable ; l'objet, beaucoup moins.
-   Candidat plus faible que je ne l'ai écrit.
+5. **Iridescent card** : voir §3. Fait sur la source — l'**objet** est une
+   **carte à jouer** dessinée en SVG (« Ace of Auras »), pas un composant
+   d'interface. Mais l'**effet** (le `conic-gradient` iridescent réactif au
+   survol) est une technique portable qui tient sur ses propres mérites :
+   **retenu de plein droit** (décision de l'utilisateur, 2026-08-21). On importe
+   l'effet, on laisse l'illustration — même geste que pour le halo de Miami.
 
 ### Sans leur place ici — à laisser sur place
 
