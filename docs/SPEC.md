@@ -1,6 +1,6 @@
 ---
 authority: canonical
-last_verified: 2026-08-13
+last_verified: 2026-08-21
 expires: never
 ---
 
@@ -210,9 +210,18 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | 5b | **Direction artistique + revue UI/UX** ([ADR 0009](decisions/0009-direction-artistique-planche-contact.md)) — repassée à l'étape 8, sur planche pleine | ✅ 2026-08-12 |
 | 6 | Migration des viz par lots, deux régimes ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)), dédup | ✅ **31/31** migrées, arbitrage Flow Field tranché le 2026-08-13 |
 | 7 | Bench Puppeteer + perf tamponnée dans les manifests | ✅ outil livré, tourne à chaque migration |
-| 8 | Recette utilisateur (revue visuelle complète par Pierre-Alexandre) | ⬜ |
-| 9 | Déploiement Vercel + CATALOG.md final | ⬜ |
+| 8 | Recette utilisateur (revue visuelle complète par Pierre-Alexandre) | ⬜ (se fait désormais sur l'URL live) |
+| 9 | Déploiement Vercel + CATALOG.md final | 🟨 **déployé le 2026-08-21** → https://viz-light.vercel.app ; CATALOG.md « final » après recette |
 | 10 | Entretien + ajouts au fil de l'eau (`scripts/new-viz.mjs`) — livrable permanent | ⬜ |
+
+**L'étape 9 a été jouée devant l'étape 8** (décision de l'utilisateur, 2026-08-21) :
+le déploiement production a été fait *avant* la recette, précisément pour que la
+recette se fasse sur l'URL live plutôt que sur un serveur local éphémère. L'
+[ADR 0006](decisions/0006-deploiement-vercel-apres-validation-locale.md) est
+respecté — il exige une « validation locale complète », et `pnpm verify` était
+vert et tamponné ; la recette (étape 8) est une revue esthétique humaine, pas
+cette validation automatisée. Reste dû à l'étape 9 : le **CATALOG.md final**,
+après que la recette ait tranché ce qui reste/part/se règle.
 
 **L'étape 7 a fusionné dans l'étape 6** : le gate du catalogue refuse une viz
 sans perf, donc chaque migration se termine par sa mesure. Mesurer en bloc à la
