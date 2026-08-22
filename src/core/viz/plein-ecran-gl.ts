@@ -58,7 +58,17 @@ export function creerPleinEcranGl({ fragment, appliquer }: OptionsPleinEcran): M
     const canvas = document.createElement("canvas");
     canvas.style.display = "block";
     hote.append(canvas);
-    const gl = canvas.getContext("webgl");
+    // `preserveDrawingBuffer: true` est VITAL ici, pas une option de confort.
+    // Une seule viz vit à la fois (SceneViz) : les autres sont figées sur leur
+    // unique `frame(0, 0)` et n'appellent plus jamais `drawArrays`. Or, buffer
+    // NON préservé, le compositeur vide le canvas WebGL après l'avoir présenté —
+    // les viz figées viraient donc au noir dès le premier re-compositing (défilement,
+    // repaint), pendant que les fonds canvas2d, eux, conservaient leur image. Le
+    // bench ne l'a jamais vu : il isole chaque viz, qui redevient l'unique élue et
+    // réanime en continu. Reproduit à la sonde (luminance 0 sur les deux seuls
+    // fonds WebGL du catalogue), corrigé ici. Chaque image repeint tout l'écran en
+    // opaque : aucune accumulation à craindre.
+    const gl = canvas.getContext("webgl", { preserveDrawingBuffer: true });
     if (!gl) throw new Error("WebGL indisponible sur ce navigateur.");
 
     let r = reglages;
