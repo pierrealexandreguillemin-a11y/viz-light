@@ -101,12 +101,41 @@ const portability = {
   },
 };
 
+/**
+ * FRONTIÈRE WEBGL — le garde-fou du bug du 2026-08-22 (SPEC.md §6, ADR 0016).
+ *
+ * Aurore et plasma s'affichaient noires en prod : une viz figée (une seule vit
+ * à la fois, ADR 0011) perd son buffer WebGL au re-compositing si le contexte
+ * n'a pas `preserveDrawingBuffer: true`. La correction vit UNE fois, dans
+ * `core/viz/plein-ecran-gl.ts` (`creerPleinEcranGl`), qui possède aussi la perte
+ * de contexte et le repeint opaque. Une viz qui crée son contexte WebGL à la
+ * main court-circuiterait tout cela — c'est le seul chemin par lequel le bug
+ * peut revenir. On l'interdit à la racine, déterministe, plutôt que de mesurer
+ * la luminance d'une viz figée en aval (fragile : dépend de l'élection de scène).
+ * `getContext("2d")` reste permis — seul le contexte WebGL est visé.
+ */
+const webglBoundary = {
+  files: ["src/viz/**/algo.ts", "src/viz/**/algo/**/*.ts"],
+  rules: {
+    "no-restricted-syntax": [
+      "error",
+      {
+        selector:
+          "CallExpression[callee.property.name='getContext'] Literal[value=/^(webgl|webgl2|experimental-webgl)$/]",
+        message:
+          "Un fond WebGL passe par creerPleinEcranGl (core/viz/plein-ecran-gl) : lui seul crée le contexte avec preserveDrawingBuffer:true, sans quoi une viz figée vire au noir (bug 2026-08-22, ADR 0016). Ne crée pas de contexte WebGL à la main.",
+      },
+    ],
+  },
+};
+
 export default defineConfig([
   ...nextVitals,
   ...nextTs,
   quality,
   typeAware,
   portability,
+  webglBoundary,
   // Doit rester en dernier : éteint les règles stylistiques qui se battraient
   // avec Prettier.
   eslintConfigPrettier,

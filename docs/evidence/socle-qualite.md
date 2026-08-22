@@ -1,7 +1,7 @@
 ---
 authority: ledger
 subject: socle-qualite
-last_verified: 2026-08-12
+last_verified: 2026-08-22
 expires: never
 ---
 
@@ -166,6 +166,41 @@ apres suppression   : Found 0 clones — exit 0
 
 40 tokens ≈ une petite fonction. Le gate attrape toujours ce pour quoi il
 existe ; il ne compte plus l'obligation contractuelle comme une faute.
+
+## 3.6 La frontière WebGL (`eslint.config.mjs`, ADR 0016) — 2026-08-22
+
+Le bug du 2026-08-22 (aurore et plasma noires en prod) avait une cause unique :
+un contexte WebGL créé sans `preserveDrawingBuffer: true`, si bien qu'une viz
+**figée** (une seule vit à la fois, ADR 0011) perdait son image au
+re-compositing. La correction vit à un seul endroit — `creerPleinEcranGl`
+(`core/viz/plein-ecran-gl.ts`) — qui possède aussi la perte de contexte et le
+repeint opaque. Le seul chemin par lequel le bug peut revenir est **une viz qui
+crée son contexte WebGL à la main** au lieu de passer par ce socle.
+
+Le gate `no-restricted-syntax` interdit donc, dans `src/viz/**/algo.ts`, tout
+`getContext("webgl" | "webgl2" | "experimental-webgl")`. `getContext("2d")`
+reste permis — seul le contexte WebGL est visé.
+
+**Pourquoi ce gate STATIQUE plutôt que la « luminance d'une viz figée » proposée
+au handoff du 2026-08-22.** Mesurer la luminance en aval exige un rendu headless
+qui force chaque viz à l'état figé — or l'état figé dépend de l'élection de
+scène (`useScenePrincipale`), pas d'un réglage qu'on pose de l'extérieur : le
+gate serait fragile, et un gate qui rougit à tort est pire que pas de gate. La
+cause racine, elle, est un seul site d'appel, attrapable à la syntaxe, sans
+flakiness. Angle mort déclaré : ce gate n'attrape PAS un shader qui rendrait
+tout noir pour une raison de logique GLSL (mauvais uniform, formule fausse) —
+cela reste couvert par l'œil porté sur la capture *figée* à la migration
+(DoD du plan Easter_eggs, §4.1 point 10), pas par une mesure automatique.
+
+Calibré dans les deux sens, le 2026-08-22 :
+
+```
+etat sain (aurore/plasma via creerPleinEcranGl) : eslint . — exit 0
+faute (canvas.getContext("webgl") dans un algo) :
+  5:60  error  Un fond WebGL passe par creerPleinEcranGl … Ne crée pas de
+               contexte WebGL à la main   no-restricted-syntax
+apres suppression                                : eslint . — exit 0
+```
 
 ## 4. Ce que ce socle ne peut PAS voir
 
