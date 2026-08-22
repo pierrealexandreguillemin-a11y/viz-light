@@ -1,6 +1,6 @@
 ---
 authority: canonical
-last_verified: 2026-08-21
+last_verified: 2026-08-22
 expires: never
 ---
 
@@ -138,7 +138,9 @@ vitrine est restée vide (`evidence/erreurs-a-ne-pas-refaire.md` §12).
 
 Hors v1 (après recette) : nouvelles créations à la demande, rapatriement d'autres
 sources (conversations claude.ai, tweets, CodePen, Shadertoy), HTML autonome
-généré si un besoin réel apparaît, PWA, remote GitHub.
+généré si un besoin réel apparaît, PWA. **Le remote GitHub, lui, est entré**
+(décision de l'utilisateur, 2026-08-22, [ADR 0013](decisions/0013-remote-github-et-deploiement-git-vercel.md)) :
+le dépôt public existe et Vercel y est branché — voir §7.
 
 **Premier lot hors v1 déjà inventorié** : `C:\Dev\Easter_eggs` — inventaire
 vérifié et tri argumenté dans `evidence/sources-easter-eggs.md`, **spec de
@@ -190,9 +192,17 @@ générés, jamais édités à la main.
 
 ## 7. Déploiement
 
-Vercel free tier, **après validation locale complète**
-([ADR 0006](decisions/0006-deploiement-vercel-apres-validation-locale.md)) —
-repo local + Vercel CLI, comme suminagashi.
+Vercel free tier, **après validation locale complète** — ce principe tient
+toujours. Ce qui a changé le 2026-08-22
+([ADR 0013](decisions/0013-remote-github-et-deploiement-git-vercel.md), qui
+supersède l'[ADR 0006](decisions/0006-deploiement-vercel-apres-validation-locale.md)) :
+le déploiement est désormais **Git-intégré**. Dépôt public
+`github.com/pierrealexandreguillemin-a11y/viz-light`, Vercel connecté
+(`vercel git connect`) : **un push sur `main` déclenche le déploiement de
+production**. La validation locale n'est pas contournée — `pnpm verify` est
+branché en **pre-push** (§5), donc un push qui déploie est un push aux gates
+verts. Le lien CLI (`.vercel/project.json`, non versionné) reste le chemin de
+secours.
 
 ## 8. Fil d'Ariane
 
@@ -211,7 +221,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | 6 | Migration des viz par lots, deux régimes ([ADR 0010](decisions/0010-deux-regimes-de-migration.md)), dédup | ✅ **31/31** migrées, arbitrage Flow Field tranché le 2026-08-13 |
 | 7 | Bench Puppeteer + perf tamponnée dans les manifests | ✅ outil livré, tourne à chaque migration |
 | 8 | Recette utilisateur (revue visuelle complète par Pierre-Alexandre) | ⬜ (se fait désormais sur l'URL live) |
-| 9 | Déploiement Vercel + CATALOG.md final | 🟨 **déployé le 2026-08-21** → https://viz-light.vercel.app ; CATALOG.md « final » après recette |
+| 9 | Déploiement Vercel + CATALOG.md final | 🟨 **déployé le 2026-08-21** → https://viz-light.vercel.app ; **remote GitHub public + CI/CD Git-intégré le 2026-08-22** ([ADR 0013](decisions/0013-remote-github-et-deploiement-git-vercel.md)) ; CATALOG.md « final » après recette |
 | 10 | Entretien + ajouts au fil de l'eau (`scripts/new-viz.mjs`) — livrable permanent | ⬜ |
 
 **L'étape 9 a été jouée devant l'étape 8** (décision de l'utilisateur, 2026-08-21) :

@@ -1,7 +1,7 @@
 ---
 authority: ledger
 subject: erreurs
-last_verified: 2026-08-12
+last_verified: 2026-08-22
 expires: never
 ---
 
@@ -244,6 +244,39 @@ qui écoute le redimensionnement. **Règle** : avant de conclure d'après une
 image, vérifier que l'acte de mesurer ne change pas ce qui est mesuré — et
 recouper par un chiffre pris SANS capture (ici : pixels allumés, 3 632 contre
 3 577, soit 1,5 % d'écart, qui disait la vérité quand l'image mentait).
+
+## 19. Les deux fonds WebGL affichés noirs en prod — et l'instrument ne le voyait pas (2026-08-22)
+
+**Défaut** : `aurore-boreale` et `plasma-deforme`, les deux seules viz WebGL du
+catalogue, s'affichaient **noires** sur l'URL live. Cause racine : le socle
+`creerPleinEcranGl` créait le contexte sans `preserveDrawingBuffer: true`. Or une
+seule viz vit à la fois (ADR 0011) : les autres sont **figées** sur leur unique
+`frame(0, 0)` et n'appellent plus `drawArrays`. Buffer non préservé, le
+compositeur vide le canvas WebGL après l'avoir présenté une fois — les viz figées
+viraient au noir dès le premier re-compositing (défilement, repaint). Les fonds
+canvas2d, dont le buffer 2D est conservé, n'ont jamais eu le problème : d'où
+exactement deux viz touchées.
+
+**Ce qui l'a rendu possible** : le bench mesure la **cadence**, pas que les pixels
+sont non-noirs — jumeau des erreurs n°1, n°14 et n°16. Pire, il **isole** chaque
+viz (les autres en `display:none`), ce qui la fait redevenir l'unique élue *animée*
+qui redessine en continu : dans les conditions du bench, une viz WebGL n'est jamais
+figée, donc jamais noire. L'instrument était aveugle à l'état précis où le bug se
+produit. Le régime « technique » (§4) n'impose pas de captures comparées aux fonds :
+ces deux-là n'avaient donc **aucune preuve visuelle**, et personne ne les avait
+regardées jusqu'à la recette sur l'URL live.
+
+**Garde-fou** : `tests/plein-ecran-gl.test.ts` exige que le contexte soit demandé
+avec `{ preserveDrawingBuffer: true }`, calibré dans les deux sens (rouge sans
+l'option, vert avec). Reproduit avant/après par une sonde qui lit la luminance de
+chaque canvas *figé* : **0 → 57,8** (aurore) et **0 → 76,9** (plasma), sur vrai GPU
+(ANGLE/AMD). **Règle** : un instrument de perf qui ne lit pas les pixels ne prouve
+pas qu'une viz s'affiche ; et une catégorie dispensée de preuve visuelle doit être
+regardée à l'œil au moins une fois avant d'être dite « migrée ». **Reste ouvert**
+(dette assumée) : le garde-fou ne couvre que CE réglage — un shader qui rendrait
+tout noir passerait encore. Un gate « luminance d'une viz figée > 0 » (la sonde
+promue en script versionné) fermerait la classe entière ; proposé, pas encore
+câblé.
 
 ## 10. Un « défaut » corrigé sans être constaté (2026-08-12, évité)
 
