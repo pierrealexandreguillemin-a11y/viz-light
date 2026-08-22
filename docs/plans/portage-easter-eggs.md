@@ -11,9 +11,12 @@ expires: never
 > [`evidence/sources-easter-eggs.md`](../evidence/sources-easter-eggs.md) ; les
 > *pourquoi* sont dans `decisions/`.
 >
-> **Périmètre hors v1** (SPEC §4) : ce lot s'exécute **après la recette**
-> (étape 8) et le déploiement (étape 9), au titre de l'étape 10 « ajouts au fil
-> de l'eau ». Rien ici ne doit retarder la v1.
+> **Périmètre hors v1** (SPEC §4) : ce lot relève de l'étape 10 « ajouts au fil
+> de l'eau ». Il était prévu **après la recette** (étape 8) — **avancé le
+> 2026-08-22 par décision de l'utilisateur** (« go »). Cela ne retarde pas la
+> recette, qui se poursuit en parallèle sur l'URL live : seul le **Lot 2**
+> (arbitrage aurore/plasma) attend son verdict visuel ; le reste (déblocages,
+> shaders sans concurrent, fractales…) n'en dépend pas.
 >
 > **Règle d'import posée par l'utilisateur : PAR COPIE.** `C:\Dev\Easter_eggs`
 > reste intact — rien n'y est déplacé, renommé ni supprimé.
