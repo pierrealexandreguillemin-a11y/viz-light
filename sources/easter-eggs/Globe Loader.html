@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Globe Loader</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #f4f1ec;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .stage {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+  /* Whirl rings spinning around the globe */
+  .whirl {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .whirl svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .whirl .ring-a { animation: spin 2.2s linear infinite; transform-origin: 100px 100px; }
+  .whirl .ring-b { animation: spin 3.4s linear infinite reverse; transform-origin: 100px 100px; }
+  .whirl .ring-c { animation: spin 5.5s linear infinite; transform-origin: 100px 100px; }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  canvas.globe {
+    position: absolute;
+    inset: 0;
+    width: 200px;
+    height: 200px;
+    display: block;
+  }
+</style>
+</head>
+<body>
+  <div class="stage" role="status" aria-label="Loading">
+    <div class="whirl">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <defs>
+          <!-- soft dashed orbit ring -->
+          <mask id="fade-a">
+            <rect width="200" height="200" fill="black"/>
+            <circle cx="100" cy="100" r="94" fill="none" stroke="white" stroke-width="6"
+                    stroke-dasharray="2 22 50 14 8 60" />
+          </mask>
+          <mask id="fade-b">
+            <rect width="200" height="200" fill="black"/>
+            <circle cx="100" cy="100" r="88" fill="none" stroke="white" stroke-width="3"
+                    stroke-dasharray="40 30 12 80 6 40" />
+          </mask>
+          <mask id="fade-c">
+            <rect width="200" height="200" fill="black"/>
+            <circle cx="100" cy="100" r="98" fill="none" stroke="white" stroke-width="2"
+                    stroke-dasharray="1 7 1 7 90 30" />
+          </mask>
+        </defs>
+
+        <!-- ring A: bold whirl arcs -->
+        <g class="ring-a">
+          <circle cx="100" cy="100" r="94"
+                  fill="none"
+                  stroke="#1a1a1a"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-dasharray="2 22 50 14 8 60"
+                  opacity="0.9"/>
+        </g>
+
+        <!-- ring B: thinner counter whirl -->
+        <g class="ring-b">
+          <circle cx="100" cy="100" r="88"
+                  fill="none"
+                  stroke="#1a1a1a"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                  stroke-dasharray="40 30 12 80 6 40"
+                  opacity="0.55"/>
+        </g>
+
+        <!-- ring C: speck particles whirling -->
+        <g class="ring-c">
+          <circle cx="100" cy="100" r="98"
+                  fill="none"
+                  stroke="#1a1a1a"
+                  stroke-width="1.4"
+                  stroke-linecap="round"
+                  stroke-dasharray="1 7 1 7 1 7 1 60 1 7 1 7 90 30"
+                  opacity="0.7"/>
+        </g>
+      </svg>
+    </div>
+
+    <canvas class="globe" width="400" height="400"></canvas>
+  </div>
+
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+(async () => {
+  const canvas = document.querySelector('canvas.globe');
+  const ctx = canvas.getContext('2d');
+  const W = 400, H = 400; // 2x for retina
+  const R = 95 * 2;       // sphere radius in canvas px (so visible ~ 95px radius)
+
+  const projection = d3.geoOrthographic()
+    .scale(R)
+    .translate([W/2, H/2])
+    .clipAngle(90);
+
+  const path = d3.geoPath(projection, ctx);
+
+  // off-white fill for sphere body? No — keep transparent so background shows.
+  const INK = '#141414';
+  const INK_SOFT = 'rgba(20,20,20,0.35)';
+  const INK_FAINT = 'rgba(20,20,20,0.18)';
+
+  // Fetch world topology
+  const world = await fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json').then(r => r.json());
+  const land = topojson.feature(world, world.objects.land);
+  const countries = topojson.feature(world, world.objects.countries);
+  const borders = topojson.mesh(world, world.objects.countries, (a, b) => a !== b);
+  const graticule = d3.geoGraticule10();
+
+  const sphere = { type: 'Sphere' };
+
+  let lambda = 0;
+  function draw() {
+    projection.rotate([lambda, -18, 0]);
+    ctx.clearRect(0, 0, W, H);
+
+    // 1. sphere outline
+    ctx.beginPath();
+    path(sphere);
+    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = INK;
+    ctx.stroke();
+
+    // 2. graticule (faint)
+    ctx.beginPath();
+    path(graticule);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = INK_FAINT;
+    ctx.stroke();
+
+    // 3. land fill (solid mono)
+    ctx.beginPath();
+    path(land);
+    ctx.fillStyle = INK;
+    ctx.fill();
+
+    // 4. country borders, drawn slightly lighter so they read on top of land
+    ctx.save();
+    ctx.beginPath();
+    path(sphere);
+    ctx.clip();
+    ctx.beginPath();
+    path(borders);
+    ctx.lineWidth = 0.8;
+    ctx.strokeStyle = 'rgba(244,241,236,0.55)'; // off-white, etched into land
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Rotation speed — full revolution every ~9s
+  const speed = 360 / 9000; // deg per ms
+  let last = performance.now();
+  function tick(now) {
+    const dt = now - last;
+    last = now;
+    lambda = (lambda + dt * speed) % 360;
+    draw();
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
