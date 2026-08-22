@@ -295,8 +295,8 @@ déclaratif : chacun est constaté.
 | Lot | Contenu | Pourquoi cet ordre |
 |---|---|---|
 | **0** | `SOURCES` + genre `choix`, ADR 0014 et 0015 ✅ 2026-08-22 | sans eux, aucun manifest du lot ne passe le validateur |
-| **0 bis** | copier les sources retenues dans `sources/easter-eggs/` | « rapatrier avant de migrer », étape 1 du fil d'Ariane appliquée à ce lot |
-| **1** | les 3 fonds shader sans concurrent | même famille que les 10 fonds déjà migrés — le chemin est connu, le risque est bas |
+| **0 bis** | copier les sources retenues dans `sources/easter-eggs/` ✅ 2026-08-22 | « rapatrier avant de migrer », étape 1 du fil d'Ariane appliquée à ce lot |
+| **1** | les 3 fonds shader sans concurrent ✅ 2026-08-22 (`voronoi-neon`, `feuille-holographique`, `champ-quantique`, souris au socle [ADR 0017](../decisions/0017-souris-service-du-socle-webgl.md), 59,9 i/s) | même famille que les 10 fonds déjà migrés — le chemin est connu, le risque est bas |
 | **2** | les 2 arbitrages esthétiques (aurore, plasma) | montrer les deux versions, ne rien trancher |
 | **3** | `explorateur-de-fractales` | le plus gros morceau ; dépend du genre `choix` du lot 0 |
 | **4** | `halo-de-trace` puis `globe-chargement` | premiers usages réels de `dom-css` et de `composant` |

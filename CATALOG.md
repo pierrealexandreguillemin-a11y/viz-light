@@ -7,13 +7,14 @@ dossier `src/viz/<slug>/` plus les fichiers de socle listés dans la fiche,
 puis pose `<VizName />`. Les chiffres de coût sortent de `scripts/bench.mjs`
 exécuté — jamais d'estimation.
 
-## Les 31 viz
+## Les 34 viz
 
 - **Anémone marine** — Une anémone posée au fond, dont les tentacules cherchent le courant.
 - **Anneau respirant** — Un anneau de poussière qui se gonfle et se dégonfle, comme un souffle.
 - **Attracteur de Lorenz** — Le papillon du chaos, retracé trente mille fois par seconde.
 - **Aurore boréale** — Des rideaux de lumière qui ondulent dans un ciel noir.
 - **Balayage radar** — Un faisceau qui tourne et réveille des échos au passage.
+- **Champ quantique** — Des ondes qui se croisent et interfèrent, le curseur devenant une source de lumière.
 - **Colonne perlée** — Une colonne de perles qui roule très lentement sur elle-même.
 - **Constellation** — Des points en dérive lente qui se relient quand ils se frôlent.
 - **Coquille cannelée** — Un coquillage strié qui s'ouvre lentement vers le spectateur.
@@ -21,6 +22,7 @@ exécuté — jamais d'estimation.
 - **Corolle de marée** — Une fleur d'eau qui monte et redescend avec la marée.
 - **Couronne battante** — Une couronne qui bat comme une méduse, deux fois par tour.
 - **Éventail cranté** — Un éventail qui s'ouvre par crans, comme un mécanisme d'horlogerie.
+- **Feuille holographique** — Un métal brossé irisé dont le reflet arc-en-ciel s'incline sous le curseur.
 - **Flow field** — Des filaments qui suivent un courant invisible.
 - **Grain de film** — Une pellicule qui vit doucement sur un dégradé sombre.
 - **Grille synthwave** — Un soleil strié sur une grille qui file vers l'horizon.
@@ -40,6 +42,7 @@ exécuté — jamais d'estimation.
 - **Spirale tressée** — Des mèches qui s'enroulent et se dénouent sans jamais se rompre.
 - **Tunnel de points** — Une gorge de poussière lumineuse qui respire et se tord lentement.
 - **Voile tournante** — Une étoffe prise dans un courant, qui claque et retombe.
+- **Voronoï néon** — Des cellules de lumière qui dérivent et s'attirent vers le curseur, arêtes fluo sur fond d'encre.
 
 ### Anémone marine
 
@@ -115,6 +118,21 @@ exécuté — jamais d'estimation.
 | Coût mesuré | 59.9 i/s · JS 0 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/balayage-radar/BalayageRadar.tsx` · `src/viz/balayage-radar/algo.ts` · `src/viz/balayage-radar/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+
+### Champ quantique
+
+*Des ondes qui se croisent et interfèrent, le curseur devenant une source de lumière.*
+
+| | |
+|---|---|
+| Slug | `champ-quantique` |
+| Runtime | webgl |
+| Tags | interference, shader, ondes, quantique |
+| Rendus | **Réglages** (défaut) |
+| Origine | Shader Wallpapers.html · fs5 (Quantum Field) (easter-eggs) |
+| Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.2 ms p95 · CPU-bound · mesuré le 2026-08-22 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Dépendances | aucune |
+| À copier | `src/viz/champ-quantique/ChampQuantique.tsx` · `src/viz/champ-quantique/algo.ts` · `src/viz/champ-quantique/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
 ### Colonne perlée
 
@@ -220,6 +238,21 @@ exécuté — jamais d'estimation.
 | Coût mesuré | 59.9 i/s · JS 8.5 ms médian, 8.9 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/eventail-crante/EventailCrante.tsx` · `src/viz/eventail-crante/algo.ts` · `src/viz/eventail-crante/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+
+### Feuille holographique
+
+*Un métal brossé irisé dont le reflet arc-en-ciel s'incline sous le curseur.*
+
+| | |
+|---|---|
+| Slug | `feuille-holographique` |
+| Runtime | webgl |
+| Tags | holographique, shader, irise, metal |
+| Rendus | **Réglages** (défaut) |
+| Origine | Shader Wallpapers.html · fs4 (Holographic Foil) (easter-eggs) |
+| Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-22 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Dépendances | aucune |
+| À copier | `src/viz/feuille-holographique/FeuilleHolographique.tsx` · `src/viz/feuille-holographique/algo.ts` · `src/viz/feuille-holographique/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
 ### Flow field
 
@@ -507,6 +540,21 @@ exécuté — jamais d'estimation.
 | Coût mesuré | 59.9 i/s · JS 4.7 ms médian, 5.2 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/voile-tournante/VoileTournante.tsx` · `src/viz/voile-tournante/algo.ts` · `src/viz/voile-tournante/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+
+### Voronoï néon
+
+*Des cellules de lumière qui dérivent et s'attirent vers le curseur, arêtes fluo sur fond d'encre.*
+
+| | |
+|---|---|
+| Slug | `voronoi-neon` |
+| Runtime | webgl |
+| Tags | voronoi, shader, neon, cellules |
+| Rendus | **Réglages** (défaut) |
+| Origine | Shader Wallpapers.html · fs2 (Neon Voronoi) (easter-eggs) |
+| Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-22 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Dépendances | aucune |
+| À copier | `src/viz/voronoi-neon/VoronoiNeon.tsx` · `src/viz/voronoi-neon/algo.ts` · `src/viz/voronoi-neon/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
 ## Hôte non-React
 

@@ -1,0 +1,99 @@
+{
+  "slug": "champ-quantique",
+  "nom": "Champ quantique",
+  "ambiance": "Des ondes qui se croisent et interfèrent, le curseur devenant une source de lumière.",
+  "categorie": "fond",
+  "origine": {
+    "source": "easter-eggs",
+    "reference": "Shader Wallpapers.html · fs5 (Quantum Field)",
+    "date": "2026-08-22"
+  },
+  "runtime": "webgl",
+  "tags": ["interference", "shader", "ondes", "quantique"],
+  "rendus": [
+    {
+      "id": "reglages",
+      "libelle": "Réglages",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "longueurOnde",
+          "libelle": "Fréquence des ondes",
+          "min": 8,
+          "max": 60,
+          "pas": 1,
+          "valeur": 28
+        },
+        {
+          "cle": "vitesse",
+          "libelle": "Vitesse",
+          "min": 0.5,
+          "max": 5,
+          "pas": 0.1,
+          "valeur": 2.2
+        },
+        {
+          "cle": "intensite",
+          "libelle": "Intensité",
+          "min": 0.1,
+          "max": 0.8,
+          "pas": 0.02,
+          "valeur": 0.35
+        },
+        {
+          "cle": "influenceSouris",
+          "libelle": "Influence de la souris",
+          "min": 0,
+          "max": 2,
+          "pas": 0.05,
+          "valeur": 1
+        },
+        {
+          "cle": "couleurCreux",
+          "libelle": "Creux",
+          "genre": "couleur",
+          "valeur": "#050a1a"
+        },
+        {
+          "cle": "couleurMid",
+          "libelle": "Corps",
+          "genre": "couleur",
+          "valeur": "#1a66d9"
+        },
+        {
+          "cle": "couleurCrete",
+          "libelle": "Crête",
+          "genre": "couleur",
+          "valeur": "#8cebff"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": ["ChampQuantique.tsx", "algo.ts", "manifest.json"],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/reglages.ts",
+      "core/viz/plein-ecran-gl.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-08-22",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 0.1,
+    "jsP95Ms": 0.2,
+    "gpuBound": false
+  }
+}

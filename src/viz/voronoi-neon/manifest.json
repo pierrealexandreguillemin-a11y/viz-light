@@ -1,0 +1,99 @@
+{
+  "slug": "voronoi-neon",
+  "nom": "Voronoï néon",
+  "ambiance": "Des cellules de lumière qui dérivent et s'attirent vers le curseur, arêtes fluo sur fond d'encre.",
+  "categorie": "fond",
+  "origine": {
+    "source": "easter-eggs",
+    "reference": "Shader Wallpapers.html · fs2 (Neon Voronoi)",
+    "date": "2026-08-22"
+  },
+  "runtime": "webgl",
+  "tags": ["voronoi", "shader", "neon", "cellules"],
+  "rendus": [
+    {
+      "id": "reglages",
+      "libelle": "Réglages",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "echelle",
+          "libelle": "Densité des cellules",
+          "min": 2,
+          "max": 10,
+          "pas": 0.5,
+          "valeur": 4
+        },
+        {
+          "cle": "vitesse",
+          "libelle": "Vitesse de dérive",
+          "min": 0,
+          "max": 2,
+          "pas": 0.05,
+          "valeur": 0.6
+        },
+        {
+          "cle": "eclat",
+          "libelle": "Éclat des arêtes",
+          "min": 0,
+          "max": 3,
+          "pas": 0.1,
+          "valeur": 1.2
+        },
+        {
+          "cle": "influenceSouris",
+          "libelle": "Influence de la souris",
+          "min": 0,
+          "max": 1,
+          "pas": 0.05,
+          "valeur": 0.5
+        },
+        {
+          "cle": "teinteA",
+          "libelle": "Teinte primaire",
+          "genre": "couleur",
+          "valeur": "#ff73d9"
+        },
+        {
+          "cle": "teinteB",
+          "libelle": "Teinte secondaire",
+          "genre": "couleur",
+          "valeur": "#73f2ff"
+        },
+        {
+          "cle": "teinteC",
+          "libelle": "Accent",
+          "genre": "couleur",
+          "valeur": "#ffd973"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": ["VoronoiNeon.tsx", "algo.ts", "manifest.json"],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/reglages.ts",
+      "core/viz/plein-ecran-gl.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-08-22",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 0.1,
+    "jsP95Ms": 0.1,
+    "gpuBound": false
+  }
+}
