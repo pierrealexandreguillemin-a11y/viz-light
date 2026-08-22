@@ -27,6 +27,38 @@ export interface OptionsPleinEcran {
   readonly appliquer: (poseur: Poseur, reglages: Reglages) => void;
 }
 
+/**
+ * Suit le pointeur sur l'hôte, en coordonnées 0..1 avec Y VERS LE HAUT — le même
+ * repère que `gl_FragCoord.xy / u_resolution` dans les shaders, pour qu'un fond
+ * n'ait aucune conversion à faire. Le socle pose `u_mouse` à chaque image ; un
+ * fond qui ne déclare pas cet uniform l'ignore (aurore, plasma), ce qui rend la
+ * souris OPT-IN sans adaptateur. Lissage exponentiel : la souris est un accent,
+ * pas un joystick — un saut brut piquerait l'image.
+ */
+function suivrePointeur(hote: HTMLElement) {
+  let cibleX = 0.5;
+  let cibleY = 0.5;
+  let x = 0.5;
+  let y = 0.5;
+  const surPointeur = (evenement: PointerEvent) => {
+    const rect = hote.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return;
+    cibleX = (evenement.clientX - rect.left) / rect.width;
+    cibleY = 1 - (evenement.clientY - rect.top) / rect.height;
+  };
+  hote.addEventListener("pointermove", surPointeur);
+  return {
+    lisser(): readonly [number, number] {
+      x += (cibleX - x) * 0.08;
+      y += (cibleY - y) * 0.08;
+      return [x, y];
+    },
+    detacher() {
+      hote.removeEventListener("pointermove", surPointeur);
+    },
+  };
+}
+
 function compiler(gl: WebGLRenderingContext, fragment: string): WebGLProgram {
   const construire = (type: number, source: string): WebGLShader => {
     const shader = gl.createShader(type);
@@ -74,6 +106,7 @@ export function creerPleinEcranGl({ fragment, appliquer }: OptionsPleinEcran): M
     let r = reglages;
     let programme = compiler(gl, fragment);
     let perdu = false;
+    const pointeur = suivrePointeur(hote);
 
     const surPerte = (evenement: Event) => {
       evenement.preventDefault();
@@ -108,6 +141,8 @@ export function creerPleinEcranGl({ fragment, appliquer }: OptionsPleinEcran): M
         gl.useProgram(programme);
         poseur.flottant("u_time", temps);
         gl.uniform2f(gl.getUniformLocation(programme, "u_resolution"), canvas.width, canvas.height);
+        const [sourisX, sourisY] = pointeur.lisser();
+        gl.uniform2f(gl.getUniformLocation(programme, "u_mouse"), sourisX, sourisY);
         appliquer(poseur, r);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
       },
@@ -116,6 +151,7 @@ export function creerPleinEcranGl({ fragment, appliquer }: OptionsPleinEcran): M
       },
       redimensionner,
       demonter() {
+        pointeur.detacher();
         canvas.removeEventListener("webglcontextlost", surPerte);
         canvas.removeEventListener("webglcontextrestored", surRetour);
         gl.getExtension("WEBGL_lose_context")?.loseContext();
