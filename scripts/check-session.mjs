@@ -51,12 +51,22 @@ if (!existsSync(cheminTampon)) {
   problemes.push("le code a changé depuis le dernier `pnpm verify` vert — relance-le.");
 }
 
-// 4 — Le fil d'Ariane ne ment pas : le « N/31 » de la SPEC = dossiers réels.
+// 4 — Le fil d'Ariane ne ment pas : le « N/31 » de la SPEC = viz de source v1.
+// Le « /31 » suit la progression du PÉRIMÈTRE v1 (SPEC §4), pas le total du
+// catalogue : depuis l'étape 10, des viz HORS v1 s'ajoutent (lot Easter_eggs).
+// On ne compte donc que les dossiers dont le manifest porte une source v1 —
+// les ajouts hors v1 (source `easter-eggs`, etc.) ne faussent plus le compte.
+const SOURCES_V1 = ["tweet-sketches", "banc-essai", "atelier-generatif"];
 const spec = readFileSync(join(RACINE, "docs", "SPEC.md"), "utf8");
 const annonce = /\*\*(\d+)\/31\*\*/.exec(spec)?.[1];
-const reels = readdirSync(join(RACINE, "src", "viz"), { withFileTypes: true }).filter((e) =>
-  e.isDirectory(),
-).length;
+const reels = readdirSync(join(RACINE, "src", "viz"), { withFileTypes: true })
+  .filter((e) => e.isDirectory())
+  .filter((e) => {
+    const manifeste = join(RACINE, "src", "viz", e.name, "manifest.json");
+    if (!existsSync(manifeste)) return false;
+    const source = JSON.parse(readFileSync(manifeste, "utf8"))?.origine?.source;
+    return SOURCES_V1.includes(source);
+  }).length;
 if (annonce === undefined) {
   problemes.push("SPEC.md n'annonce plus de compte « **N/31** » — fil d'Ariane illisible.");
 } else if (Number(annonce) !== reels) {

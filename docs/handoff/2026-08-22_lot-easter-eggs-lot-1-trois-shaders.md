@@ -63,6 +63,15 @@ inchangé = churn de commit). Ajout d'un filtre : `pnpm bench <slug> [<slug>…]
 mesure que ceux-là ; sans argument, tout le catalogue comme avant. Slug inconnu =
 rouge franc.
 
+Second ajustement, révélé par le premier dépassement de 31 viz :
+`scripts/check-session.mjs` comparait le « N/31 » de la SPEC au **nombre total**
+de dossiers `src/viz/`. Ce modèle conflait progression v1 et total catalogue —
+faux dès l'étape 10, qui ajoute des viz hors v1. Le « /31 » suit le **périmètre
+v1** (SPEC §4) : le gate ne compte plus que les dossiers de source v1
+(`tweet-sketches`, `banc-essai`, `atelier-generatif`) ; les ajouts `easter-eggs`
+ne le faussent plus. Ce n'est pas un seuil baissé — l'assertion v1 (31 = 31)
+reste protectrice, une suppression de viz v1 la rougirait encore.
+
 ## 5. Preuve
 
 - **`pnpm verify` exit 0**, tamponné sur ce code : 168 tests, couverture
