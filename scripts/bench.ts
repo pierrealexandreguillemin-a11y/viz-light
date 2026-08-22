@@ -158,10 +158,21 @@ async function mesurerUne(slug: string): Promise<Releve | null> {
   }, slug);
 }
 
+// Slugs passés en argument = ne mesurer QUE ceux-là. Sans argument, tout le
+// catalogue, comme avant. Mesurer une viz nouvelle ne doit pas re-tamponner les
+// 34 déjà mesurées (date du jour sur des manifests inchangés = churn de commit).
+const cibles = new Set(process.argv.slice(2));
 const aMesurer = readdirSync(DOSSIER_VIZ, { withFileTypes: true })
   .filter((e) => e.isDirectory())
   .map((e) => e.name)
+  .filter((slug) => cibles.size === 0 || cibles.has(slug))
   .sort();
+
+if (cibles.size > 0 && aMesurer.length !== cibles.size) {
+  const introuvables = [...cibles].filter((slug) => !aMesurer.includes(slug));
+  console.error(`Slugs introuvables sous src/viz/ : ${introuvables.join(", ")}`);
+  process.exit(1);
+}
 
 console.log(`\nMesure de ${aMesurer.length} viz, ${DUREE_MESURE_MS / 1000} s chacune…`);
 const releves: Releve[] = [];
