@@ -7,8 +7,20 @@
  * COPIER (liste exacte des fichiers), sans avoir à ouvrir le code.
  */
 
-/** Les trois artifacts rapatriés — cf. evidence/sources-viz-light.md. */
-export const SOURCES = ["tweet-sketches", "banc-essai", "atelier-generatif"] as const;
+/**
+ * Origines rapatriées. Les trois premières sont les artifacts « Viz Light »
+ * (cf. evidence/sources-viz-light.md) ; `easter-eggs` est le lot hors v1 de
+ * `C:\Dev\Easter_eggs`, importé PAR COPIE (SPEC §4, ADR 0014). La source
+ * s'affiche telle quelle dans la vitrine — aucun `Record<Source, …>` exhaustif
+ * dans le dépôt, donc pas de piège d'invisibilité : le seul risque est le refus
+ * franc du validateur, qui est bruyant.
+ */
+export const SOURCES = [
+  "tweet-sketches",
+  "banc-essai",
+  "atelier-generatif",
+  "easter-eggs",
+] as const;
 export type Source = (typeof SOURCES)[number];
 
 /** Runtimes couverts par le socle (SPEC.md §2). `iframe` est la soupape. */
@@ -46,12 +58,22 @@ export interface Origine {
 }
 
 /**
- * Un réglage exposé par un rendu. Trois genres, calqués sur ce que le matériel
- * d'origine savait faire (banc d'essai : curseurs, interrupteurs, couleurs) —
- * en perdre un à la migration serait refaire l'erreur n°7 du registre.
+ * Un réglage exposé par un rendu. Les trois premiers genres sont calqués sur ce
+ * que le matériel d'origine savait faire (banc d'essai : curseurs,
+ * interrupteurs, couleurs) — en perdre un à la migration serait refaire
+ * l'erreur n°7 du registre. `choix` (ADR 0015) exprime un choix parmi N valeurs
+ * libellées (une famille de fractale, une palette) : ce n'est ni un curseur —
+ * qui exigerait une légende pour dire ce que « 3 » veut dire — ni un
+ * interrupteur.
  */
-export const GENRES_PARAM = ["curseur", "interrupteur", "couleur"] as const;
+export const GENRES_PARAM = ["curseur", "interrupteur", "couleur", "choix"] as const;
 export type GenreParam = (typeof GENRES_PARAM)[number];
+
+/** Une option d'un paramètre `choix` : la valeur portée, le libellé montré. */
+export interface OptionChoix {
+  readonly valeur: string;
+  readonly libelle: string;
+}
 
 export interface Param {
   readonly cle: string;
@@ -62,7 +84,9 @@ export interface Param {
   readonly min?: number;
   readonly max?: number;
   readonly pas?: number;
-  /** Nombre (curseur), 0|1 (interrupteur), chaîne CSS (couleur). */
+  /** Valeurs libellées — requises pour `choix`, sans objet sinon. */
+  readonly options?: readonly OptionChoix[];
+  /** Nombre (curseur), 0|1 (interrupteur), chaîne CSS (couleur), clé d'option (choix). */
   readonly valeur: number | string;
   readonly note?: string;
 }

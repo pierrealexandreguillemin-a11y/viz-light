@@ -1,6 +1,8 @@
 "use client";
 
-import type { Param, Rendu } from "../manifest/types.ts";
+import type { ReactElement } from "react";
+
+import type { GenreParam, Param, Rendu } from "../manifest/types.ts";
 import type { Reglages as ValeursReglages } from "../viz/contrat.ts";
 
 interface Proprietes {
@@ -71,11 +73,42 @@ function Couleur({ param, valeur, surValeur }: ProprietesControle) {
   );
 }
 
+/** Un choix parmi N : un menu, jamais un curseur — « 3 » exigerait une légende. */
+function Choix({ param, valeur, surValeur }: ProprietesControle) {
+  const courante = typeof valeur === "string" ? valeur : String(param.valeur);
+  return (
+    <label className="etiquette flex items-center justify-between gap-3 normal-case">
+      <span>{param.libelle}</span>
+      <select
+        value={courante}
+        onChange={(e) => surValeur(e.target.value)}
+        className="cursor-pointer border border-(--color-filet) bg-(--color-encre-levee) px-2 py-1 text-(--color-os)"
+      >
+        {(param.options ?? []).map((option) => (
+          <option key={option.valeur} value={option.valeur}>
+            {option.libelle}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
+/**
+ * UN CONTRÔLE PAR GENRE, exhaustif par construction. Le `Record<GenreParam, …>`
+ * fait d'un genre ajouté à `GENRES_PARAM` sans contrôle une **erreur de
+ * compilation** (`pnpm typecheck`), pas un réglage silencieusement invisible —
+ * même garde-fou que le `Record<Categorie, …>` de la planche (ADR 0012).
+ */
+const CONTROLES: Record<GenreParam, (proprietes: ProprietesControle) => ReactElement> = {
+  curseur: (proprietes) => <Curseur {...proprietes} />,
+  interrupteur: (proprietes) => <Interrupteur {...proprietes} />,
+  couleur: (proprietes) => <Couleur {...proprietes} />,
+  choix: (proprietes) => <Choix {...proprietes} />,
+};
+
 function Controle(proprietes: ProprietesControle) {
-  const genre = proprietes.param.genre ?? "curseur";
-  if (genre === "interrupteur") return <Interrupteur {...proprietes} />;
-  if (genre === "couleur") return <Couleur {...proprietes} />;
-  return <Curseur {...proprietes} />;
+  return CONTROLES[proprietes.param.genre ?? "curseur"](proprietes);
 }
 
 /**

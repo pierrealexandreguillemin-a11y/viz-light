@@ -1,6 +1,6 @@
 ---
 authority: annex
-last_verified: 2026-08-13
+last_verified: 2026-08-22
 expires: never
 ---
 
@@ -58,7 +58,7 @@ donc `pnpm verify` est rouge. Rien ne se porte tant que ce n'est pas fait.
 
 - **À faire** : ajouter `"easter-eggs"` à `SOURCES` + un cas dans
   `tests/manifest-valider.test.ts` qui vérifie les deux sens (la nouvelle valeur
-  passe, une valeur inventée échoue). **ADR 0013.**
+  passe, une valeur inventée échoue). **[ADR 0014](../decisions/0014-source-easter-eggs-dans-le-contrat.md) — fait le 2026-08-22.**
 - **Vérifié, et c'est une bonne nouvelle** : il n'existe **aucun**
   `Record<Source, …>` exhaustif dans le dépôt — la source s'affiche telle quelle
   (`core/catalogue/rendre.ts:46`, `core/composants/Specimen.tsx:68`). Le piège
@@ -76,7 +76,8 @@ palette : ce n'est ni un curseur ni un interrupteur.
   (SPEC §4, « Aucune légende »).
 - **À faire** : ajouter un genre **`choix`** (liste de valeurs libellées) au
   schéma, au panneau de réglages et au validateur, calibré dans les deux sens.
-  **ADR 0014.** C'est le même geste qu'ADR 0012 : élargir le type plutôt que
+  **[ADR 0015](../decisions/0015-genre-de-parametre-choix.md) — fait le 2026-08-22.**
+  C'est le même geste qu'ADR 0012 : élargir le type plutôt que
   laisser le type décider à la place du contenu.
 - **Attention** : contrairement à `Source`, un genre nouveau **doit** être rendu
   par le panneau. Le rendu des paramètres doit passer par un
@@ -290,7 +291,7 @@ déclaratif : chacun est constaté.
 
 | Lot | Contenu | Pourquoi cet ordre |
 |---|---|---|
-| **0** | `SOURCES` + genre `choix`, ADR 0013 et 0014 | sans eux, aucun manifest du lot ne passe le validateur |
+| **0** | `SOURCES` + genre `choix`, ADR 0014 et 0015 ✅ 2026-08-22 | sans eux, aucun manifest du lot ne passe le validateur |
 | **0 bis** | copier les sources retenues dans `sources/easter-eggs/` | « rapatrier avant de migrer », étape 1 du fil d'Ariane appliquée à ce lot |
 | **1** | les 3 fonds shader sans concurrent | même famille que les 10 fonds déjà migrés — le chemin est connu, le risque est bas |
 | **2** | les 2 arbitrages esthétiques (aurore, plasma) | montrer les deux versions, ne rien trancher |

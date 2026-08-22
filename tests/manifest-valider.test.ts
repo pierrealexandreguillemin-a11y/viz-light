@@ -68,6 +68,16 @@ const lireRendus = (m: Record<string, unknown>) => m["rendus"] as Record<string,
 const lirePerf = (m: Record<string, unknown>) => m["perf"] as Record<string, unknown>;
 const lireOrigine = (m: Record<string, unknown>) => m["origine"] as Record<string, unknown>;
 
+/** Remplace le premier paramètre du rendu aligné en entier — pour tester un genre. */
+const muterParamComplet =
+  (param: Record<string, unknown>): Mutation =>
+  (m) => {
+    const params = lireRendus(m)[1]!["params"] as Record<string, unknown>[];
+    params[0] = param;
+  };
+
+const CHEMIN_VALEUR = "rendus[1].params[0].valeur";
+
 describe("validerManifest — identité et champs de base", () => {
   it("accepte un manifest complet", () => {
     expect(validerManifest(manifestValide(), "tunnel-de-points")).toEqual([]);
@@ -114,6 +124,16 @@ describe("validerManifest — identité et champs de base", () => {
     );
   });
 
+  it("accepte la source easter-eggs et refuse une source inventée — les deux sens (ADR 0014)", () => {
+    // Le lot Easter_eggs (SPEC §4, hors v1) est rapatrié PAR COPIE ; ses manifests
+    // portent `origine.source: "easter-eggs"`. Sans cette valeur dans SOURCES, le
+    // validateur les refuse, donc `pnpm catalog` — donc `pnpm verify` — est rouge.
+    expect(cheminsFautifs((m) => (lireOrigine(m)["source"] = "easter-eggs"))).toEqual([]);
+    expect(cheminsFautifs((m) => (lireOrigine(m)["source"] = "inventee"))).toContain(
+      "origine.source",
+    );
+  });
+
   it("refuse une date d'origine mal formée mais accepte son absence", () => {
     expect(cheminsFautifs((m) => (lireOrigine(m)["date"] = "29/07/2026"))).toContain(
       "origine.date",
@@ -148,14 +168,6 @@ describe("validerManifest — paramètres", () => {
       params[0]![champ] = valeur;
     };
 
-  /** Remplace le premier paramètre en entier — pour tester un autre genre. */
-  const muterParamComplet =
-    (param: Record<string, unknown>): Mutation =>
-    (m) => {
-      const params = lireRendus(m)[1]!["params"] as Record<string, unknown>[];
-      params[0] = param;
-    };
-
   it("refuse min >= max, un pas nul et une valeur hors bornes", () => {
     expect(cheminsFautifs(muterParam("min", 20000))).toContain("rendus[1].params[0].min");
     expect(cheminsFautifs(muterParam("pas", 0))).toContain("rendus[1].params[0].pas");
@@ -165,8 +177,6 @@ describe("validerManifest — paramètres", () => {
   it("refuse un nombre non fini", () => {
     expect(cheminsFautifs(muterParam("max", Number.NaN))).toContain("rendus[1].params[0].max");
   });
-
-  const CHEMIN_VALEUR = "rendus[1].params[0].valeur";
 
   it("accepte un interrupteur 0|1 et refuse toute autre valeur", () => {
     const brancher = (valeur: unknown): Mutation =>
@@ -197,6 +207,90 @@ describe("validerManifest — paramètres", () => {
         rendu["params"] = [...params, { ...(params[0] as object) }];
       }),
     ).toContain("rendus[1].params");
+  });
+});
+
+describe("validerManifest — genre choix (ADR 0015)", () => {
+  const CHEMIN_OPTIONS = "rendus[1].params[0].options";
+  const choixValide = () => ({
+    cle: "famille",
+    libelle: "Famille de fractale",
+    genre: "choix",
+    valeur: "julia",
+    options: [
+      { valeur: "mandelbrot", libelle: "Mandelbrot" },
+      { valeur: "julia", libelle: "Julia" },
+    ],
+  });
+
+  it("accepte un choix dont la valeur par défaut est l'une des options", () => {
+    expect(cheminsFautifs(muterParamComplet(choixValide()))).toEqual([]);
+  });
+
+  it("refuse une valeur par défaut absente des options", () => {
+    expect(
+      cheminsFautifs(muterParamComplet({ ...choixValide(), valeur: "burning-ship" })),
+    ).toContain(CHEMIN_VALEUR);
+    expect(cheminsFautifs(muterParamComplet({ ...choixValide(), valeur: 1 }))).toContain(
+      CHEMIN_VALEUR,
+    );
+  });
+
+  it("exige au moins une option", () => {
+    expect(cheminsFautifs(muterParamComplet({ ...choixValide(), options: [] }))).toContain(
+      CHEMIN_OPTIONS,
+    );
+    const sansOptions: Record<string, unknown> = { ...choixValide() };
+    delete sansOptions["options"];
+    expect(cheminsFautifs(muterParamComplet(sansOptions))).toContain(CHEMIN_OPTIONS);
+  });
+
+  it("refuse une option sans `valeur` ou sans `libelle` non vides", () => {
+    expect(
+      cheminsFautifs(
+        muterParamComplet({
+          ...choixValide(),
+          valeur: "mandelbrot",
+          options: [{ valeur: "mandelbrot", libelle: "" }],
+        }),
+      ),
+    ).toContain(`${CHEMIN_OPTIONS}[0].libelle`);
+    expect(
+      cheminsFautifs(
+        muterParamComplet({
+          ...choixValide(),
+          valeur: "julia",
+          options: [{ libelle: "Julia" }],
+        }),
+      ),
+    ).toContain(`${CHEMIN_OPTIONS}[0].valeur`);
+  });
+
+  it("refuse deux options partageant la même valeur", () => {
+    expect(
+      cheminsFautifs(
+        muterParamComplet({
+          ...choixValide(),
+          valeur: "julia",
+          options: [
+            { valeur: "julia", libelle: "Julia" },
+            { valeur: "julia", libelle: "Julia bis" },
+          ],
+        }),
+      ),
+    ).toContain(CHEMIN_OPTIONS);
+  });
+
+  it("refuse une option qui n'est pas un objet", () => {
+    expect(
+      cheminsFautifs(
+        muterParamComplet({
+          ...choixValide(),
+          valeur: "julia",
+          options: [{ valeur: "julia", libelle: "Julia" }, "pas-un-objet"],
+        }),
+      ),
+    ).toContain(`${CHEMIN_OPTIONS}[1]`);
   });
 });
 

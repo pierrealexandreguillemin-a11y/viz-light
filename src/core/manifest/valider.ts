@@ -1,4 +1,11 @@
-import { CATEGORIES, GENRES_PARAM, RUNTIMES, SOURCES, type VizManifest } from "./types.ts";
+import {
+  CATEGORIES,
+  GENRES_PARAM,
+  type GenreParam,
+  RUNTIMES,
+  SOURCES,
+  type VizManifest,
+} from "./types.ts";
 
 /**
  * VALIDATION DU CONTRAT DE DONNÉES — c'est le gate de `pnpm catalog`.
@@ -90,6 +97,64 @@ function validerCurseur(valeur: Dict, chemin: string): Probleme[] {
   return problemes;
 }
 
+/**
+ * Un `choix` porte une liste d'options libellées et une valeur par défaut qui
+ * DOIT être l'une d'elles. Tordre le contenu pour entrer dans un curseur
+ * (« 1 à 7 ») produirait un réglage qui exige une légende — interdit (SPEC §4).
+ */
+function validerChoix(valeur: Dict, chemin: string): Probleme[] {
+  const options = valeur["options"];
+  if (!Array.isArray(options) || options.length === 0) {
+    return [probleme(`${chemin}.options`, "au moins une option { valeur, libelle } attendue")];
+  }
+  const problemes: Probleme[] = [];
+  options.forEach((option, i) => {
+    const ou = `${chemin}.options[${i}]`;
+    if (!estDict(option)) {
+      problemes.push(probleme(ou, OBJET_ATTENDU));
+      return;
+    }
+    problemes.push(...chaineNonVide(option, "valeur", ou), ...chaineNonVide(option, "libelle", ou));
+  });
+  const cles = options.filter(estDict).map((o) => o["valeur"]);
+  if (new Set(cles).size !== cles.length) {
+    problemes.push(probleme(`${chemin}.options`, "deux options partagent la même `valeur`"));
+  }
+  if (typeof valeur["valeur"] !== "string" || !cles.includes(valeur["valeur"])) {
+    problemes.push(probleme(`${chemin}.valeur`, "doit être la `valeur` d'une des options"));
+  }
+  return problemes;
+}
+
+function validerInterrupteur(valeur: Dict, chemin: string): Probleme[] {
+  if (valeur["valeur"] !== 0 && valeur["valeur"] !== 1) {
+    return [probleme(`${chemin}.valeur`, "0 ou 1 attendu pour un interrupteur")];
+  }
+  return [];
+}
+
+// couleur : une chaîne CSS. La couleur d'une viz est une donnée de la viz,
+// pas de l'UI — même frontière que le gate OKLCH (tests/couleurs-oklch).
+function validerCouleur(valeur: Dict, chemin: string): Probleme[] {
+  if (typeof valeur["valeur"] !== "string" || valeur["valeur"].trim() === "") {
+    return [probleme(`${chemin}.valeur`, "chaîne CSS non vide attendue pour une couleur")];
+  }
+  return [];
+}
+
+/**
+ * UN VALIDEUR PAR GENRE, exhaustif par construction. Le `Record<GenreParam, …>`
+ * fait d'un genre ajouté à `GENRES_PARAM` sans validation une erreur de
+ * compilation — la même garantie que le `Record<GenreParam, …>` du panneau
+ * (Reglages.tsx), aux deux bouts de la donnée.
+ */
+const VALIDEURS_GENRE: Record<GenreParam, (valeur: Dict, chemin: string) => Probleme[]> = {
+  curseur: validerCurseur,
+  interrupteur: validerInterrupteur,
+  couleur: validerCouleur,
+  choix: validerChoix,
+};
+
 function validerParam(valeur: unknown, chemin: string): Probleme[] {
   if (!estDict(valeur)) return [probleme(chemin, OBJET_ATTENDU)];
   const problemes = [
@@ -101,19 +166,7 @@ function validerParam(valeur: unknown, chemin: string): Probleme[] {
     problemes.push(probleme(`${chemin}.genre`, `attendu : ${GENRES_PARAM.join(" | ")}`));
     return problemes;
   }
-  if (genre === "curseur") return [...problemes, ...validerCurseur(valeur, chemin)];
-  if (genre === "interrupteur") {
-    if (valeur["valeur"] !== 0 && valeur["valeur"] !== 1) {
-      problemes.push(probleme(`${chemin}.valeur`, "0 ou 1 attendu pour un interrupteur"));
-    }
-    return problemes;
-  }
-  // couleur : une chaîne CSS. La couleur d'une viz est une donnée de la viz,
-  // pas de l'UI — même frontière que le gate OKLCH (tests/couleurs-oklch).
-  if (typeof valeur["valeur"] !== "string" || valeur["valeur"].trim() === "") {
-    problemes.push(probleme(`${chemin}.valeur`, "chaîne CSS non vide attendue pour une couleur"));
-  }
-  return problemes;
+  return [...problemes, ...VALIDEURS_GENRE[genre as GenreParam](valeur, chemin)];
 }
 
 function validerParams(valeur: unknown, chemin: string): Probleme[] {
