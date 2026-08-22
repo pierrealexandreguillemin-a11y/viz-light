@@ -141,7 +141,12 @@ export function creerChampDePoints({
       const rect = hote.getBoundingClientRect();
       sourisX = rect.width === 0 ? 0 : (evenement.clientX - rect.left) / rect.width - 0.5;
     };
+    // TACTILE (ADR 0018) : `pointerdown` en plus de `pointermove` — au tactile
+    // une pression (tap) fait office de pointage, faute de survol. `touch-action:
+    // none` : le glissé pilote l'accent au lieu de scroller (on scrolle autour).
+    hote.style.touchAction = "none";
     hote.addEventListener("pointermove", surPointeur);
+    hote.addEventListener("pointerdown", surPointeur);
 
     const redimensionner = (suivantes: Dimensions) => {
       toile.redimensionner(suivantes);
@@ -196,7 +201,9 @@ export function creerChampDePoints({
       },
       redimensionner,
       demonter() {
+        hote.style.touchAction = "";
         hote.removeEventListener("pointermove", surPointeur);
+        hote.removeEventListener("pointerdown", surPointeur);
         toile.demonter();
       },
     };

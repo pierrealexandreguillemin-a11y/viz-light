@@ -98,3 +98,21 @@ La **recette** (étape 8) et le **CATALOG.md final** (étape 9) restent dus, sur
 l'URL live — donc après un `git push`, qui **n'a pas été demandé** cette session.
 Le verdict visuel des trois shaders appartient à l'utilisateur ; il se fera sur
 la vitrine déployée.
+
+## 7. Tactile — ADR 0018 (après retour utilisateur, même session)
+
+Question soulevée à la reprise : le tactile est-il géré pour mobile sur les viz à
+influence souris ? Constat vérifié : les deux moteurs (`champ-de-points.ts`,
+`plein-ecran-gl.ts`) écoutaient `pointermove` seul — au tactile, pas de survol
+(tap ignoré) et le scroll volait le glissé (pas de `touch-action`).
+
+Décision de l'utilisateur : **« gérer le tactile push comme un clic ; on scrolle
+au-dessus/en-dessous, pas bloquant. »** Appliqué aux deux moteurs (donc aux
+**21 viz** à influence souris) : `pointerdown` en plus de `pointermove` (une
+pression place le pointeur — « push comme un clic ») + `touch-action: none` sur
+l'hôte (le glissé pilote l'accent au lieu de scroller). ADR 0018.
+
+**Prouvé au tactile émulé** (iPhone, `hasTouch: true`) : deux taps sur coins
+opposés de `feuille-holographique` → le reflet suit exactement (haut-gauche puis
+bas-droite). Rejouable : émuler un écran tactile, `page.touchscreen.tap(...)` sur
+la viz, comparer les captures.

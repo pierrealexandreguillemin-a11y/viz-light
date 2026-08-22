@@ -34,6 +34,12 @@ export interface OptionsPleinEcran {
  * fond qui ne déclare pas cet uniform l'ignore (aurore, plasma), ce qui rend la
  * souris OPT-IN sans adaptateur. Lissage exponentiel : la souris est un accent,
  * pas un joystick — un saut brut piquerait l'image.
+ *
+ * TACTILE (ADR 0018) : `pointerdown` en plus de `pointermove`, car au tactile il
+ * n'y a pas de survol — une PRESSION (tap) fait office de pointage, « push comme
+ * un clic ». `touch-action: none` sur l'hôte : un glissé sur la viz pilote
+ * l'accent au lieu de scroller la page — on scrolle par les zones autour de la
+ * viz, décidé non bloquant par l'utilisateur.
  */
 function suivrePointeur(hote: HTMLElement) {
   let cibleX = 0.5;
@@ -46,7 +52,9 @@ function suivrePointeur(hote: HTMLElement) {
     cibleX = (evenement.clientX - rect.left) / rect.width;
     cibleY = 1 - (evenement.clientY - rect.top) / rect.height;
   };
+  hote.style.touchAction = "none";
   hote.addEventListener("pointermove", surPointeur);
+  hote.addEventListener("pointerdown", surPointeur);
   return {
     lisser(): readonly [number, number] {
       x += (cibleX - x) * 0.08;
@@ -54,7 +62,9 @@ function suivrePointeur(hote: HTMLElement) {
       return [x, y];
     },
     detacher() {
+      hote.style.touchAction = "";
       hote.removeEventListener("pointermove", surPointeur);
+      hote.removeEventListener("pointerdown", surPointeur);
     },
   };
 }
