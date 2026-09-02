@@ -1,6 +1,6 @@
 ---
 authority: canonical
-last_verified: 2026-08-22
+last_verified: 2026-09-02
 expires: never
 ---
 
@@ -174,13 +174,21 @@ fait tenir le contrat d'extraction du §3) et le **test OKLCH** (aucune couleur
 hex/hsl en dur dans `src/`).
 
 **Plancher de couverture** posé à l'étape 4 (2026-08-12) sur le code qui décide
-— validateur de manifest, rendu du catalogue, générateur de registre : **94 /
-93 / 97 / 99** (statements / branches / functions / lines), mesurés avant d'être
-fixés. Ils se relèvent avec la mesure, jamais l'inverse.
+— validateur de manifest, rendu du catalogue, générateur de registre, et depuis
+le 2026-09-02 le vérificateur de la liste d'extraction : **96 / 94 / 98 / 99**
+(statements / branches / functions / lines), mesurés avant d'être fixés
+(97,06 / 94,5 / 98,33 / 100 le 2026-09-02). Ils se relèvent avec la mesure,
+jamais l'inverse.
 
-`scripts/build-catalog.ts` est un gate : **manifest invalide ou perf manquante =
-rouge**. Il écrit `CATALOG.md` et `src/viz/registre.genere.ts` — deux fichiers
-générés, jamais édités à la main.
+`scripts/build-catalog.ts` est un gate : **manifest invalide, liste d'extraction
+inexacte ou perf manquante = rouge**. Il écrit `CATALOG.md` et
+`src/viz/registre.genere.ts` — deux fichiers générés, jamais édités à la main.
+La **liste d'extraction est confrontée au code** (`core/extraction/verifier.ts`,
+2026-09-02) : on suit les imports depuis les fichiers de la viz, et `fichiers`,
+`socle` et `deps` doivent être exactement la fermeture obtenue — rien d'oublié,
+rien de superflu. Motif : `useScenePrincipale.ts` (ADR 0011) manquait aux 34
+listes, et les 18 sketches p5 omettaient `toile.ts` ; un claude+n qui copiait
+la liste obtenait des imports cassés.
 
 ## 6. Gestion d'erreurs
 

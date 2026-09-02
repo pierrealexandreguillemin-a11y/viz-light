@@ -32,6 +32,9 @@ export default defineConfig({
         "src/core/manifest/valider.ts",
         "src/core/catalogue/rendre.ts",
         "src/core/registre/generer.ts",
+        // Ajouté le 2026-09-02 : le gate de la liste d'extraction décide, lui
+        // aussi, ce qu'un claude+n copie — il entre sous le plancher.
+        "src/core/extraction/verifier.ts",
       ],
       reporter: ["text", "html"],
       /**
@@ -46,7 +49,9 @@ export default defineConfig({
        * couvert. Pour vérifier qu'un fichier est réellement suivi, lire
        * `coverage/coverage-summary.json`, pas le tableau de la console.
        */
-      thresholds: { statements: 94, branches: 93, functions: 97, lines: 99 },
+      // Re-mesuré le 2026-09-02 avec le gate d'extraction sous le plancher :
+      // 97,06 / 94,5 / 98,33 / 100 → relevés à 96 / 94 / 98 / 99.
+      thresholds: { statements: 96, branches: 94, functions: 98, lines: 99 },
     },
   },
   resolve: { alias: { "@": resolve(import.meta.dirname, "src") } },

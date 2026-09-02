@@ -58,7 +58,7 @@ exécuté — jamais d'estimation.
 | Origine | 7 mars 2026 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 16.3 ms médian, 17.97 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/anemone-marine/AnemoneMarine.tsx` · `src/viz/anemone-marine/algo.ts` · `src/viz/anemone-marine/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/anemone-marine/AnemoneMarine.tsx` · `src/viz/anemone-marine/algo.ts` · `src/viz/anemone-marine/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Anneau respirant
 
@@ -73,7 +73,7 @@ exécuté — jamais d'estimation.
 | Origine | 1er août 2026 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 4.5 ms médian, 5 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/anneau-respirant/AnneauRespirant.tsx` · `src/viz/anneau-respirant/algo.ts` · `src/viz/anneau-respirant/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/anneau-respirant/AnneauRespirant.tsx` · `src/viz/anneau-respirant/algo.ts` · `src/viz/anneau-respirant/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Attracteur de Lorenz
 
@@ -88,7 +88,7 @@ exécuté — jamais d'estimation.
 | Origine | 9 mai 2026 (tweet-sketches) |
 | Coût mesuré | 29.9 i/s · JS 33.5 ms médian, 36.48 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/attracteur-de-lorenz/AttracteurDeLorenz.tsx` · `src/viz/attracteur-de-lorenz/algo.ts` · `src/viz/attracteur-de-lorenz/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/attracteur-de-lorenz/AttracteurDeLorenz.tsx` · `src/viz/attracteur-de-lorenz/algo.ts` · `src/viz/attracteur-de-lorenz/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Aurore boréale
 
@@ -103,7 +103,7 @@ exécuté — jamais d'estimation.
 | Origine | aurora (banc-essai) |
 | Coût mesuré | 59.9 i/s · JS 0 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/aurore-boreale/AuroreBoreale.tsx` · `src/viz/aurore-boreale/algo.ts` · `src/viz/aurore-boreale/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/aurore-boreale/AuroreBoreale.tsx` · `src/viz/aurore-boreale/algo.ts` · `src/viz/aurore-boreale/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/viz/reglages.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Balayage radar
 
@@ -118,7 +118,7 @@ exécuté — jamais d'estimation.
 | Origine | scan (banc-essai) |
 | Coût mesuré | 59.9 i/s · JS 0 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/balayage-radar/BalayageRadar.tsx` · `src/viz/balayage-radar/algo.ts` · `src/viz/balayage-radar/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/balayage-radar/BalayageRadar.tsx` · `src/viz/balayage-radar/algo.ts` · `src/viz/balayage-radar/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Champ quantique
 
@@ -133,7 +133,7 @@ exécuté — jamais d'estimation.
 | Origine | Shader Wallpapers.html · fs5 (Quantum Field) (easter-eggs) |
 | Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.2 ms p95 · CPU-bound · mesuré le 2026-08-22 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/champ-quantique/ChampQuantique.tsx` · `src/viz/champ-quantique/algo.ts` · `src/viz/champ-quantique/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/champ-quantique/ChampQuantique.tsx` · `src/viz/champ-quantique/algo.ts` · `src/viz/champ-quantique/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/viz/reglages.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Colonne perlée
 
@@ -148,7 +148,7 @@ exécuté — jamais d'estimation.
 | Origine | 7 mai 2026 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 4.4 ms médian, 4.75 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/colonne-perlee/ColonnePerlee.tsx` · `src/viz/colonne-perlee/algo.ts` · `src/viz/colonne-perlee/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/colonne-perlee/ColonnePerlee.tsx` · `src/viz/colonne-perlee/algo.ts` · `src/viz/colonne-perlee/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Constellation
 
@@ -163,7 +163,7 @@ exécuté — jamais d'estimation.
 | Origine | constellation (banc-essai) |
 | Coût mesuré | 59.9 i/s · JS 0.8 ms médian, 1.7 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/constellation/Constellation.tsx` · `src/viz/constellation/algo.ts` · `src/viz/constellation/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/constellation/Constellation.tsx` · `src/viz/constellation/algo.ts` · `src/viz/constellation/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Coquille cannelée
 
@@ -178,7 +178,7 @@ exécuté — jamais d'estimation.
 | Origine | 8 août 2026 — #1 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 7.8 ms médian, 8.3 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/coquille-cannelee/CoquilleCannelee.tsx` · `src/viz/coquille-cannelee/algo.ts` · `src/viz/coquille-cannelee/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/coquille-cannelee/CoquilleCannelee.tsx` · `src/viz/coquille-cannelee/algo.ts` · `src/viz/coquille-cannelee/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Coquille jumelle
 
@@ -193,7 +193,7 @@ exécuté — jamais d'estimation.
 | Origine | 8 août 2026 — #2 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 7.5 ms médian, 8.06 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/coquille-jumelle/CoquilleJumelle.tsx` · `src/viz/coquille-jumelle/algo.ts` · `src/viz/coquille-jumelle/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/coquille-jumelle/CoquilleJumelle.tsx` · `src/viz/coquille-jumelle/algo.ts` · `src/viz/coquille-jumelle/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Corolle de marée
 
@@ -208,7 +208,7 @@ exécuté — jamais d'estimation.
 | Origine | 25 juillet 2026 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 4.7 ms médian, 5.25 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/corolle-de-maree/CorolleDeMaree.tsx` · `src/viz/corolle-de-maree/algo.ts` · `src/viz/corolle-de-maree/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/corolle-de-maree/CorolleDeMaree.tsx` · `src/viz/corolle-de-maree/algo.ts` · `src/viz/corolle-de-maree/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Couronne battante
 
@@ -223,7 +223,7 @@ exécuté — jamais d'estimation.
 | Origine | 6 mars 2026 (tweet-sketches) |
 | Coût mesuré | 29.9 i/s · JS 33.2 ms médian, 35.84 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/couronne-battante/CouronneBattante.tsx` · `src/viz/couronne-battante/algo.ts` · `src/viz/couronne-battante/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/couronne-battante/CouronneBattante.tsx` · `src/viz/couronne-battante/algo.ts` · `src/viz/couronne-battante/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Éventail cranté
 
@@ -238,7 +238,7 @@ exécuté — jamais d'estimation.
 | Origine | 24 juillet 2026 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 8.5 ms médian, 8.9 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/eventail-crante/EventailCrante.tsx` · `src/viz/eventail-crante/algo.ts` · `src/viz/eventail-crante/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/eventail-crante/EventailCrante.tsx` · `src/viz/eventail-crante/algo.ts` · `src/viz/eventail-crante/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Explorateur de fractales
 
@@ -268,7 +268,7 @@ exécuté — jamais d'estimation.
 | Origine | Shader Wallpapers.html · fs4 (Holographic Foil) (easter-eggs) |
 | Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-22 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/feuille-holographique/FeuilleHolographique.tsx` · `src/viz/feuille-holographique/algo.ts` · `src/viz/feuille-holographique/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/feuille-holographique/FeuilleHolographique.tsx` · `src/viz/feuille-holographique/algo.ts` · `src/viz/feuille-holographique/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/viz/reglages.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Flow field
 
@@ -283,7 +283,7 @@ exécuté — jamais d'estimation.
 | Origine | flow (banc-essai) |
 | Coût mesuré | 59.9 i/s · JS 0.9 ms médian, 1.1 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/flow-field/FlowField.tsx` · `src/viz/flow-field/algo.ts` · `src/viz/flow-field/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/flow-field/FlowField.tsx` · `src/viz/flow-field/algo.ts` · `src/viz/flow-field/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 | Variantes écartées | Arbitrage tranché par l'utilisateur le 2026-08-13 : cette version (banc d'essai) gagne. La seconde, dans l'Atelier génératif (« flow-field », sources/genart-studio-standalone.html), reste consultable à la source mais n'entre pas au catalogue — SPEC.md §4, « la version validée par l'utilisateur gagne ». |
 
 ### Grain de film
@@ -299,7 +299,7 @@ exécuté — jamais d'estimation.
 | Origine | grain (banc-essai) |
 | Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.2 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/grain-de-film/GrainDeFilm.tsx` · `src/viz/grain-de-film/algo.ts` · `src/viz/grain-de-film/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/grain-de-film/GrainDeFilm.tsx` · `src/viz/grain-de-film/algo.ts` · `src/viz/grain-de-film/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Grille synthwave
 
@@ -314,7 +314,7 @@ exécuté — jamais d'estimation.
 | Origine | synthwave (banc-essai) |
 | Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.2 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/grille-synthwave/GrilleSynthwave.tsx` · `src/viz/grille-synthwave/algo.ts` · `src/viz/grille-synthwave/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/grille-synthwave/GrilleSynthwave.tsx` · `src/viz/grille-synthwave/algo.ts` · `src/viz/grille-synthwave/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Médaillon tournant
 
@@ -329,7 +329,7 @@ exécuté — jamais d'estimation.
 | Origine | 10 mars 2026 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 15.4 ms médian, 15.8 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/medaillon-tournant/MedaillonTournant.tsx` · `src/viz/medaillon-tournant/algo.ts` · `src/viz/medaillon-tournant/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/medaillon-tournant/MedaillonTournant.tsx` · `src/viz/medaillon-tournant/algo.ts` · `src/viz/medaillon-tournant/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Mesh gradient
 
@@ -344,7 +344,7 @@ exécuté — jamais d'estimation.
 | Origine | mesh (banc-essai) |
 | Coût mesuré | 59.9 i/s · JS 0 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/mesh-gradient/MeshGradient.tsx` · `src/viz/mesh-gradient/algo.ts` · `src/viz/mesh-gradient/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/mesh-gradient/MeshGradient.tsx` · `src/viz/mesh-gradient/algo.ts` · `src/viz/mesh-gradient/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Noise Grid
 
@@ -359,7 +359,7 @@ exécuté — jamais d'estimation.
 | Origine | noise-grid (atelier-generatif) |
 | Coût mesuré | 59.9 i/s · JS 1.2 ms médian, 1.4 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/noise-grid/NoiseGrid.tsx` · `src/viz/noise-grid/algo.ts` · `src/viz/noise-grid/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/toile.ts` · `src/core/viz/reglages.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` · `src/core/viz/bruit-perlin.ts` |
+| À copier | `src/viz/noise-grid/NoiseGrid.tsx` · `src/viz/noise-grid/algo.ts` · `src/viz/noise-grid/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/bruit-perlin.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Orbes floutées
 
@@ -374,7 +374,7 @@ exécuté — jamais d'estimation.
 | Origine | orbs (banc-essai) |
 | Coût mesuré | 30 i/s · JS 0.1 ms médian, 0.3 ms p95 · GPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/orbes-floutees/OrbesFloutees.tsx` · `src/viz/orbes-floutees/algo.ts` · `src/viz/orbes-floutees/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/orbes-floutees/OrbesFloutees.tsx` · `src/viz/orbes-floutees/algo.ts` · `src/viz/orbes-floutees/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Orbit Particles
 
@@ -389,7 +389,7 @@ exécuté — jamais d'estimation.
 | Origine | orbit-particles (atelier-generatif) |
 | Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.2 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/orbit-particles/OrbitParticles.tsx` · `src/viz/orbit-particles/algo.ts` · `src/viz/orbit-particles/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/toile.ts` · `src/core/viz/reglages.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/orbit-particles/OrbitParticles.tsx` · `src/viz/orbit-particles/algo.ts` · `src/viz/orbit-particles/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Plasma déformé
 
@@ -404,7 +404,7 @@ exécuté — jamais d'estimation.
 | Origine | plasma (banc-essai) |
 | Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/plasma-deforme/PlasmaDeforme.tsx` · `src/viz/plasma-deforme/algo.ts` · `src/viz/plasma-deforme/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/plasma-deforme/PlasmaDeforme.tsx` · `src/viz/plasma-deforme/algo.ts` · `src/viz/plasma-deforme/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/viz/reglages.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Poussière d'étoiles
 
@@ -419,7 +419,7 @@ exécuté — jamais d'estimation.
 | Origine | sparse (banc-essai) |
 | Coût mesuré | 59.9 i/s · JS 0.2 ms médian, 0.3 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/poussiere-d-etoiles/PoussiereDEtoiles.tsx` · `src/viz/poussiere-d-etoiles/algo.ts` · `src/viz/poussiere-d-etoiles/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/poussiere-d-etoiles/PoussiereDEtoiles.tsx` · `src/viz/poussiere-d-etoiles/algo.ts` · `src/viz/poussiere-d-etoiles/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Rosace fondatrice
 
@@ -434,7 +434,7 @@ exécuté — jamais d'estimation.
 | Origine | 22 février 2026 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 16.05 ms médian, 16.75 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/rosace-fondatrice/RosaceFondatrice.tsx` · `src/viz/rosace-fondatrice/algo.ts` · `src/viz/rosace-fondatrice/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/rosace-fondatrice/RosaceFondatrice.tsx` · `src/viz/rosace-fondatrice/algo.ts` · `src/viz/rosace-fondatrice/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Rosace jumelle
 
@@ -449,7 +449,7 @@ exécuté — jamais d'estimation.
 | Origine | 5 mai 2026 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 14.9 ms médian, 15.5 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/rosace-jumelle/RosaceJumelle.tsx` · `src/viz/rosace-jumelle/algo.ts` · `src/viz/rosace-jumelle/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/rosace-jumelle/RosaceJumelle.tsx` · `src/viz/rosace-jumelle/algo.ts` · `src/viz/rosace-jumelle/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Rosace triple
 
@@ -464,7 +464,7 @@ exécuté — jamais d'estimation.
 | Origine | 31 juillet 2026 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 7.8 ms médian, 8.4 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/rosace-triple/RosaceTriple.tsx` · `src/viz/rosace-triple/algo.ts` · `src/viz/rosace-triple/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/rosace-triple/RosaceTriple.tsx` · `src/viz/rosace-triple/algo.ts` · `src/viz/rosace-triple/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Ruban ondulé
 
@@ -479,7 +479,7 @@ exécuté — jamais d'estimation.
 | Origine | 8 mars 2026 — #2 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 18.3 ms médian, 19.5 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/ruban-ondule/RubanOndule.tsx` · `src/viz/ruban-ondule/algo.ts` · `src/viz/ruban-ondule/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/ruban-ondule/RubanOndule.tsx` · `src/viz/ruban-ondule/algo.ts` · `src/viz/ruban-ondule/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Ruban plissé
 
@@ -494,7 +494,7 @@ exécuté — jamais d'estimation.
 | Origine | 8 mars 2026 — #1 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 17.4 ms médian, 18.35 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/ruban-plisse/RubanPlisse.tsx` · `src/viz/ruban-plisse/algo.ts` · `src/viz/ruban-plisse/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/ruban-plisse/RubanPlisse.tsx` · `src/viz/ruban-plisse/algo.ts` · `src/viz/ruban-plisse/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Spiral Bloom
 
@@ -509,7 +509,7 @@ exécuté — jamais d'estimation.
 | Origine | spiral-bloom (atelier-generatif) |
 | Coût mesuré | 59.9 i/s · JS 1.1 ms médian, 1.4 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/spiral-bloom/SpiralBloom.tsx` · `src/viz/spiral-bloom/algo.ts` · `src/viz/spiral-bloom/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/toile.ts` · `src/core/viz/reglages.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` · `src/core/viz/bruit-perlin.ts` |
+| À copier | `src/viz/spiral-bloom/SpiralBloom.tsx` · `src/viz/spiral-bloom/algo.ts` · `src/viz/spiral-bloom/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/bruit-perlin.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Spirale tressée
 
@@ -524,7 +524,7 @@ exécuté — jamais d'estimation.
 | Origine | 9 août 2026 — #1 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 6.3 ms médian, 6.7 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/spirale-tressee/SpiraleTressee.tsx` · `src/viz/spirale-tressee/algo.ts` · `src/viz/spirale-tressee/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/spirale-tressee/SpiraleTressee.tsx` · `src/viz/spirale-tressee/algo.ts` · `src/viz/spirale-tressee/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Tunnel de points
 
@@ -539,7 +539,7 @@ exécuté — jamais d'estimation.
 | Origine | 29 juillet 2026 — Tunnel de points (HSB) (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 2.8 ms médian, 3.1 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/tunnel-de-points/TunnelDePoints.tsx` · `src/viz/tunnel-de-points/algo.ts` · `src/viz/tunnel-de-points/manifest.json` · `src/core/viz/contrat.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/tunnel-de-points/TunnelDePoints.tsx` · `src/viz/tunnel-de-points/algo.ts` · `src/viz/tunnel-de-points/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 | Variantes écartées | 29 juillet 2026 — original (version golfée, rendue par le préréglage « Origine ») · atelier-generatif / tunnel (même reprise, paramétrée autrement) |
 
 ### Voile tournante
@@ -555,7 +555,7 @@ exécuté — jamais d'estimation.
 | Origine | 9 août 2026 — #2 (tweet-sketches) |
 | Coût mesuré | 59.9 i/s · JS 4.7 ms médian, 5.2 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/voile-tournante/VoileTournante.tsx` · `src/viz/voile-tournante/algo.ts` · `src/viz/voile-tournante/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/voile-tournante/VoileTournante.tsx` · `src/viz/voile-tournante/algo.ts` · `src/viz/voile-tournante/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Voronoï néon
 
@@ -570,7 +570,7 @@ exécuté — jamais d'estimation.
 | Origine | Shader Wallpapers.html · fs2 (Neon Voronoi) (easter-eggs) |
 | Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-22 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
-| À copier | `src/viz/voronoi-neon/VoronoiNeon.tsx` · `src/viz/voronoi-neon/algo.ts` · `src/viz/voronoi-neon/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+| À copier | `src/viz/voronoi-neon/VoronoiNeon.tsx` · `src/viz/voronoi-neon/algo.ts` · `src/viz/voronoi-neon/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/viz/reglages.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ## Hôte non-React
 

@@ -15,16 +15,18 @@
  * Ce fichier ne fait QUE des entrées-sorties : toute la logique est dans
  * `src/core/`, où elle est testable sans toucher au disque.
  */
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import { rendreCatalogue } from "../src/core/catalogue/rendre.ts";
+import { verifierExtraction, type Lecteur } from "../src/core/extraction/verifier.ts";
 import { enManifest, validerManifest, type Probleme } from "../src/core/manifest/valider.ts";
 import { genererRegistre, type EntreeRegistre } from "../src/core/registre/generer.ts";
 import type { VizManifest } from "../src/core/manifest/types.ts";
 
 const RACINE = join(import.meta.dirname, "..");
-const DOSSIER_VIZ = join(RACINE, "src", "viz");
+const DOSSIER_SRC = join(RACINE, "src");
+const DOSSIER_VIZ = join(DOSSIER_SRC, "viz");
 const SORTIE_CATALOGUE = join(RACINE, "CATALOG.md");
 const SORTIE_REGISTRE = join(DOSSIER_VIZ, "registre.genere.ts");
 
@@ -60,8 +62,29 @@ function lireManifest(slug: string): VizManifest | Echec {
 
   const problemes = validerManifest(brut, slug);
   if (problemes.length > 0) return { slug, problemes };
-  return enManifest(brut);
+  const manifest = enManifest(brut);
+  // La liste d'extraction est confrontée au code : ce que le manifest promet
+  // de copier doit être exactement ce que les imports exigent (SPEC.md §3).
+  const problemesExtraction = verifierExtraction(manifest, lecteurSrc);
+  if (problemesExtraction.length > 0) return { slug, problemes: problemesExtraction };
+  return manifest;
 }
+
+/** Le disque, vu depuis `src/`, chemins en `/`. */
+const lecteurSrc: Lecteur = {
+  existe: (chemin) => {
+    const absolu = join(DOSSIER_SRC, chemin);
+    return existsSync(absolu) && statSync(absolu).isFile();
+  },
+  lire: (chemin) => readFileSync(join(DOSSIER_SRC, chemin), "utf8"),
+  listerDossier: (dossier) =>
+    readdirSync(join(DOSSIER_SRC, dossier), { recursive: true, withFileTypes: true })
+      .filter((e) => e.isFile())
+      .map((e) =>
+        relative(join(DOSSIER_SRC, dossier), join(e.parentPath, e.name)).replaceAll("\\", "/"),
+      )
+      .sort(),
+};
 
 const estEchec = (v: VizManifest | Echec): v is Echec => "problemes" in v;
 
