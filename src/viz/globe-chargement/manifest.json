@@ -1,0 +1,110 @@
+{
+  "slug": "globe-chargement",
+  "nom": "Globe de chargement",
+  "ambiance": "Une Terre en points qui tourne lentement sous trois anneaux d'orbite — un loader qui n'a rien d'un spinner.",
+  "categorie": "composant",
+  "origine": {
+    "source": "easter-eggs",
+    "reference": "Globe Loader.html (anneaux SVG + canvas d3-geo, world-atlas 110m)",
+    "date": "2026-08-22"
+  },
+  "runtime": "canvas2d",
+  "tags": ["loader", "globe", "terre", "anneaux", "composant"],
+  "rendus": [
+    {
+      "id": "reglages",
+      "libelle": "Réglages",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "vitesse",
+          "libelle": "Vitesse de rotation",
+          "min": 0,
+          "max": 0.5,
+          "pas": 0.01,
+          "valeur": 0.11
+        },
+        {
+          "cle": "inclinaison",
+          "libelle": "Inclinaison",
+          "min": -60,
+          "max": 60,
+          "pas": 1,
+          "valeur": -18
+        },
+        {
+          "cle": "taille",
+          "libelle": "Taille",
+          "min": 0.15,
+          "max": 1,
+          "pas": 0.05,
+          "valeur": 0.4
+        },
+        {
+          "cle": "pas",
+          "libelle": "Finesse des points",
+          "min": 1,
+          "max": 4,
+          "pas": 1,
+          "valeur": 2
+        },
+        {
+          "cle": "anneaux",
+          "libelle": "Anneaux",
+          "min": 0,
+          "max": 3,
+          "pas": 1,
+          "valeur": 3
+        },
+        {
+          "cle": "epaisseur",
+          "libelle": "Épaisseur des traits",
+          "min": 0.5,
+          "max": 3,
+          "pas": 0.1,
+          "valeur": 1
+        },
+        {
+          "cle": "disque",
+          "libelle": "Disque",
+          "genre": "interrupteur",
+          "valeur": 1
+        },
+        {
+          "cle": "encre",
+          "libelle": "Encre",
+          "genre": "couleur",
+          "valeur": "#ece8df"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": ["GlobeChargement.tsx", "algo.ts", "algo/terres.ts", "manifest.json", "notes.md"],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/reglages.ts",
+      "core/viz/toile.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/useScenePrincipale.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-09-02",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 1.2,
+    "jsP95Ms": 1.4,
+    "gpuBound": false
+  }
+}

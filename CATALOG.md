@@ -7,7 +7,7 @@ dossier `src/viz/<slug>/` plus les fichiers de socle listés dans la fiche,
 puis pose `<VizName />`. Les chiffres de coût sortent de `scripts/bench.mjs`
 exécuté — jamais d'estimation.
 
-## Les 35 viz
+## Les 37 viz
 
 - **Anémone marine** — Une anémone posée au fond, dont les tentacules cherchent le courant.
 - **Anneau respirant** — Un anneau de poussière qui se gonfle et se dégonfle, comme un souffle.
@@ -25,8 +25,10 @@ exécuté — jamais d'estimation.
 - **Explorateur de fractales** — Sept ensembles à parcourir au doigt et à la molette, dont les couleurs coulent le long des filaments.
 - **Feuille holographique** — Un métal brossé irisé dont le reflet arc-en-ciel s'incline sous le curseur.
 - **Flow field** — Des filaments qui suivent un courant invisible.
+- **Globe de chargement** — Une Terre en points qui tourne lentement sous trois anneaux d'orbite — un loader qui n'a rien d'un spinner.
 - **Grain de film** — Une pellicule qui vit doucement sur un dégradé sombre.
 - **Grille synthwave** — Un soleil strié sur une grille qui file vers l'horizon.
+- **Halo de tracé** — Un circuit fluo qui brûle dans le noir, parcouru par une comète blanche.
 - **Médaillon tournant** — Un médaillon suspendu qui tourne, hésite, et repart.
 - **Mesh gradient** — Une nappe de couleurs fondues qui respire à peine.
 - **Noise Grid** — Une grille de cellules qui respirent au passage d'un plan de bruit.
@@ -286,6 +288,21 @@ exécuté — jamais d'estimation.
 | À copier | `src/viz/flow-field/FlowField.tsx` · `src/viz/flow-field/algo.ts` · `src/viz/flow-field/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 | Variantes écartées | Arbitrage tranché par l'utilisateur le 2026-08-13 : cette version (banc d'essai) gagne. La seconde, dans l'Atelier génératif (« flow-field », sources/genart-studio-standalone.html), reste consultable à la source mais n'entre pas au catalogue — SPEC.md §4, « la version validée par l'utilisateur gagne ». |
 
+### Globe de chargement
+
+*Une Terre en points qui tourne lentement sous trois anneaux d'orbite — un loader qui n'a rien d'un spinner.*
+
+| | |
+|---|---|
+| Slug | `globe-chargement` |
+| Runtime | canvas2d |
+| Tags | loader, globe, terre, anneaux, composant |
+| Rendus | **Réglages** (défaut) |
+| Origine | Globe Loader.html (anneaux SVG + canvas d3-geo, world-atlas 110m) (easter-eggs) |
+| Coût mesuré | 59.9 i/s · JS 1.2 ms médian, 1.4 ms p95 · CPU-bound · mesuré le 2026-09-02 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Dépendances | aucune |
+| À copier | `src/viz/globe-chargement/GlobeChargement.tsx` · `src/viz/globe-chargement/algo.ts` · `src/viz/globe-chargement/algo/terres.ts` · `src/viz/globe-chargement/manifest.json` · `src/viz/globe-chargement/notes.md` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+
 ### Grain de film
 
 *Une pellicule qui vit doucement sur un dégradé sombre.*
@@ -315,6 +332,21 @@ exécuté — jamais d'estimation.
 | Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.2 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/grille-synthwave/GrilleSynthwave.tsx` · `src/viz/grille-synthwave/algo.ts` · `src/viz/grille-synthwave/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
+
+### Halo de tracé
+
+*Un circuit fluo qui brûle dans le noir, parcouru par une comète blanche.*
+
+| | |
+|---|---|
+| Slug | `halo-de-trace` |
+| Runtime | dom-css |
+| Tags | neon, circuit, svg, halo, comete |
+| Rendus | **Réglages** (défaut) |
+| Origine | miami-circuit-glow.html (stroke-dasharray + blur + drop-shadow ; le tracé de Miami est resté à la source) (easter-eggs) |
+| Coût mesuré | 59.9 i/s · JS 0 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-09-02 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Dépendances | aucune |
+| À copier | `src/viz/halo-de-trace/HaloDeTrace.tsx` · `src/viz/halo-de-trace/algo.ts` · `src/viz/halo-de-trace/algo/trace.ts` · `src/viz/halo-de-trace/manifest.json` · `src/viz/halo-de-trace/notes.md` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
 ### Médaillon tournant
 
