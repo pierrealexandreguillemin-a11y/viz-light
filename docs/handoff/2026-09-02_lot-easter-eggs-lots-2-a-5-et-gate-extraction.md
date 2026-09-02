@@ -109,3 +109,25 @@ reste **discret** : verdict esthétique à la recette, les curseurs y pourvoient
   Easter_eggs n'ont pas encore été vues par l'utilisateur.
 - La catégorie de la carte iridescente (`composant` ou `fond`) et celle des
   shaders réactifs restent des champs de manifest à confirmer à la recette.
+
+## 8. Suite de session — « pousse », puis « go 4 » (entretien)
+
+- **Poussé et déployé** : `6f0736b` puis `74c6fa8`, déploiements Vercel READY,
+  `viz-light.vercel.app` sert 38 articles (vérifié par `curl` + captures live).
+- **Vitrine live regardée** : sections « Interactifs · 1 » et « Composants · 2 »
+  présentes (elles le sont par construction, `Record<Categorie, string>`). Un
+  défaut vu : le halo de la carte iridescente débordait de sa case jusque sur
+  le titre de section → `overflow: hidden` sur la scène, re-regardé en prod
+  après déploiement : rogné.
+- **`lectureDuCout`** : champ optionnel du manifest (hors de `perf`, donc jamais
+  écrasé par le bench), validé non vide, rendu dans `CATALOG.md` sous
+  « Comment lire ce coût ». Posé sur six viz : fractales (chiffre de repos),
+  halo et carte (coût dans les filtres, hors JS), orbes floutées (GPU-bound),
+  Lorenz et couronne (30 i/s voulus par l'œuvre). Pas dans la vitrine :
+  « aucune légende ». SPEC §2 mis à jour.
+- Tests du validateur découpés (`tests/aides/manifest.ts` partagé) parce que le
+  fichier dépassait 300 lignes ; jscpd a alors mordu sur deux fixtures voisines
+  → la fixture du catalogue dérive désormais de la référence partagée.
+- `pnpm verify` exit 0 : 201 tests, 97,06 / 94,62 / 98,36 / 100, 0 clone.
+
+Reste inchangé : verdict Lot 2, recette sur l'URL live, CATALOG.md final.
