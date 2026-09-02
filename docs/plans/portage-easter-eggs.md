@@ -1,6 +1,6 @@
 ---
 authority: annex
-last_verified: 2026-08-22
+last_verified: 2026-09-02
 expires: never
 ---
 
@@ -182,6 +182,16 @@ La source mêle anneaux SVG en `@keyframes`, un canvas 2D et
 `requestAnimationFrame`. **Même piège d'instrument qu'au §3.4**, en pire : la
 moitié de l'animation échapperait à la mesure.
 
+**Vu à l'exécution, le 2026-09-02, et manqué par l'inventaire** : le globe
+dépend de **d3 + topojson-client + `world-atlas@2.0.2`**, tous trois chargés
+depuis unpkg à chaque ouverture. Un composant qui a besoin du réseau pour
+apparaître n'est pas extractible tel quel. Résolu en **rastérisant les
+terres une fois** (masque 1° × 1°, 8 100 octets dans `algo/terres.ts`) et en
+dessinant le globe **en points** — chaque cellule se projette seule, ce qui
+évite aussi le découpage des polygones à l'horizon. Le rendu est donc un globe
+pointillé, pas un aplat de continents : choix esthétique de ce portage,
+réversible.
+
 - **Décision** : réécriture **entière en `canvas2d`**, une seule surface, tout
   le mouvement dans `frame()`. Le régime technique l'autorise explicitement
   (ADR 0010) et c'est ce qui rend la mesure honnête.
@@ -297,10 +307,10 @@ déclaratif : chacun est constaté.
 | **0** | `SOURCES` + genre `choix`, ADR 0014 et 0015 ✅ 2026-08-22 | sans eux, aucun manifest du lot ne passe le validateur |
 | **0 bis** | copier les sources retenues dans `sources/easter-eggs/` ✅ 2026-08-22 | « rapatrier avant de migrer », étape 1 du fil d'Ariane appliquée à ce lot |
 | **1** | les 3 fonds shader sans concurrent ✅ 2026-08-22 (`voronoi-neon`, `feuille-holographique`, `champ-quantique`, souris au socle [ADR 0017](../decisions/0017-souris-service-du-socle-webgl.md), 59,9 i/s) | même famille que les 10 fonds déjà migrés — le chemin est connu, le risque est bas |
-| **2** | les 2 arbitrages esthétiques (aurore, plasma) | montrer les deux versions, ne rien trancher |
-| **3** | `explorateur-de-fractales` | le plus gros morceau ; dépend du genre `choix` du lot 0 |
-| **4** | `halo-de-trace` puis `globe-chargement` | premiers usages réels de `dom-css` et de `composant` |
-| **5** | `carte-iridescente` (l'effet iridescent) | dernier car seul `dom-css` de surface interactive ; retenu, cf. §3.6 |
+| **2** | les 2 arbitrages esthétiques (aurore, plasma) — **préparé le 2026-09-02** : quatre captures et trois issues possibles dans [`evidence/arbitrage-aurore-plasma.md`](../evidence/arbitrage-aurore-plasma.md) ; **verdict à l'utilisateur, rien n'est tranché** | montrer les deux versions, ne rien trancher |
+| **3** | `explorateur-de-fractales` ✅ 2026-09-02 (7 familles, 8 palettes, rendu progressif par tranches, 59,9 i/s au repos) | le plus gros morceau ; dépend du genre `choix` du lot 0 |
+| **4** | `halo-de-trace` puis `globe-chargement` ✅ 2026-09-02 (halo : `stroke-dashoffset` posé par `frame()` ; globe : masque de terres 1° rastérisé une fois, plus de d3 ni de réseau) | premiers usages réels de `dom-css` et de `composant` |
+| **5** | `carte-iridescente` (l'effet iridescent) ✅ 2026-09-02 (16 réglages de la source conservés, reflet OKLCH, dérive au repos dans `frame()`) | dernier car seul `dom-css` de surface interactive ; retenu, cf. §3.6 |
 
 Boucle par viz, inchangée depuis l'étape 6 :
 

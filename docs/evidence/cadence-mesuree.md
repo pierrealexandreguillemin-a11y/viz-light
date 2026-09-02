@@ -1,7 +1,7 @@
 ---
 authority: ledger
 subject: perf
-last_verified: 2026-08-13
+last_verified: 2026-09-02
 expires: never
 ---
 
@@ -48,6 +48,17 @@ entre 16 et 19 ms de JavaScript — c'est-à-dire exactement la frontière. Ceux
 16,7 ms ne prouve rien à elle seule — c'est le temps JS qu'il faut lire. Une
 cadence de 30 i/s avec un JS à 0,1 ms (le cas d'`orbes-floutees`) est en
 revanche un verdict net : le coût est ailleurs que dans notre code.
+
+## 2 bis. L'explorateur de fractales : un chiffre de repos (2026-09-02)
+
+`explorateur-de-fractales` porte **59,9 i/s · JS 1,9 ms** — c'est le coût du
+**repos** : recolorier tous les pixels à travers la table de couleurs qui
+défile. Un zoom ou un glissé déclenche une **rafale** de calcul (une à deux
+secondes à 256 itérations, plein cadre) découpée en tranches de 8 ms par image :
+la cadence tient, mais le JS par image monte à ~12-14 ms le temps de la rafale
+(lu sur l'instrument juste après un changement de famille : 12,65 ms). La
+fenêtre de mesure de 7 s au repos ne le voit pas, et c'est normal — le manifest
+dit ce que coûte la viz posée, `notes.md` dit ce que coûte la manipulation.
 
 ## 3. Méthode, pour que ces chiffres restent comparables
 

@@ -1,7 +1,7 @@
 ---
 authority: ledger
 subject: sources
-last_verified: 2026-08-13
+last_verified: 2026-09-02
 expires: never
 ---
 
@@ -141,3 +141,32 @@ périmètre.
    `pnpm build` → `pnpm bench` → captures → `pnpm verify`. Les shaders relèvent
    du régime technique (réécriture libre) ; l'explorateur et le halo SVG aussi
    — aucun n'est une œuvre d'auteur au sens de l'ADR 0010.
+
+## 5. Le masque de terres du globe — rejouable (2026-09-02)
+
+L'inventaire du §1 décrivait le globe comme « un canvas 2D piloté par
+`requestAnimationFrame` » ; **il avait manqué que ce canvas dépend de d3,
+topojson-client et `world-atlas@2.0.2`, chargés depuis unpkg à chaque
+ouverture.** Vu en lisant le `<script>` au moment du portage. Correction :
+les terres sont rastérisées une fois et embarquées (`src/viz/globe-chargement/algo/terres.ts`).
+
+Procédure (Python, shapely 2.1, numpy) — attendu : **19 106 cellules de terre
+sur 64 800 (29,5 %)**, 8 100 octets, base64 de 10 800 caractères :
+
+1. `curl -sL https://unpkg.com/world-atlas@2.0.2/countries-110m.json`
+   (107 761 octets).
+2. Décoder la topologie : arcs en delta + `transform` (scale, translate) ;
+   objets `land` → polygones (anneau extérieur + trous).
+3. **Écarter le sliver dégénéré** : un anneau de 11 sommets qui va de −180° à
+   180° sur un degré de latitude (autour des Fidji, lat −16,5°). Sans cela il
+   remplit une parallèle entière : 359 cellules sur 360 à la ligne 106,
+   constaté sur la première capture (une ligne de points barrait le globe).
+   Critère : étendue en longitude ≥ 359° **et** en latitude < 5°.
+4. Pour chaque polygone, `buffer(0)` puis `contains_xy` sur les centres d'une
+   grille 1° (longitudes −179,5…179,5, latitudes 89,5…−89,5).
+5. `numpy.packbits` (poids fort en tête), base64.
+
+Piège rencontré en chemin : « dérouler » les anneaux qui touchent ±180° (ajouter
+360° aux longitudes négatives) casse l'Eurasie et l'Antarctique, dont les
+anneaux touchent légitimement l'antiméridien — le critère du point 3 est le
+bon, pas la largeur de la boîte englobante.
