@@ -3,80 +3,23 @@ import { describe, expect, it } from "vitest";
 import { CATEGORIES } from "@/core/manifest/types.ts";
 import { validerManifest } from "@/core/manifest/valider.ts";
 
+import {
+  CHEMIN_VALEUR,
+  cheminsFautifs,
+  lireOrigine,
+  lirePerf,
+  lireRendus,
+  manifestValide,
+  muterParamComplet,
+  type Mutation,
+} from "./aides/manifest.ts";
+
 /**
  * Le validateur est le gate du contrat de données : ces tests décrivent
  * exactement ce qu'il refuse. Chaque cas correspond à une faute qu'un manifest
  * écrit à la main commettra un jour et qu'aucun autre gate ne verrait — le JSON
  * n'est pas typé, donc le typecheck ne le lit pas.
  */
-const manifestValide = () => ({
-  slug: "tunnel-de-points",
-  nom: "Tunnel de points",
-  ambiance: "Un tunnel de poussière lumineuse qui respire.",
-  origine: {
-    source: "atelier-generatif",
-    reference: "tunnel",
-    auteur: "@yuruyurau",
-    date: "2026-07-29",
-  },
-  categorie: "animation",
-  runtime: "p5",
-  tags: ["tunnel", "particules", "hsb"],
-  rendus: [
-    { id: "origine", libelle: "Origine", defaut: false, params: [] },
-    {
-      id: "aligne",
-      libelle: "Aligné",
-      defaut: true,
-      params: [
-        {
-          cle: "pointCount",
-          libelle: "Nombre de points",
-          min: 1000,
-          max: 10000,
-          pas: 500,
-          valeur: 6000,
-        },
-      ],
-    },
-  ],
-  extraction: {
-    fichiers: ["TunnelDePoints.tsx", "algo.ts", "manifest.json"],
-    socle: ["core/hooks/useAnimationLoop.ts"],
-    deps: ["p5"],
-  },
-  perf: {
-    mesureLe: "2026-08-12",
-    machine: "Windows 11 / Chrome 151",
-    cadenceFps: 60,
-    jsMedianMs: 3.1,
-    jsP95Ms: 5.4,
-    gpuBound: false,
-  },
-});
-
-type Mutation = (m: Record<string, unknown>) => void;
-
-/** Applique une mutation au manifest valide et renvoie les chemins fautifs. */
-function cheminsFautifs(mutation: Mutation, slug = "tunnel-de-points"): string[] {
-  const m = manifestValide() as unknown as Record<string, unknown>;
-  mutation(m);
-  return validerManifest(m, slug).map((p) => p.chemin);
-}
-
-const lireRendus = (m: Record<string, unknown>) => m["rendus"] as Record<string, unknown>[];
-const lirePerf = (m: Record<string, unknown>) => m["perf"] as Record<string, unknown>;
-const lireOrigine = (m: Record<string, unknown>) => m["origine"] as Record<string, unknown>;
-
-/** Remplace le premier paramètre du rendu aligné en entier — pour tester un genre. */
-const muterParamComplet =
-  (param: Record<string, unknown>): Mutation =>
-  (m) => {
-    const params = lireRendus(m)[1]!["params"] as Record<string, unknown>[];
-    params[0] = param;
-  };
-
-const CHEMIN_VALEUR = "rendus[1].params[0].valeur";
 
 describe("validerManifest — identité et champs de base", () => {
   it("accepte un manifest complet", () => {
@@ -210,90 +153,6 @@ describe("validerManifest — paramètres", () => {
   });
 });
 
-describe("validerManifest — genre choix (ADR 0015)", () => {
-  const CHEMIN_OPTIONS = "rendus[1].params[0].options";
-  const choixValide = () => ({
-    cle: "famille",
-    libelle: "Famille de fractale",
-    genre: "choix",
-    valeur: "julia",
-    options: [
-      { valeur: "mandelbrot", libelle: "Mandelbrot" },
-      { valeur: "julia", libelle: "Julia" },
-    ],
-  });
-
-  it("accepte un choix dont la valeur par défaut est l'une des options", () => {
-    expect(cheminsFautifs(muterParamComplet(choixValide()))).toEqual([]);
-  });
-
-  it("refuse une valeur par défaut absente des options", () => {
-    expect(
-      cheminsFautifs(muterParamComplet({ ...choixValide(), valeur: "burning-ship" })),
-    ).toContain(CHEMIN_VALEUR);
-    expect(cheminsFautifs(muterParamComplet({ ...choixValide(), valeur: 1 }))).toContain(
-      CHEMIN_VALEUR,
-    );
-  });
-
-  it("exige au moins une option", () => {
-    expect(cheminsFautifs(muterParamComplet({ ...choixValide(), options: [] }))).toContain(
-      CHEMIN_OPTIONS,
-    );
-    const sansOptions: Record<string, unknown> = { ...choixValide() };
-    delete sansOptions["options"];
-    expect(cheminsFautifs(muterParamComplet(sansOptions))).toContain(CHEMIN_OPTIONS);
-  });
-
-  it("refuse une option sans `valeur` ou sans `libelle` non vides", () => {
-    expect(
-      cheminsFautifs(
-        muterParamComplet({
-          ...choixValide(),
-          valeur: "mandelbrot",
-          options: [{ valeur: "mandelbrot", libelle: "" }],
-        }),
-      ),
-    ).toContain(`${CHEMIN_OPTIONS}[0].libelle`);
-    expect(
-      cheminsFautifs(
-        muterParamComplet({
-          ...choixValide(),
-          valeur: "julia",
-          options: [{ libelle: "Julia" }],
-        }),
-      ),
-    ).toContain(`${CHEMIN_OPTIONS}[0].valeur`);
-  });
-
-  it("refuse deux options partageant la même valeur", () => {
-    expect(
-      cheminsFautifs(
-        muterParamComplet({
-          ...choixValide(),
-          valeur: "julia",
-          options: [
-            { valeur: "julia", libelle: "Julia" },
-            { valeur: "julia", libelle: "Julia bis" },
-          ],
-        }),
-      ),
-    ).toContain(CHEMIN_OPTIONS);
-  });
-
-  it("refuse une option qui n'est pas un objet", () => {
-    expect(
-      cheminsFautifs(
-        muterParamComplet({
-          ...choixValide(),
-          valeur: "julia",
-          options: [{ valeur: "julia", libelle: "Julia" }, "pas-un-objet"],
-        }),
-      ),
-    ).toContain(`${CHEMIN_OPTIONS}[1]`);
-  });
-});
-
 describe("validerManifest — perf mesurée", () => {
   it("accepte null — la viz n'est simplement pas encore mesurée", () => {
     expect(cheminsFautifs((m) => (m["perf"] = null))).toEqual([]);
@@ -346,5 +205,16 @@ describe("validerManifest — extraction", () => {
         e["deps"] = [];
       }),
     ).toEqual([]);
+  });
+});
+
+describe("validerManifest — lectureDuCout, optionnelle mais jamais vide", () => {
+  it("accepte son absence et une lecture non vide", () => {
+    expect(cheminsFautifs(() => {})).toEqual([]);
+    expect(cheminsFautifs((m) => (m["lectureDuCout"] = "chiffre du repos"))).toEqual([]);
+  });
+  it("refuse une lecture vide ou d'un autre type", () => {
+    expect(cheminsFautifs((m) => (m["lectureDuCout"] = "  "))).toEqual(["lectureDuCout"]);
+    expect(cheminsFautifs((m) => (m["lectureDuCout"] = 3))).toEqual(["lectureDuCout"]);
   });
 });

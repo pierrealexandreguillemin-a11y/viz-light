@@ -103,5 +103,6 @@
     "jsMedianMs": 0.1,
     "jsP95Ms": 0.3,
     "gpuBound": true
-  }
+  },
+  "lectureDuCout": "0,1 ms de JavaScript mais 30 i/s GPU-bound : c'est le flou CSS qui coûte, pas le code. Réduire le flou ou la surface affichée rend les 60 i/s."
 }

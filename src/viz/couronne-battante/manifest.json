@@ -182,5 +182,6 @@
     "jsMedianMs": 33.2,
     "jsP95Ms": 35.84,
     "gpuBound": false
-  }
+  },
+  "lectureDuCout": "30 000 points par image, ~33 ms de JavaScript : le double du budget d'une image à 60 i/s, et c'est ce que demande le golfé d'origine. Le curseur « Points » arbitre."
 }

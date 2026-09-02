@@ -4,7 +4,11 @@ import { rendreCatalogue } from "@/core/catalogue/rendre.ts";
 import { genererRegistre } from "@/core/registre/generer.ts";
 import type { VizManifest } from "@/core/manifest/types.ts";
 
+import { manifestValide } from "./aides/manifest.ts";
+
+/** Le manifest de référence partagé, rhabillé en fond du banc d'essai — une seule fixture, pas deux copies. */
 const viz = (surcharge: Partial<VizManifest> = {}): VizManifest => ({
+  ...(manifestValide() as unknown as VizManifest),
   slug: "flow-field",
   nom: "Flow Field",
   ambiance: "Des rubans qui suivent un vent invisible.",
@@ -12,10 +16,6 @@ const viz = (surcharge: Partial<VizManifest> = {}): VizManifest => ({
   categorie: "fond",
   runtime: "canvas2d",
   tags: ["organique", "bruit"],
-  rendus: [
-    { id: "origine", libelle: "Origine", defaut: false, params: [] },
-    { id: "aligne", libelle: "Aligné", defaut: true, params: [] },
-  ],
   extraction: {
     fichiers: ["FlowField.tsx", "algo.ts"],
     socle: ["core/hooks/useCanvas.ts"],
@@ -64,6 +64,13 @@ describe("rendreCatalogue", () => {
     const md = rendreCatalogue([viz({ variantes: ["version banc d'essai"] })]);
     expect(md).toContain("**Aligné** (défaut)");
     expect(md).toContain("version banc d'essai");
+  });
+
+  it("ajoute la lecture du coût quand le manifest en porte une, et rien sinon", () => {
+    expect(rendreCatalogue([viz({ lectureDuCout: "chiffre du repos" })])).toContain(
+      "| Comment lire ce coût | chiffre du repos |",
+    );
+    expect(rendreCatalogue([viz()])).not.toContain("Comment lire ce coût");
   });
 
   it("trie par nom pour que la sortie ne dépende pas de l'ordre du disque", () => {

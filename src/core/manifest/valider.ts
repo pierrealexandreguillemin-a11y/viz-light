@@ -302,6 +302,10 @@ export function validerManifest(valeur: unknown, slugAttendu: string): Probleme[
   if (!CATEGORIES.includes(valeur["categorie"] as never)) {
     problemes.push(probleme("categorie", `attendu : ${CATEGORIES.join(" | ")}`));
   }
+  // Optionnelle, mais une lecture vide serait une promesse de contexte non tenue.
+  if (valeur["lectureDuCout"] !== undefined) {
+    problemes.push(...chaineNonVide(valeur, "lectureDuCout", ""));
+  }
   return problemes;
 }
 

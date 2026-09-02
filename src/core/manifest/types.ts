@@ -141,6 +141,14 @@ export interface VizManifest {
   readonly rendus: readonly Rendu[];
   readonly extraction: Extraction;
   readonly perf: PerfMesuree | null;
+  /**
+   * Ce que le chiffre de `perf` dit ET ne dit pas — quand un chiffre isolé
+   * tromperait (un coût de repos pour une viz qui se manipule, un coût hors
+   * JavaScript dans les filtres du navigateur, une cadence à 30 i/s voulue par
+   * l'œuvre). Éditorial, écrit à la main ; `pnpm bench` ne le touche pas parce
+   * qu'il vit hors de `perf`. Optionnel : la plupart des chiffres se lisent seuls.
+   */
+  readonly lectureDuCout?: string;
   /** Doublons écartés, notés ici plutôt que perdus (SPEC.md §4). */
   readonly variantes?: readonly string[];
 }

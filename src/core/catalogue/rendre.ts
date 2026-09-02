@@ -45,6 +45,7 @@ function fiche(viz: VizManifest): string {
     `| Rendus | ${rendus} |`,
     `| Origine | ${viz.origine.reference} (${viz.origine.source}) |`,
     `| Coût mesuré | ${viz.perf ? perfEnLigne(viz.perf) : "**non mesuré**"} |`,
+    ...(viz.lectureDuCout ? [`| Comment lire ce coût | ${viz.lectureDuCout} |`] : []),
     `| Dépendances | ${deps} |`,
     `| À copier | ${listeFichiers(viz)} |`,
   ];

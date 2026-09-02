@@ -197,5 +197,6 @@
     "jsMedianMs": 1.9,
     "jsP95Ms": 2.2,
     "gpuBound": false
-  }
+  },
+  "lectureDuCout": "Chiffre du repos : recolorier tous les pixels pendant que la palette défile. Un zoom ou un glissé déclenche une rafale de calcul d'une à deux secondes à 256 itérations, découpée en tranches de 8 ms par image — la cadence tient, le JavaScript par image monte à ~13 ms le temps de la rafale. Le curseur « Itérations » arbitre le coût des rafales."
 }

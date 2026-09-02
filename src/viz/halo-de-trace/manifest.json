@@ -112,5 +112,6 @@
     "jsMedianMs": 0,
     "jsP95Ms": 0.1,
     "gpuBound": false
-  }
+  },
+  "lectureDuCout": "Le JavaScript ne fait que poser un décalage de tirets ; le coût réel est celui des filtres (deux flous, deux ombres portées), rastérisés par le navigateur hors du fil principal, et il grimpe avec « Halo » et la taille d'affichage. S'il pèse, l'instrument le montre en GPU-bound."
 }

@@ -67,7 +67,11 @@ naît là-bas est rapatrié ici ([ADR 0001](decisions/0001-catalogue-unifie-dans
   « mauvaise pratique » sont du **contenu par viz** (notes.md), pas du socle.
 - **Perf tamponnée** : `scripts/bench.mjs` (Puppeteer) mesure chaque viz et écrit
   les chiffres dans son manifest — un claude+n choisit sur données sans rien
-  exécuter.
+  exécuter. Quand un chiffre isolé tromperait (coût de repos d'une viz qu'on
+  manipule, coût hors JavaScript dans les filtres du navigateur, 30 i/s voulus
+  par l'œuvre), le manifest porte une **`lectureDuCout`** éditoriale, rendue
+  dans `CATALOG.md` sous « Comment lire ce coût » (2026-09-02) ; le bench ne la
+  touche pas, elle vit hors de `perf`.
 
 ## 3. Contrat d'extraction (claude+n)
 

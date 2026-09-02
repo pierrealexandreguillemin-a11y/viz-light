@@ -90,6 +90,7 @@ exécuté — jamais d'estimation.
 | Rendus | Origine · **Aligné** (défaut) |
 | Origine | 9 mai 2026 (tweet-sketches) |
 | Coût mesuré | 29.9 i/s · JS 33.5 ms médian, 36.48 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Comment lire ce coût | 30 000 points par image, ~33 ms de JavaScript : le double du budget d'une image à 60 i/s, et c'est ce que demande le golfé d'origine. Le curseur « Points » arbitre. |
 | Dépendances | aucune |
 | À copier | `src/viz/attracteur-de-lorenz/AttracteurDeLorenz.tsx` · `src/viz/attracteur-de-lorenz/algo.ts` · `src/viz/attracteur-de-lorenz/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
@@ -135,6 +136,7 @@ exécuté — jamais d'estimation.
 | Rendus | **Réglages** (défaut) |
 | Origine | card-app.jsx (l'effet iridescent + inclinaison 3D ; l'illustration « Ace of Auras » est restée à la source) (easter-eggs) |
 | Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.2 ms p95 · CPU-bound · mesuré le 2026-09-02 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Comment lire ce coût | Le JavaScript pose quelques chaînes CSS ; le coût réel est le dégradé conique recalculé à chaque image, le flou du halo et les modes de fusion, hors du fil principal. « Flou du halo » et « Halo » l'allègent. |
 | Dépendances | aucune |
 | À copier | `src/viz/carte-iridescente/CarteIridescente.tsx` · `src/viz/carte-iridescente/algo.ts` · `src/viz/carte-iridescente/algo/iridescence.ts` · `src/viz/carte-iridescente/manifest.json` · `src/viz/carte-iridescente/notes.md` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
@@ -240,6 +242,7 @@ exécuté — jamais d'estimation.
 | Rendus | Origine · **Aligné** (défaut) |
 | Origine | 6 mars 2026 (tweet-sketches) |
 | Coût mesuré | 29.9 i/s · JS 33.2 ms médian, 35.84 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Comment lire ce coût | 30 000 points par image, ~33 ms de JavaScript : le double du budget d'une image à 60 i/s, et c'est ce que demande le golfé d'origine. Le curseur « Points » arbitre. |
 | Dépendances | aucune |
 | À copier | `src/viz/couronne-battante/CouronneBattante.tsx` · `src/viz/couronne-battante/algo.ts` · `src/viz/couronne-battante/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
@@ -270,6 +273,7 @@ exécuté — jamais d'estimation.
 | Rendus | **Réglages** (défaut) |
 | Origine | fractal-explorer.html (FractalCalculators, 7 familles) + mandelbrot-domain/ (lissage, palettes) (easter-eggs) |
 | Coût mesuré | 59.9 i/s · JS 1.9 ms médian, 2.2 ms p95 · CPU-bound · mesuré le 2026-09-02 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Comment lire ce coût | Chiffre du repos : recolorier tous les pixels pendant que la palette défile. Un zoom ou un glissé déclenche une rafale de calcul d'une à deux secondes à 256 itérations, découpée en tranches de 8 ms par image — la cadence tient, le JavaScript par image monte à ~13 ms le temps de la rafale. Le curseur « Itérations » arbitre le coût des rafales. |
 | Dépendances | aucune |
 | À copier | `src/viz/explorateur-de-fractales/ExplorateurDeFractales.tsx` · `src/viz/explorateur-de-fractales/algo.ts` · `src/viz/explorateur-de-fractales/algo/fractales.ts` · `src/viz/explorateur-de-fractales/algo/palettes.ts` · `src/viz/explorateur-de-fractales/algo/interaction.ts` · `src/viz/explorateur-de-fractales/algo/rendu.ts` · `src/viz/explorateur-de-fractales/manifest.json` · `src/viz/explorateur-de-fractales/notes.md` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
@@ -361,6 +365,7 @@ exécuté — jamais d'estimation.
 | Rendus | **Réglages** (défaut) |
 | Origine | miami-circuit-glow.html (stroke-dasharray + blur + drop-shadow ; le tracé de Miami est resté à la source) (easter-eggs) |
 | Coût mesuré | 59.9 i/s · JS 0 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-09-02 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Comment lire ce coût | Le JavaScript ne fait que poser un décalage de tirets ; le coût réel est celui des filtres (deux flous, deux ombres portées), rastérisés par le navigateur hors du fil principal, et il grimpe avec « Halo » et la taille d'affichage. S'il pèse, l'instrument le montre en GPU-bound. |
 | Dépendances | aucune |
 | À copier | `src/viz/halo-de-trace/HaloDeTrace.tsx` · `src/viz/halo-de-trace/algo.ts` · `src/viz/halo-de-trace/algo/trace.ts` · `src/viz/halo-de-trace/manifest.json` · `src/viz/halo-de-trace/notes.md` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
@@ -421,6 +426,7 @@ exécuté — jamais d'estimation.
 | Rendus | **Réglages** (défaut) |
 | Origine | orbs (banc-essai) |
 | Coût mesuré | 30 i/s · JS 0.1 ms médian, 0.3 ms p95 · GPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Comment lire ce coût | 0,1 ms de JavaScript mais 30 i/s GPU-bound : c'est le flou CSS qui coûte, pas le code. Réduire le flou ou la surface affichée rend les 60 i/s. |
 | Dépendances | aucune |
 | À copier | `src/viz/orbes-floutees/OrbesFloutees.tsx` · `src/viz/orbes-floutees/algo.ts` · `src/viz/orbes-floutees/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
