@@ -110,6 +110,9 @@ function construire(hote: HTMLElement): Pile {
     height: "100%",
     display: "grid",
     placeItems: "center",
+    // Le halo flou dépasse la carte de moitié : sans ce rognage il s'étalait
+    // hors de la case, jusque sur le titre de section (vu sur la vitrine live).
+    overflow: "hidden",
     touchAction: "none",
     cursor: "pointer",
   });
