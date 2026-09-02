@@ -7,7 +7,7 @@ dossier `src/viz/<slug>/` plus les fichiers de socle listés dans la fiche,
 puis pose `<VizName />`. Les chiffres de coût sortent de `scripts/bench.mjs`
 exécuté — jamais d'estimation.
 
-## Les 34 viz
+## Les 35 viz
 
 - **Anémone marine** — Une anémone posée au fond, dont les tentacules cherchent le courant.
 - **Anneau respirant** — Un anneau de poussière qui se gonfle et se dégonfle, comme un souffle.
@@ -22,6 +22,7 @@ exécuté — jamais d'estimation.
 - **Corolle de marée** — Une fleur d'eau qui monte et redescend avec la marée.
 - **Couronne battante** — Une couronne qui bat comme une méduse, deux fois par tour.
 - **Éventail cranté** — Un éventail qui s'ouvre par crans, comme un mécanisme d'horlogerie.
+- **Explorateur de fractales** — Sept ensembles à parcourir au doigt et à la molette, dont les couleurs coulent le long des filaments.
 - **Feuille holographique** — Un métal brossé irisé dont le reflet arc-en-ciel s'incline sous le curseur.
 - **Flow field** — Des filaments qui suivent un courant invisible.
 - **Grain de film** — Une pellicule qui vit doucement sur un dégradé sombre.
@@ -238,6 +239,21 @@ exécuté — jamais d'estimation.
 | Coût mesuré | 59.9 i/s · JS 8.5 ms médian, 8.9 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/eventail-crante/EventailCrante.tsx` · `src/viz/eventail-crante/algo.ts` · `src/viz/eventail-crante/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
+
+### Explorateur de fractales
+
+*Sept ensembles à parcourir au doigt et à la molette, dont les couleurs coulent le long des filaments.*
+
+| | |
+|---|---|
+| Slug | `explorateur-de-fractales` |
+| Runtime | canvas2d |
+| Tags | fractale, mandelbrot, julia, zoom, exploration |
+| Rendus | **Réglages** (défaut) |
+| Origine | fractal-explorer.html (FractalCalculators, 7 familles) + mandelbrot-domain/ (lissage, palettes) (easter-eggs) |
+| Coût mesuré | 59.9 i/s · JS 1.9 ms médian, 2.2 ms p95 · CPU-bound · mesuré le 2026-09-02 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Dépendances | aucune |
+| À copier | `src/viz/explorateur-de-fractales/ExplorateurDeFractales.tsx` · `src/viz/explorateur-de-fractales/algo.ts` · `src/viz/explorateur-de-fractales/algo/fractales.ts` · `src/viz/explorateur-de-fractales/algo/palettes.ts` · `src/viz/explorateur-de-fractales/algo/interaction.ts` · `src/viz/explorateur-de-fractales/algo/rendu.ts` · `src/viz/explorateur-de-fractales/manifest.json` · `src/viz/explorateur-de-fractales/notes.md` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
 ### Feuille holographique
 

@@ -1,0 +1,201 @@
+{
+  "slug": "explorateur-de-fractales",
+  "nom": "Explorateur de fractales",
+  "ambiance": "Sept ensembles à parcourir au doigt et à la molette, dont les couleurs coulent le long des filaments.",
+  "categorie": "interactif",
+  "origine": {
+    "source": "easter-eggs",
+    "reference": "fractal-explorer.html (FractalCalculators, 7 familles) + mandelbrot-domain/ (lissage, palettes)",
+    "date": "2026-08-22"
+  },
+  "runtime": "canvas2d",
+  "tags": ["fractale", "mandelbrot", "julia", "zoom", "exploration"],
+  "rendus": [
+    {
+      "id": "reglages",
+      "libelle": "Réglages",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "famille",
+          "libelle": "Famille",
+          "genre": "choix",
+          "options": [
+            {
+              "valeur": "mandelbrot",
+              "libelle": "Mandelbrot"
+            },
+            {
+              "valeur": "julia",
+              "libelle": "Julia"
+            },
+            {
+              "valeur": "navire",
+              "libelle": "Navire en feu"
+            },
+            {
+              "valeur": "tricorne",
+              "libelle": "Tricorne"
+            },
+            {
+              "valeur": "multibrot3",
+              "libelle": "Multibrot z³"
+            },
+            {
+              "valeur": "multibrot4",
+              "libelle": "Multibrot z⁴"
+            },
+            {
+              "valeur": "multibrot5",
+              "libelle": "Multibrot z⁵"
+            }
+          ],
+          "valeur": "mandelbrot"
+        },
+        {
+          "cle": "constanteJulia",
+          "libelle": "Constante de Julia",
+          "genre": "choix",
+          "options": [
+            {
+              "valeur": "dendrite",
+              "libelle": "Dendrite spirale"
+            },
+            {
+              "valeur": "lapin",
+              "libelle": "Lapin de Douady"
+            },
+            {
+              "valeur": "dragon",
+              "libelle": "Dragon"
+            },
+            {
+              "valeur": "spirale",
+              "libelle": "Spirale dorée"
+            },
+            {
+              "valeur": "etoile",
+              "libelle": "Étoile de mer"
+            },
+            {
+              "valeur": "san-marco",
+              "libelle": "San Marco"
+            },
+            {
+              "valeur": "flocon",
+              "libelle": "Flocon"
+            }
+          ],
+          "valeur": "dendrite"
+        },
+        {
+          "cle": "iterations",
+          "libelle": "Itérations",
+          "min": 32,
+          "max": 1024,
+          "pas": 32,
+          "valeur": 256
+        },
+        {
+          "cle": "palette",
+          "libelle": "Palette",
+          "genre": "choix",
+          "options": [
+            {
+              "valeur": "classique",
+              "libelle": "Classique"
+            },
+            {
+              "valeur": "feu",
+              "libelle": "Feu"
+            },
+            {
+              "valeur": "glace",
+              "libelle": "Glace"
+            },
+            {
+              "valeur": "neon",
+              "libelle": "Néon"
+            },
+            {
+              "valeur": "gris",
+              "libelle": "Niveaux de gris"
+            },
+            {
+              "valeur": "psychedelique",
+              "libelle": "Psychédélique"
+            },
+            {
+              "valeur": "crepuscule",
+              "libelle": "Crépuscule"
+            },
+            {
+              "valeur": "miami",
+              "libelle": "Miami"
+            }
+          ],
+          "valeur": "classique"
+        },
+        {
+          "cle": "cycle",
+          "libelle": "Longueur du cycle de couleurs",
+          "min": 16,
+          "max": 512,
+          "pas": 16,
+          "valeur": 256
+        },
+        {
+          "cle": "defilement",
+          "libelle": "Défilement des couleurs",
+          "min": 0,
+          "max": 1,
+          "pas": 0.05,
+          "valeur": 0.15
+        },
+        {
+          "cle": "interieur",
+          "libelle": "Intérieur de l'ensemble",
+          "genre": "couleur",
+          "valeur": "#000000"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": [
+      "ExplorateurDeFractales.tsx",
+      "algo.ts",
+      "algo/fractales.ts",
+      "algo/palettes.ts",
+      "algo/interaction.ts",
+      "algo/rendu.ts",
+      "manifest.json",
+      "notes.md"
+    ],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/reglages.ts",
+      "core/viz/toile.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/useScenePrincipale.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-09-02",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 1.9,
+    "jsP95Ms": 2.2,
+    "gpuBound": false
+  }
+}

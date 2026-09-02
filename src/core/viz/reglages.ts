@@ -59,3 +59,18 @@ export function hexVersRgb(hex: string): readonly [number, number, number] {
   if (brut.length !== 6 || [lire(0), lire(2), lire(4)].some(Number.isNaN)) return [0, 0, 0];
   return [lire(0), lire(2), lire(4)];
 }
+
+/**
+ * Un `choix` (ADR 0015) vaut la clé d'une de ses options. Une clé inconnue —
+ * manifest édité, option retirée — retombe sur le défaut au lieu de laisser
+ * la viz chercher une famille ou une palette qui n'existe pas.
+ */
+export function lireChoix<T extends string>(
+  r: Reglages,
+  cle: string,
+  admises: readonly T[],
+  defaut: T,
+): T {
+  const valeur = r[cle];
+  return admises.find((option) => option === valeur) ?? defaut;
+}
