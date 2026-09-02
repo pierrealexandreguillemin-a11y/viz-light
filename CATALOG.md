@@ -7,13 +7,14 @@ dossier `src/viz/<slug>/` plus les fichiers de socle listés dans la fiche,
 puis pose `<VizName />`. Les chiffres de coût sortent de `scripts/bench.mjs`
 exécuté — jamais d'estimation.
 
-## Les 37 viz
+## Les 38 viz
 
 - **Anémone marine** — Une anémone posée au fond, dont les tentacules cherchent le courant.
 - **Anneau respirant** — Un anneau de poussière qui se gonfle et se dégonfle, comme un souffle.
 - **Attracteur de Lorenz** — Le papillon du chaos, retracé trente mille fois par seconde.
 - **Aurore boréale** — Des rideaux de lumière qui ondulent dans un ciel noir.
 - **Balayage radar** — Un faisceau qui tourne et réveille des échos au passage.
+- **Carte iridescente** — Une carte sombre qui s'incline vers le doigt et fait courir un reflet arc-en-ciel sur sa surface, comme une feuille métallisée.
 - **Champ quantique** — Des ondes qui se croisent et interfèrent, le curseur devenant une source de lumière.
 - **Colonne perlée** — Une colonne de perles qui roule très lentement sur elle-même.
 - **Constellation** — Des points en dérive lente qui se relient quand ils se frôlent.
@@ -121,6 +122,21 @@ exécuté — jamais d'estimation.
 | Coût mesuré | 59.9 i/s · JS 0 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-13 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/balayage-radar/BalayageRadar.tsx` · `src/viz/balayage-radar/algo.ts` · `src/viz/balayage-radar/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
+
+### Carte iridescente
+
+*Une carte sombre qui s'incline vers le doigt et fait courir un reflet arc-en-ciel sur sa surface, comme une feuille métallisée.*
+
+| | |
+|---|---|
+| Slug | `carte-iridescente` |
+| Runtime | dom-css |
+| Tags | carte, iridescent, holographique, survol, 3d, composant |
+| Rendus | **Réglages** (défaut) |
+| Origine | card-app.jsx (l'effet iridescent + inclinaison 3D ; l'illustration « Ace of Auras » est restée à la source) (easter-eggs) |
+| Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.2 ms p95 · CPU-bound · mesuré le 2026-09-02 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Dépendances | aucune |
+| À copier | `src/viz/carte-iridescente/CarteIridescente.tsx` · `src/viz/carte-iridescente/algo.ts` · `src/viz/carte-iridescente/algo/iridescence.ts` · `src/viz/carte-iridescente/manifest.json` · `src/viz/carte-iridescente/notes.md` · `src/core/viz/contrat.ts` · `src/core/viz/reglages.ts` · `src/core/composants/creerCoquille.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/Cout.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useInstrument.ts` · `src/core/instrument/mesures.ts` |
 
 ### Champ quantique
 

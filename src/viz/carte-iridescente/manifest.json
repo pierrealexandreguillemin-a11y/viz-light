@@ -1,0 +1,213 @@
+{
+  "slug": "carte-iridescente",
+  "nom": "Carte iridescente",
+  "ambiance": "Une carte sombre qui s'incline vers le doigt et fait courir un reflet arc-en-ciel sur sa surface, comme une feuille métallisée.",
+  "categorie": "composant",
+  "origine": {
+    "source": "easter-eggs",
+    "reference": "card-app.jsx (l'effet iridescent + inclinaison 3D ; l'illustration « Ace of Auras » est restée à la source)",
+    "date": "2026-08-22"
+  },
+  "runtime": "dom-css",
+  "tags": ["carte", "iridescent", "holographique", "survol", "3d", "composant"],
+  "rendus": [
+    {
+      "id": "reglages",
+      "libelle": "Réglages",
+      "defaut": true,
+      "params": [
+        {
+          "cle": "inclinaison",
+          "libelle": "Inclinaison",
+          "min": 0,
+          "max": 45,
+          "pas": 1,
+          "valeur": 16
+        },
+        {
+          "cle": "perspective",
+          "libelle": "Perspective",
+          "min": 400,
+          "max": 2400,
+          "pas": 50,
+          "valeur": 1100
+        },
+        {
+          "cle": "relief",
+          "libelle": "Relief au survol",
+          "min": 0,
+          "max": 80,
+          "pas": 1,
+          "valeur": 28
+        },
+        {
+          "cle": "zoom",
+          "libelle": "Zoom au survol",
+          "min": 0,
+          "max": 10,
+          "pas": 0.5,
+          "valeur": 3
+        },
+        {
+          "cle": "iridescence",
+          "libelle": "Iridescence",
+          "min": 0,
+          "max": 100,
+          "pas": 1,
+          "valeur": 80
+        },
+        {
+          "cle": "style",
+          "libelle": "Texture",
+          "genre": "choix",
+          "options": [
+            {
+              "valeur": "conique",
+              "libelle": "Conique"
+            },
+            {
+              "valeur": "lineaire",
+              "libelle": "Linéaire"
+            },
+            {
+              "valeur": "holographique",
+              "libelle": "Holographique"
+            }
+          ],
+          "valeur": "conique"
+        },
+        {
+          "cle": "chroma",
+          "libelle": "Saturation",
+          "min": 0,
+          "max": 0.35,
+          "pas": 0.01,
+          "valeur": 0.2
+        },
+        {
+          "cle": "fusion",
+          "libelle": "Fusion",
+          "genre": "choix",
+          "options": [
+            {
+              "valeur": "color-dodge",
+              "libelle": "Densité couleur"
+            },
+            {
+              "valeur": "screen",
+              "libelle": "Superposition"
+            },
+            {
+              "valeur": "overlay",
+              "libelle": "Incrustation"
+            },
+            {
+              "valeur": "soft-light",
+              "libelle": "Lumière tamisée"
+            },
+            {
+              "valeur": "multiply",
+              "libelle": "Produit"
+            }
+          ],
+          "valeur": "overlay"
+        },
+        {
+          "cle": "vitesse",
+          "libelle": "Glissement du reflet",
+          "min": 0,
+          "max": 720,
+          "pas": 10,
+          "valeur": 220
+        },
+        {
+          "cle": "derive",
+          "libelle": "Dérive au repos",
+          "min": 0,
+          "max": 90,
+          "pas": 1,
+          "valeur": 12
+        },
+        {
+          "cle": "reflet",
+          "libelle": "Reflet",
+          "min": 0,
+          "max": 100,
+          "pas": 1,
+          "valeur": 50
+        },
+        {
+          "cle": "tailleReflet",
+          "libelle": "Taille du reflet",
+          "min": 10,
+          "max": 100,
+          "pas": 1,
+          "valeur": 45
+        },
+        {
+          "cle": "grain",
+          "libelle": "Grain",
+          "min": 0,
+          "max": 60,
+          "pas": 1,
+          "valeur": 14
+        },
+        {
+          "cle": "halo",
+          "libelle": "Halo",
+          "min": 0,
+          "max": 100,
+          "pas": 1,
+          "valeur": 55
+        },
+        {
+          "cle": "flouHalo",
+          "libelle": "Flou du halo",
+          "min": 10,
+          "max": 120,
+          "pas": 5,
+          "valeur": 60
+        },
+        {
+          "cle": "fond",
+          "libelle": "Fond de la carte",
+          "genre": "couleur",
+          "valeur": "#1b1815"
+        }
+      ]
+    }
+  ],
+  "extraction": {
+    "fichiers": [
+      "CarteIridescente.tsx",
+      "algo.ts",
+      "algo/iridescence.ts",
+      "manifest.json",
+      "notes.md"
+    ],
+    "socle": [
+      "core/viz/contrat.ts",
+      "core/viz/reglages.ts",
+      "core/composants/creerCoquille.tsx",
+      "core/composants/SceneViz.tsx",
+      "core/composants/LimiteErreur.tsx",
+      "core/composants/Cout.tsx",
+      "core/hooks/useBoucleAnimation.ts",
+      "core/hooks/useSurface.ts",
+      "core/hooks/useVisible.ts",
+      "core/hooks/useScenePrincipale.ts",
+      "core/hooks/usePreferenceMouvement.ts",
+      "core/hooks/useInstrument.ts",
+      "core/instrument/mesures.ts"
+    ],
+    "deps": []
+  },
+  "perf": {
+    "mesureLe": "2026-09-02",
+    "machine": "win32 x64 · HeadlessChrome/151.0.7922.77",
+    "cadenceFps": 59.9,
+    "jsMedianMs": 0.1,
+    "jsP95Ms": 0.2,
+    "gpuBound": false
+  }
+}

@@ -22,38 +22,39 @@ import manifest1 from "./anneau-respirant/manifest.json";
 import manifest2 from "./attracteur-de-lorenz/manifest.json";
 import manifest3 from "./aurore-boreale/manifest.json";
 import manifest4 from "./balayage-radar/manifest.json";
-import manifest5 from "./champ-quantique/manifest.json";
-import manifest6 from "./colonne-perlee/manifest.json";
-import manifest7 from "./constellation/manifest.json";
-import manifest8 from "./coquille-cannelee/manifest.json";
-import manifest9 from "./coquille-jumelle/manifest.json";
-import manifest10 from "./corolle-de-maree/manifest.json";
-import manifest11 from "./couronne-battante/manifest.json";
-import manifest12 from "./eventail-crante/manifest.json";
-import manifest13 from "./explorateur-de-fractales/manifest.json";
-import manifest14 from "./feuille-holographique/manifest.json";
-import manifest15 from "./flow-field/manifest.json";
-import manifest16 from "./globe-chargement/manifest.json";
-import manifest17 from "./grain-de-film/manifest.json";
-import manifest18 from "./grille-synthwave/manifest.json";
-import manifest19 from "./halo-de-trace/manifest.json";
-import manifest20 from "./medaillon-tournant/manifest.json";
-import manifest21 from "./mesh-gradient/manifest.json";
-import manifest22 from "./noise-grid/manifest.json";
-import manifest23 from "./orbes-floutees/manifest.json";
-import manifest24 from "./orbit-particles/manifest.json";
-import manifest25 from "./plasma-deforme/manifest.json";
-import manifest26 from "./poussiere-d-etoiles/manifest.json";
-import manifest27 from "./rosace-fondatrice/manifest.json";
-import manifest28 from "./rosace-jumelle/manifest.json";
-import manifest29 from "./rosace-triple/manifest.json";
-import manifest30 from "./ruban-ondule/manifest.json";
-import manifest31 from "./ruban-plisse/manifest.json";
-import manifest32 from "./spiral-bloom/manifest.json";
-import manifest33 from "./spirale-tressee/manifest.json";
-import manifest34 from "./tunnel-de-points/manifest.json";
-import manifest35 from "./voile-tournante/manifest.json";
-import manifest36 from "./voronoi-neon/manifest.json";
+import manifest5 from "./carte-iridescente/manifest.json";
+import manifest6 from "./champ-quantique/manifest.json";
+import manifest7 from "./colonne-perlee/manifest.json";
+import manifest8 from "./constellation/manifest.json";
+import manifest9 from "./coquille-cannelee/manifest.json";
+import manifest10 from "./coquille-jumelle/manifest.json";
+import manifest11 from "./corolle-de-maree/manifest.json";
+import manifest12 from "./couronne-battante/manifest.json";
+import manifest13 from "./eventail-crante/manifest.json";
+import manifest14 from "./explorateur-de-fractales/manifest.json";
+import manifest15 from "./feuille-holographique/manifest.json";
+import manifest16 from "./flow-field/manifest.json";
+import manifest17 from "./globe-chargement/manifest.json";
+import manifest18 from "./grain-de-film/manifest.json";
+import manifest19 from "./grille-synthwave/manifest.json";
+import manifest20 from "./halo-de-trace/manifest.json";
+import manifest21 from "./medaillon-tournant/manifest.json";
+import manifest22 from "./mesh-gradient/manifest.json";
+import manifest23 from "./noise-grid/manifest.json";
+import manifest24 from "./orbes-floutees/manifest.json";
+import manifest25 from "./orbit-particles/manifest.json";
+import manifest26 from "./plasma-deforme/manifest.json";
+import manifest27 from "./poussiere-d-etoiles/manifest.json";
+import manifest28 from "./rosace-fondatrice/manifest.json";
+import manifest29 from "./rosace-jumelle/manifest.json";
+import manifest30 from "./rosace-triple/manifest.json";
+import manifest31 from "./ruban-ondule/manifest.json";
+import manifest32 from "./ruban-plisse/manifest.json";
+import manifest33 from "./spiral-bloom/manifest.json";
+import manifest34 from "./spirale-tressee/manifest.json";
+import manifest35 from "./tunnel-de-points/manifest.json";
+import manifest36 from "./voile-tournante/manifest.json";
+import manifest37 from "./voronoi-neon/manifest.json";
 
 export const REGISTRE: Readonly<Record<string, EntreeViz>> = {
   "anemone-marine": {
@@ -76,132 +77,136 @@ export const REGISTRE: Readonly<Record<string, EntreeViz>> = {
     manifest: manifest4 as VizManifest,
     Composant: lazy(() => import("./balayage-radar/BalayageRadar.tsx")),
   },
-  "champ-quantique": {
+  "carte-iridescente": {
     manifest: manifest5 as VizManifest,
+    Composant: lazy(() => import("./carte-iridescente/CarteIridescente.tsx")),
+  },
+  "champ-quantique": {
+    manifest: manifest6 as VizManifest,
     Composant: lazy(() => import("./champ-quantique/ChampQuantique.tsx")),
   },
   "colonne-perlee": {
-    manifest: manifest6 as VizManifest,
+    manifest: manifest7 as VizManifest,
     Composant: lazy(() => import("./colonne-perlee/ColonnePerlee.tsx")),
   },
   constellation: {
-    manifest: manifest7 as VizManifest,
+    manifest: manifest8 as VizManifest,
     Composant: lazy(() => import("./constellation/Constellation.tsx")),
   },
   "coquille-cannelee": {
-    manifest: manifest8 as VizManifest,
+    manifest: manifest9 as VizManifest,
     Composant: lazy(() => import("./coquille-cannelee/CoquilleCannelee.tsx")),
   },
   "coquille-jumelle": {
-    manifest: manifest9 as VizManifest,
+    manifest: manifest10 as VizManifest,
     Composant: lazy(() => import("./coquille-jumelle/CoquilleJumelle.tsx")),
   },
   "corolle-de-maree": {
-    manifest: manifest10 as VizManifest,
+    manifest: manifest11 as VizManifest,
     Composant: lazy(() => import("./corolle-de-maree/CorolleDeMaree.tsx")),
   },
   "couronne-battante": {
-    manifest: manifest11 as VizManifest,
+    manifest: manifest12 as VizManifest,
     Composant: lazy(() => import("./couronne-battante/CouronneBattante.tsx")),
   },
   "eventail-crante": {
-    manifest: manifest12 as VizManifest,
+    manifest: manifest13 as VizManifest,
     Composant: lazy(() => import("./eventail-crante/EventailCrante.tsx")),
   },
   "explorateur-de-fractales": {
-    manifest: manifest13 as VizManifest,
+    manifest: manifest14 as VizManifest,
     Composant: lazy(() => import("./explorateur-de-fractales/ExplorateurDeFractales.tsx")),
   },
   "feuille-holographique": {
-    manifest: manifest14 as VizManifest,
+    manifest: manifest15 as VizManifest,
     Composant: lazy(() => import("./feuille-holographique/FeuilleHolographique.tsx")),
   },
   "flow-field": {
-    manifest: manifest15 as VizManifest,
+    manifest: manifest16 as VizManifest,
     Composant: lazy(() => import("./flow-field/FlowField.tsx")),
   },
   "globe-chargement": {
-    manifest: manifest16 as VizManifest,
+    manifest: manifest17 as VizManifest,
     Composant: lazy(() => import("./globe-chargement/GlobeChargement.tsx")),
   },
   "grain-de-film": {
-    manifest: manifest17 as VizManifest,
+    manifest: manifest18 as VizManifest,
     Composant: lazy(() => import("./grain-de-film/GrainDeFilm.tsx")),
   },
   "grille-synthwave": {
-    manifest: manifest18 as VizManifest,
+    manifest: manifest19 as VizManifest,
     Composant: lazy(() => import("./grille-synthwave/GrilleSynthwave.tsx")),
   },
   "halo-de-trace": {
-    manifest: manifest19 as VizManifest,
+    manifest: manifest20 as VizManifest,
     Composant: lazy(() => import("./halo-de-trace/HaloDeTrace.tsx")),
   },
   "medaillon-tournant": {
-    manifest: manifest20 as VizManifest,
+    manifest: manifest21 as VizManifest,
     Composant: lazy(() => import("./medaillon-tournant/MedaillonTournant.tsx")),
   },
   "mesh-gradient": {
-    manifest: manifest21 as VizManifest,
+    manifest: manifest22 as VizManifest,
     Composant: lazy(() => import("./mesh-gradient/MeshGradient.tsx")),
   },
   "noise-grid": {
-    manifest: manifest22 as VizManifest,
+    manifest: manifest23 as VizManifest,
     Composant: lazy(() => import("./noise-grid/NoiseGrid.tsx")),
   },
   "orbes-floutees": {
-    manifest: manifest23 as VizManifest,
+    manifest: manifest24 as VizManifest,
     Composant: lazy(() => import("./orbes-floutees/OrbesFloutees.tsx")),
   },
   "orbit-particles": {
-    manifest: manifest24 as VizManifest,
+    manifest: manifest25 as VizManifest,
     Composant: lazy(() => import("./orbit-particles/OrbitParticles.tsx")),
   },
   "plasma-deforme": {
-    manifest: manifest25 as VizManifest,
+    manifest: manifest26 as VizManifest,
     Composant: lazy(() => import("./plasma-deforme/PlasmaDeforme.tsx")),
   },
   "poussiere-d-etoiles": {
-    manifest: manifest26 as VizManifest,
+    manifest: manifest27 as VizManifest,
     Composant: lazy(() => import("./poussiere-d-etoiles/PoussiereDEtoiles.tsx")),
   },
   "rosace-fondatrice": {
-    manifest: manifest27 as VizManifest,
+    manifest: manifest28 as VizManifest,
     Composant: lazy(() => import("./rosace-fondatrice/RosaceFondatrice.tsx")),
   },
   "rosace-jumelle": {
-    manifest: manifest28 as VizManifest,
+    manifest: manifest29 as VizManifest,
     Composant: lazy(() => import("./rosace-jumelle/RosaceJumelle.tsx")),
   },
   "rosace-triple": {
-    manifest: manifest29 as VizManifest,
+    manifest: manifest30 as VizManifest,
     Composant: lazy(() => import("./rosace-triple/RosaceTriple.tsx")),
   },
   "ruban-ondule": {
-    manifest: manifest30 as VizManifest,
+    manifest: manifest31 as VizManifest,
     Composant: lazy(() => import("./ruban-ondule/RubanOndule.tsx")),
   },
   "ruban-plisse": {
-    manifest: manifest31 as VizManifest,
+    manifest: manifest32 as VizManifest,
     Composant: lazy(() => import("./ruban-plisse/RubanPlisse.tsx")),
   },
   "spiral-bloom": {
-    manifest: manifest32 as VizManifest,
+    manifest: manifest33 as VizManifest,
     Composant: lazy(() => import("./spiral-bloom/SpiralBloom.tsx")),
   },
   "spirale-tressee": {
-    manifest: manifest33 as VizManifest,
+    manifest: manifest34 as VizManifest,
     Composant: lazy(() => import("./spirale-tressee/SpiraleTressee.tsx")),
   },
   "tunnel-de-points": {
-    manifest: manifest34 as VizManifest,
+    manifest: manifest35 as VizManifest,
     Composant: lazy(() => import("./tunnel-de-points/TunnelDePoints.tsx")),
   },
   "voile-tournante": {
-    manifest: manifest35 as VizManifest,
+    manifest: manifest36 as VizManifest,
     Composant: lazy(() => import("./voile-tournante/VoileTournante.tsx")),
   },
   "voronoi-neon": {
-    manifest: manifest36 as VizManifest,
+    manifest: manifest37 as VizManifest,
     Composant: lazy(() => import("./voronoi-neon/VoronoiNeon.tsx")),
   },
 };
