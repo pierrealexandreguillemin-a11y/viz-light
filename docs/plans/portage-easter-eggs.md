@@ -1,6 +1,6 @@
 ---
 authority: annex
-last_verified: 2026-09-02
+last_verified: 2026-10-05
 expires: never
 ---
 
@@ -104,8 +104,8 @@ seul canvas. Les **seuls** uniformes sont `u_time`, `u_mouse`, `u_mouseSmooth`,
 - **Catégorie `fond`, malgré la réactivité au clic.** Ces shaders répondent au
   curseur et aux clics (`u_clicks` : ondes de choc, pulsations). On ne les
   *manipule* pourtant pas pour explorer quelque chose : la souris est un accent,
-  pas un usage. Si l'utilisateur en juge autrement à la recette, c'est **un
-  champ du manifest à changer**, pas du code.
+  pas un usage. **Confirmé par l'utilisateur le 2026-10-05** : « bien des
+  fonds ? → oui ».
 - **Piège — gate OKLCH.** `tests/couleurs-oklch.test.ts` refuse tout `#rrggbb`,
   `rgb(`, `hsl(` sous `src/` dans les fichiers `.css` / `.ts` / `.tsx`. Les
   couleurs par défaut vont donc dans le **`manifest.json`** (genre `couleur`,
@@ -212,10 +212,8 @@ fonds du banc d'essai. C'est lui qu'on importe.
   Auras » (`card-art.jsx`, SVG 360 × 540, enseigne inventée). On porte l'effet,
   pas le dessin — même principe que le halo de Miami (§3.4), dont on prend la
   technique et non le circuit.
-- **Catégorie à confirmer à la recette** : `composant` (surface iridescente
-  qu'on pose dans une interface) est l'hypothèse de départ ; si l'utilisateur
-  juge que l'effet se regarde plus qu'il ne s'emploie, `fond` conviendrait — un
-  champ du manifest à changer, pas du code.
+- **Catégorie `composant` — confirmée par l'utilisateur le 2026-10-05** : un
+  élément d'interface, pas un fond.
 - **Piège d'instrument** : la teinte suit le pointeur **depuis `frame()`**,
   jamais en CSS pur — sinon l'instrument mesure du vide (§3.4, §3.5).
 - Priorité basse dans l'ordre d'exécution (§6, lot 5) parce que c'est le seul

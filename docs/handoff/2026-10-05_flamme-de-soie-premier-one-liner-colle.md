@@ -64,3 +64,13 @@ après. Le régime reste « œuvre » (ADR 0010).
   59,9 i/s, deux relevés de pixels à 1 s d'écart différents, capture regardée).
 - Inchangé : verdict Lot 2 (`evidence/arbitrage-aurore-plasma.md`), recette
   (étape 8) sur l'URL live, CATALOG.md final (étape 9).
+
+## 5. Deux catégories tranchées par l'utilisateur
+
+« la carte iridescente : un élément d'interface (composant) » ; « les shaders
+réactifs : bien des fonds ? → oui ». Les manifests portaient déjà
+`composant` (`carte-iridescente`) et `fond` (`voronoi-neon`,
+`feuille-holographique`, `champ-quantique`) : aucun code ne change, les deux
+hypothèses du plan (`plans/portage-easter-eggs.md` §3.1 et §3.6) deviennent
+des décisions. Restent à l'utilisateur : verdict Lot 2, recette, CATALOG.md
+final.
