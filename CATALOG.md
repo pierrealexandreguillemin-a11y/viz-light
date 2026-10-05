@@ -303,7 +303,7 @@ exécuté — jamais d'estimation.
 | Runtime | canvas2d |
 | Tags | flamme, plume, ondulation |
 | Rendus | Origine · **Aligné** (défaut) |
-| Origine | one-liner collé le 2026-10-05, sources/tweets-golfes.md (tweet-direct) |
+| Origine | 4 octobre 2026 (tweet-direct) |
 | Coût mesuré | 59.9 i/s · JS 13.2 ms médian, 15.05 ms p95 · CPU-bound · mesuré le 2026-10-05 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/flamme-de-soie/FlammeDeSoie.tsx` · `src/viz/flamme-de-soie/algo.ts` · `src/viz/flamme-de-soie/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |

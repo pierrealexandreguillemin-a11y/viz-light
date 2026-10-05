@@ -5,8 +5,9 @@
   "categorie": "animation",
   "origine": {
     "source": "tweet-direct",
-    "reference": "one-liner collé le 2026-10-05, sources/tweets-golfes.md",
-    "auteur": "@yuruyurau"
+    "reference": "4 octobre 2026",
+    "auteur": "@yuruyurau",
+    "date": "2026-10-04"
   },
   "runtime": "canvas2d",
   "tags": ["flamme", "plume", "ondulation"],

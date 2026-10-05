@@ -21,8 +21,11 @@ expires: never
   `t += π/480` (0,006545), alpha 46 au rendu `origine`, rendus `origine` +
   `aligne` (défaut) aux valeurs fixes de la série (SPEC §8).
 - Golfé recopié à l'octet dans `sources/tweets-golfes.md`, section nouvelle
-  « Ajouts au fil de l'eau ». **Date du post inconnue** : non fournie, pas
-  retrouvée par recherche web. `origine.date` est absent (autorisé), pas inventé.
+  « Ajouts au fil de l'eau ». **Date du post** : inconnue au portage (recherche web
+  infructueuse, rien inventé), puis fournie par l'utilisateur en collant la page X
+  du post : **4 octobre 2026**. Code de la page identique à l'octet (`diff`).
+  `origine.date: "2026-10-04"`. L'ADR 0019 (immuable) dit encore « date
+  inconnue » : c'était vrai au moment de la décision.
 - Nom « Flamme de soie » choisi par moi d'après l'image : **renommable au goût
   de l'utilisateur**.
 
@@ -56,7 +59,6 @@ après. Le régime reste « œuvre » (ADR 0010).
 
 ## 4. Ce qui reste
 
-- **Utilisateur** : voir la viz (en local ou après un push qu'il demandera),
-  valider ou changer le nom.
+- **Utilisateur** : a validé la viz (« c'est ça ! »). Push non demandé.
 - Inchangé : verdict Lot 2 (`evidence/arbitrage-aurore-plasma.md`), recette
   (étape 8) sur l'URL live, CATALOG.md final (étape 9).
