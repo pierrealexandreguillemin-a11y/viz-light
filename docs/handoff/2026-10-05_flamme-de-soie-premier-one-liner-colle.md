@@ -59,6 +59,8 @@ après. Le régime reste « œuvre » (ADR 0010).
 
 ## 4. Ce qui reste
 
-- **Utilisateur** : a validé la viz (« c'est ça ! »). Push non demandé.
+- **Utilisateur** : a validé la viz (« c'est ça ! »), puis « pousse » :
+  `44012c5` poussé, déployé, vérifié en ligne (39 articles, flamme à
+  59,9 i/s, deux relevés de pixels à 1 s d'écart différents, capture regardée).
 - Inchangé : verdict Lot 2 (`evidence/arbitrage-aurore-plasma.md`), recette
   (étape 8) sur l'URL live, CATALOG.md final (étape 9).
