@@ -74,3 +74,10 @@ réactifs : bien des fonds ? → oui ». Les manifests portaient déjà
 hypothèses du plan (`plans/portage-easter-eggs.md` §3.1 et §3.6) deviennent
 des décisions. Restent à l'utilisateur : verdict Lot 2, recette, CATALOG.md
 final.
+
+## 6. Clôture
+
+Sur « pousse, vérifie déploiement et fin de session » : `03b1dda` poussé,
+statut GitHub du commit `Vercel: success`, site HTTP 200, 39 articles, flamme
+à 59,9 i/s et animée (deux relevés de pixels à 1 s d'écart différents). Ce
+handoff part dans un dernier commit docs, poussé lui aussi.
