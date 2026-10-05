@@ -10,7 +10,8 @@
 /**
  * Origines rapatriées. Les trois premières sont les artifacts « Viz Light »
  * (cf. evidence/sources-viz-light.md) ; `easter-eggs` est le lot hors v1 de
- * `C:\Dev\Easter_eggs`, importé PAR COPIE (SPEC §4, ADR 0014). La source
+ * `C:\Dev\Easter_eggs`, importé PAR COPIE (SPEC §4, ADR 0014) ; `tweet-direct`
+ * est un one-liner @yuruyurau collé par l'utilisateur, hors artifact (ADR 0019). La source
  * s'affiche telle quelle dans la vitrine — aucun `Record<Source, …>` exhaustif
  * dans le dépôt, donc pas de piège d'invisibilité : le seul risque est le refus
  * franc du validateur, qui est bruyant.
@@ -20,6 +21,7 @@ export const SOURCES = [
   "banc-essai",
   "atelier-generatif",
   "easter-eggs",
+  "tweet-direct",
 ] as const;
 export type Source = (typeof SOURCES)[number];
 

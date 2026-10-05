@@ -77,6 +77,13 @@ describe("validerManifest — identité et champs de base", () => {
     );
   });
 
+  it("accepte la source tweet-direct — un sketch collé hors des artifacts v1 (ADR 0019)", () => {
+    // Un one-liner @yuruyurau fourni directement par l'utilisateur n'est PAS issu de
+    // l'artifact `tweet-sketches` : le classer là fausserait sa provenance et le
+    // compte v1 de `pnpm session`. Le refus d'une source inventée est testé ci-dessus.
+    expect(cheminsFautifs((m) => (lireOrigine(m)["source"] = "tweet-direct"))).toEqual([]);
+  });
+
   it("refuse une date d'origine mal formée mais accepte son absence", () => {
     expect(cheminsFautifs((m) => (lireOrigine(m)["date"] = "29/07/2026"))).toContain(
       "origine.date",
