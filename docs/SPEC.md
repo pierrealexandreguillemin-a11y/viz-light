@@ -1,6 +1,6 @@
 ---
 authority: canonical
-last_verified: 2026-09-02
+last_verified: 2026-10-05
 expires: never
 ---
 
@@ -141,7 +141,8 @@ aux fonds a servi de motif pour les reporter, et la section « Fonds » de la
 vitrine est restée vide (`evidence/erreurs-a-ne-pas-refaire.md` §12).
 
 Hors v1 (après recette) : nouvelles créations à la demande, rapatriement d'autres
-sources (conversations claude.ai, tweets, CodePen, Shadertoy), HTML autonome
+sources (conversations claude.ai, tweets — entrés le 2026-10-05 sous la source
+`tweet-direct`, [ADR 0019](decisions/0019-source-tweet-direct.md) —, CodePen, Shadertoy), HTML autonome
 généré si un besoin réel apparaît, PWA. **Le remote GitHub, lui, est entré**
 (décision de l'utilisateur, 2026-08-22, [ADR 0013](decisions/0013-remote-github-et-deploiement-git-vercel.md)) :
 le dépôt public existe et Vercel y est branché — voir §7.
@@ -234,7 +235,7 @@ produit quelque chose de visible ou compréhensible par l'utilisateur.
 | 7 | Bench Puppeteer + perf tamponnée dans les manifests | ✅ outil livré, tourne à chaque migration |
 | 8 | Recette utilisateur (revue visuelle complète par Pierre-Alexandre) | ⬜ (se fait désormais sur l'URL live) |
 | 9 | Déploiement Vercel + CATALOG.md final | 🟨 **déployé le 2026-08-21** → https://viz-light.vercel.app ; **remote GitHub public + CI/CD Git-intégré le 2026-08-22** ([ADR 0013](decisions/0013-remote-github-et-deploiement-git-vercel.md)) ; CATALOG.md « final » après recette |
-| 10 | Entretien + ajouts au fil de l'eau (`scripts/new-viz.mjs`) — livrable permanent | 🟨 **lot Easter_eggs en cours depuis le 2026-08-22** (décision utilisateur, devant la recette) : Lot 0 déblocages du contrat ([ADR 0014](decisions/0014-source-easter-eggs-dans-le-contrat.md), [0015](decisions/0015-genre-de-parametre-choix.md)) + garde-fou WebGL ([ADR 0016](decisions/0016-frontiere-webgl-gate-statique.md)) + sources rapatriées ; **Lot 1 fait le 2026-08-22** : 3 fonds shaders, souris au socle ([ADR 0017](decisions/0017-souris-service-du-socle-webgl.md)) ; **Lots 3, 4 et 5 faits le 2026-09-02** : `explorateur-de-fractales` (premier `interactif`), `globe-chargement` et `carte-iridescente` (premiers `composant`), `halo-de-trace` (premier `dom-css` du lot), tous mesurés à 59,9 i/s → **catalogue à 38 viz** ; **Lot 2 préparé, pas tranché** : les deux versions d'aurore et de plasma sont côte à côte dans [`evidence/arbitrage-aurore-plasma.md`](evidence/arbitrage-aurore-plasma.md), verdict à l'utilisateur — [`plans/portage-easter-eggs.md`](plans/portage-easter-eggs.md) |
+| 10 | Entretien + ajouts au fil de l'eau (`scripts/new-viz.mjs`) — livrable permanent | 🟨 **lot Easter_eggs en cours depuis le 2026-08-22** (décision utilisateur, devant la recette) : Lot 0 déblocages du contrat ([ADR 0014](decisions/0014-source-easter-eggs-dans-le-contrat.md), [0015](decisions/0015-genre-de-parametre-choix.md)) + garde-fou WebGL ([ADR 0016](decisions/0016-frontiere-webgl-gate-statique.md)) + sources rapatriées ; **Lot 1 fait le 2026-08-22** : 3 fonds shaders, souris au socle ([ADR 0017](decisions/0017-souris-service-du-socle-webgl.md)) ; **Lots 3, 4 et 5 faits le 2026-09-02** : `explorateur-de-fractales` (premier `interactif`), `globe-chargement` et `carte-iridescente` (premiers `composant`), `halo-de-trace` (premier `dom-css` du lot), tous mesurés à 59,9 i/s → **catalogue à 38 viz** ; **Lot 2 préparé, pas tranché** : les deux versions d'aurore et de plasma sont côte à côte dans [`evidence/arbitrage-aurore-plasma.md`](evidence/arbitrage-aurore-plasma.md), verdict à l'utilisateur — [`plans/portage-easter-eggs.md`](plans/portage-easter-eggs.md) ; **premier one-liner collé hors artifact le 2026-10-05** : `flamme-de-soie`, source `tweet-direct` ([ADR 0019](decisions/0019-source-tweet-direct.md)), régime œuvre, formule identique au golfé (écart 0 sur 100 000 points), 59,9 i/s → **catalogue à 39 viz** |
 
 **L'étape 9 a été jouée devant l'étape 8** (décision de l'utilisateur, 2026-08-21) :
 le déploiement production a été fait *avant* la recette, précisément pour que la

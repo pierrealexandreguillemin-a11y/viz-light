@@ -128,3 +128,15 @@ t=0,draw=$=>{t||createCanvas(w=400,w);background(9).stroke(w,96);for(t+=PI/60,i=
 ```
 
 ---
+
+## Ajouts au fil de l'eau (étape 10)
+
+Collés tels quels par l'utilisateur dans une session Claude Code. Le texte est
+recopié **à l'octet** ; la date du post n'a pas été fournie et n'est pas
+inventée.
+
+**Fourni le 2026-10-05** — catalogué sous `flamme-de-soie`
+```js
+a=(y,d=mag(k=(5+3*sin(y+4))*cos(i/7),e=y/5-9)-2.8+sin(t*3-k*k/8))=>point((q=3*sin(k*2)+k*y/25*(9+2*sin(e*6-d*5+t*6)))+30*cos(c=d-t)+200,q*sin(c)+d*39)
+t=0,draw=$=>{t||createCanvas(w=400,w);background(9).stroke(w,46);for(t+=PI/480,i=2e4;i--;)a(i/885)}//#つぶやきProcessing
+```

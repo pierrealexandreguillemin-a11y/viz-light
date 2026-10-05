@@ -9,7 +9,7 @@ import { creerToile } from "./toile.ts";
  * `Math` fournit déjà. Porter en canvas2d retire donc p5 du bundle sans changer
  * une opération.
  *
- * POURQUOI UN MOTEUR PARTAGÉ. Dix-neuf sketches diffèrent par UNE fonction : la
+ * POURQUOI UN MOTEUR PARTAGÉ. Les sketches diffèrent par UNE fonction : la
  * position d'un point. Tout le reste — traînée par fondu, teinte HSB dérivée de
  * la géométrie, regroupement des teintes, rotation souris, homothétie vers
  * l'hôte — est identique. Le recopier dix-neuf fois serait la duplication que

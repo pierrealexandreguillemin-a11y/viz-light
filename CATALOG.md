@@ -7,7 +7,7 @@ dossier `src/viz/<slug>/` plus les fichiers de socle listés dans la fiche,
 puis pose `<VizName />`. Les chiffres de coût sortent de `scripts/bench.mjs`
 exécuté — jamais d'estimation.
 
-## Les 38 viz
+## Les 39 viz
 
 - **Anémone marine** — Une anémone posée au fond, dont les tentacules cherchent le courant.
 - **Anneau respirant** — Un anneau de poussière qui se gonfle et se dégonfle, comme un souffle.
@@ -25,6 +25,7 @@ exécuté — jamais d'estimation.
 - **Éventail cranté** — Un éventail qui s'ouvre par crans, comme un mécanisme d'horlogerie.
 - **Explorateur de fractales** — Sept ensembles à parcourir au doigt et à la molette, dont les couleurs coulent le long des filaments.
 - **Feuille holographique** — Un métal brossé irisé dont le reflet arc-en-ciel s'incline sous le curseur.
+- **Flamme de soie** — Une flamme de fils blancs qui vacille sans jamais avancer.
 - **Flow field** — Des filaments qui suivent un courant invisible.
 - **Globe de chargement** — Une Terre en points qui tourne lentement sous trois anneaux d'orbite — un loader qui n'a rien d'un spinner.
 - **Grain de film** — Une pellicule qui vit doucement sur un dégradé sombre.
@@ -291,6 +292,21 @@ exécuté — jamais d'estimation.
 | Coût mesuré | 59.9 i/s · JS 0.1 ms médian, 0.1 ms p95 · CPU-bound · mesuré le 2026-08-22 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
 | Dépendances | aucune |
 | À copier | `src/viz/feuille-holographique/FeuilleHolographique.tsx` · `src/viz/feuille-holographique/algo.ts` · `src/viz/feuille-holographique/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/plein-ecran-gl.ts` · `src/core/viz/reglages.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
+
+### Flamme de soie
+
+*Une flamme de fils blancs qui vacille sans jamais avancer.*
+
+| | |
+|---|---|
+| Slug | `flamme-de-soie` |
+| Runtime | canvas2d |
+| Tags | flamme, plume, ondulation |
+| Rendus | Origine · **Aligné** (défaut) |
+| Origine | one-liner collé le 2026-10-05, sources/tweets-golfes.md (tweet-direct) |
+| Coût mesuré | 59.9 i/s · JS 13.2 ms médian, 15.05 ms p95 · CPU-bound · mesuré le 2026-10-05 sur win32 x64 · HeadlessChrome/151.0.7922.77 |
+| Dépendances | aucune |
+| À copier | `src/viz/flamme-de-soie/FlammeDeSoie.tsx` · `src/viz/flamme-de-soie/algo.ts` · `src/viz/flamme-de-soie/manifest.json` · `src/core/viz/contrat.ts` · `src/core/viz/champ-de-points.ts` · `src/core/viz/toile.ts` · `src/core/composants/Cout.tsx` · `src/core/composants/LimiteErreur.tsx` · `src/core/composants/SceneViz.tsx` · `src/core/composants/creerCoquille.tsx` · `src/core/hooks/useBoucleAnimation.ts` · `src/core/hooks/useInstrument.ts` · `src/core/hooks/usePreferenceMouvement.ts` · `src/core/hooks/useScenePrincipale.ts` · `src/core/hooks/useSurface.ts` · `src/core/hooks/useVisible.ts` · `src/core/instrument/mesures.ts` |
 
 ### Flow field
 
